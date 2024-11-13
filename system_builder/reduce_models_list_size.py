@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # -*-coding:utf-8 -*-
 """
-@File    :   __init__.py
-@Time    :   2024/10/25 22:40:01
+@File    :   reduce_models_list_size.py
+@Time    :   2024/11/08 15:08:15
 @Author  :   Jinyi Zhang 
 @Version :   1.0
 @Contact :   zhangjinyi.cn@hotmail.com
 @License :   (C)Copyright 2023-2024, Jinyi Zhang
 @Desc    :   None
 """
+import json
 
-
-from .gpt import GPTQuery
-from .llm_query import LLMQuery
+if __name__ == "__main__":
+    with open("./models_100.json", "r") as f:
+        pass

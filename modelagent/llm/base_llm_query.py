@@ -10,6 +10,9 @@
 class BaseLLMQuery:
     def __init__(self, max_num_tokens=4096) -> None:
         self.max_num_tokens = max_num_tokens
+
+    def get_completion(self, prompt):
+        raise NotImplementedError
     
     def get_completion_single_round(self, prompt):
         raise NotImplementedError

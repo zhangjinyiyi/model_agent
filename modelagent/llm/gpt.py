@@ -30,12 +30,18 @@ class GPTQuery(BaseLLMQuery):
         return self.get_completion_single_round(prompt)
     
     def get_completion_single_round(self, prompt):
-    
-        response = self.client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
-            model=self.model,
-            max_tokens=self.max_num_tokens
-        )
+        
+        if self.model.startswith("o1"):
+            response = self.client.chat.completions.create(
+                messages=[{"role": "user", "content": prompt}],
+                model=self.model,
+            )
+        else:
+            response = self.client.chat.completions.create(
+                messages=[{"role": "user", "content": prompt}],
+                model=self.model,
+                max_tokens=self.max_num_tokens
+            )
         return response.choices[0].message.content
     
     def get_completion_multiple_round(self, messages):
