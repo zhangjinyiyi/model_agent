@@ -12,6 +12,7 @@
 import json
 from modelagent.llm.llm_query import GPTQuery
 
+
 if __name__ == "__main__":
     prompt_template = """
     you are a modeling expert. you need to select all necessary modules from the given list of modules with name and description
@@ -27,6 +28,7 @@ if __name__ == "__main__":
         module_list_text = f.read()
     task = "build a simple pipe system to test the pressure loss"
     prompt = prompt_template.format(task, module_list_text)
+    
     gpt = GPTQuery(model="gpt-4o")
     resp = gpt.get_completion(prompt)
     print(resp)

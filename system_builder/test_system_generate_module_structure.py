@@ -21,7 +21,7 @@ if __name__ == "__main__":
     here is the task: {}.
     """
 
-    task = "build a pipe system to test the pressure loss"
+    task = "build a system to test the pid controller of a first order system"
     prompt = prompt_template.format(task)
     gpt = GPTQuery(model="gpt-4o")
     resp = gpt.get_completion(prompt)
