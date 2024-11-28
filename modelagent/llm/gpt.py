@@ -21,10 +21,18 @@ from .base_llm_query import BaseLLMQuery
 
 
 class GPTQuery(BaseLLMQuery):
-    def __init__(self, model="gpt-3.5-turbo", max_num_token=4096) -> None:
+    def __init__(
+        self, 
+        model="gpt-3.5-turbo", 
+        max_num_token=4096,
+        base_url="https://api.bianxie.ai/v1",
+        json_mode=False
+    ) -> None:
+        
         super().__init__(max_num_tokens=max_num_token)
         self.model = model
-        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url=base_url)
+        self.json_mode = json_mode
 
     def get_completion(self, prompt):
         return self.get_completion_single_round(prompt)
@@ -35,12 +43,14 @@ class GPTQuery(BaseLLMQuery):
             response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=self.model,
+                response_format={"type": "json_object"} if self.json_mode else None
             )
         else:
             response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=self.model,
-                max_tokens=self.max_num_tokens
+                max_tokens=self.max_num_tokens,
+                response_format={"type": "json_object"} if self.json_mode else None
             )
         return response.choices[0].message.content
     

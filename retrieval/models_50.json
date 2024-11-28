@@ -1,0 +1,382 @@
+{
+    "Connectors.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Connectors.mo",
+        "description": "This Modelica package \"Connectors\" defines connector interfaces for water/steam systems, including inlet and outlet connectors. Each connector handles parameters like pressure, specific enthalpy, and mass flow rate, along with pseudo-variables to verify connection orientation, supporting integration into thermal fluid simulations in the ThermoSysPro library."
+    },
+    "Sink.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/Sink.mo",
+        "description": "The Modelica model \"Sink\" is part of the ThermoSysPro library for water/steam systems, representing a fluid sink with parameters for specific enthalpy, pressure, and mass flow rate. It includes connectors for enthalpy input and fluid inlet, with default specific enthalpy active when unconnected."
+    },
+    "SinkPQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SinkPQ.mo",
+        "description": "The model \"SinkPQ\" simulates a water/steam sink with fixed pressure, mass flow rate, and specific enthalpy. It uses parameters for default values unless overridden by input connectors. The model ensures continuity by assigning default values when input terminals are unconnected, maintaining system integration."
+    },
+    "PlugA.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/PlugA.mo",
+        "description": "The Modelica model \"PlugA\" defines a fluid outlet, representing a connection for fluid flow characterized by pressure (P), mass flow rate (Q), and specific enthalpy (h). The model includes graphical annotations for diagram and icon representation. Developed as part of ThermoSysPro, it was authored by Baligh El Hefni and Daniel Bouskela."
+    },
+    "SourceP.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SourceP.mo",
+        "description": "The given Modelica model represents a water/steam source with fixed pressure. It provides parameters and equations to configure and simulate the fluid's properties, such as pressure, temperature, and specific enthalpy, based on user-specified options. The model outputs are used for fluid outlet connections."
+    },
+    "SinkQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SinkQ.mo",
+        "description": "The Modelica model \"SinkQ\" defines a water/steam sink with fixed mass flow rate and specific enthalpy. It allows for setting default values for mass flow rate and specific enthalpy when inputs are not connected. The model includes pressure, mass flow, and enthalpy as public parameters."
+    },
+    "RefQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/RefQ.mo",
+        "description": "The Modelica code describes \"RefQ,\" a model for setting a fixed fluid mass flow rate. It allows for flow reversal, either continuous or discontinuous, controlled via parameters. It includes fluid inlet and outlet connectors, with equations ensuring pressure and enthalpy balance across the flow path."
+    },
+    "RefH.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/RefH.mo",
+        "description": "The Modelica model \"RefH\" describes a system with a fixed specific enthalpy reference for fluid flow, allowing for continuous or discontinuous flow reversal. It accounts for small mass flow rates and maintains equal pressure, enthalpy, and mass flow rate between inlet and outlet connectors."
+    },
+    "RefP.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/RefP.mo",
+        "description": "The Modelica model \"RefP\" simulates a fixed-pressure reference system using parameters for absolute pressure and flow reversal. It includes mass flow rate and specific enthalpy as fluid properties and handles flow reversal through continuous or discontinuous settings, supporting external pressure input."
+    },
+    "SourceQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SourceQ.mo",
+        "description": "The `SourceQ` model defines a water/steam source with a fixed mass flow rate and specific enthalpy. It allows setting default mass flow and enthalpy values, which activate if connectors are not engaged. Outputs include fluid pressure, mass flow rate, and specific enthalpy through the `FluidOutlet` connector."
+    },
+    "SinkP.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SinkP.mo",
+        "description": "The \"SinkP\" model in Modelica represents a water/steam sink with fixed pressure. It includes parameters for pressure, temperature, and specific enthalpy, defined as constants and input signals. The model calculates fluid properties using IF97 water-steam equations, providing flexibility for liquid, steam, or saturation conditions."
+    },
+    "RefT.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/RefT.mo",
+        "description": "The \"RefT\" model in Modelica is a fixed temperature reference for fluid flow, with parameters for fluid temperature and flow reversal mode. It computes specific enthalpy using IF97 regions. The model considers both continuous and discontinuous flow reversals, with annotations for diagram and icon representation."
+    },
+    "SourcePQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/SourcePQ.mo",
+        "description": "The Modelica code defines a water/steam source model, \"SourcePQ\", with fixed pressure, mass flow rate, and specific enthalpy. These parameters have default values but can be overridden through connected inputs. The outputs are connected to a fluid outlet interface, facilitating fluid dynamics simulations."
+    },
+    "Source.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/Source.mo",
+        "description": "The `Source` model in the ThermoSysPro library represents a water/steam source. It defines parameters for fluid pressure, mass flow rate, and specific enthalpy. If the input connector for specific enthalpy is unconnected, a default value is used. The model facilitates the connection of these parameters to fluid outlets."
+    },
+    "PlugB.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/BoundaryConditions/PlugB.mo",
+        "description": "The `PlugB` model in ThermoSysPro.WaterSteam defines a fluid boundary condition with attributes for absolute pressure, mass flow rate, and specific enthalpy, connected via a fluid inlet interface. The model includes visual annotations for diagram and icon representations, underlining its utility in fluid dynamics simulations."
+    },
+    "SensorQv.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Sensors/SensorQv.mo",
+        "description": "The \"SensorQv\" Modelica model is a volumetric flow sensor designed for water and steam applications, allowing sensitivity to flow direction and mode based on the International Formulation for Thermodynamic Properties (IF97). It outputs the volumetric flow rate in either m\u00b3/h or m\u00b3/s and measures various fluid properties."
+    },
+    "SensorQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Sensors/SensorQ.mo",
+        "description": "The Modelica model \"SensorQ\" is a mass flow sensor for water-steam systems, featuring parameters for continuous or discontinuous flow reversal. It measures mass flow rate, adjusting to flow reversals. Visual annotations define its icon and diagram appearances, ensuring user-friendly interpretation and functionality verification."
+    },
+    "SensorP.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Sensors/SensorP.mo",
+        "description": "The Modelica model `SensorP` is a pressure sensor within the ThermoSysPro library. It monitors pressure in a fluid flow, accommodating continuous or discontinuous flow reversals. It uses parameters for mass flow constraints, predicts sensor signal outputs, and models flow properties at input and output fluid connectors."
+    },
+    "SensorH.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Sensors/SensorH.mo",
+        "description": "The \"SensorH\" model is a specific enthalpy sensor for fluid systems, accommodating continuous or discontinuous flow reversals. It measures mass flow rates and outputs enthalpy values. Flow direction is monitored, ensuring accurate enthalpy readings, with options for continuous reversal with a minimum flow and event handling for transitions."
+    },
+    "SensorT.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Sensors/SensorT.mo",
+        "description": "The `SensorT` model in Modelica is a temperature sensor for water and steam systems. It measures fluid temperature based on mass flow rate and pressure, with provisions for continuous or discontinuous flow reversals. The sensor calculates thermodynamic properties, including temperature from pressure and specific enthalpy, using IF97 region specifications."
+    },
+    "StaticDrum.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/StaticDrum.mo",
+        "description": "The Modelica code describes a static drum model used for separating vapor and liquid phases in water-steam systems. It includes parameters for vapor separation efficiency and fluid properties, connectors for fluid input and output, and equations governing mass, energy balance, and fluid thermodynamics at various inlets and outlets."
+    },
+    "Splitter2.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/Splitter2.mo",
+        "description": "This Modelica model, \"Splitter2,\" is a fluid junction component with two outlets for water/steam or C3H3F5. It manages mass and energy conservation, distributing input flow between outlets based on extraction coefficients. The model calculates fluid thermodynamic properties and supports multiple regional modes."
+    },
+    "DeheaterMixer2.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/DeheaterMixer2.mo",
+        "description": "The `DeheaterMixer2` model describes a mixing junction for water and steam in ThermoSysPro. It balances mass and energy flows, ensuring fluid temperature remains below a specified maximum. It calculates thermodynamic properties based on pressure and enthalpy, adjusting flow rates to maintain conditions within specified limits."
+    },
+    "Splitter3.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/Splitter3.mo",
+        "description": "The provided Modelica code defines a \"Splitter3\" model within the ThermoSysPro.WaterSteam library. It is designed to split a fluid flow into three outlets, supporting water/steam or C3H3F5 fluid types. The model balances mass and energy while allowing control over outlet flow rates via extraction coefficients."
+    },
+    "SteamExtractionSplitter.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/SteamExtractionSplitter.mo",
+        "description": "The `SteamExtractionSplitter` is a Modelica model designed for steam extraction processes. It includes parameters for vapor mass fraction at extraction and inlet, supporting multiple fluid states. It balances pressure, enthalpy, mass, and energy, using standard fluid properties for thermodynamic calculations at both inlet and saturation points."
+    },
+    "SteamDryer.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/SteamDryer.mo",
+        "description": "The \"SteamDryer\" Modelica model simulates a steam dryer that manages vapor mass fraction at the outlet. It includes parameters for vapor status, fluid pressure, and specific enthalpy. The model enforces mass and energy conservation while calculating fluid thermodynamic properties. Configuration relies on the IF97 standard."
+    },
+    "Mixer3.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/Mixer3.mo",
+        "description": "The \"Mixer3\" model in Modelica represents a fluid mixer with three inlets for either steam or water. It balances mass and energy flows, computes thermodynamic properties, and includes coefficients for flow adjustments. Parameters specify fluid type and phase. It outputs pressure, enthalpy, and temperature."
+    },
+    "MassFlowMultiplier.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/MassFlowMultiplier.mo",
+        "description": "The MassFlowMultiplier model in ThermoSysPro represents a fluid junction using a mass flow multiplier. It contains parameters for flow multiplier alpha, fluid type, and density. It calculates fluid properties and balances mass and energy, allowing fixed or dynamic density and modeling various IF97 fluid regions."
+    },
+    "Mixer2.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/Mixer2.mo",
+        "description": "This Modelica model, \"Mixer2\", simulates a thermodynamic mixer with two inlets for fluid mixing, suitable for water/steam or C3H3F5. It calculates pressure, specific enthalpy, and temperature using mass and energy balance equations, accommodating variable inlet extraction coefficients for diverse fluid properties."
+    },
+    "Mixer8.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Junctions/Mixer8.mo",
+        "description": "The Modelica code describes a fluid mixer with eight inlets and one outlet, designed for water/steam or C3H3F5. It considers mass and energy balance, fluid properties, and supports automatic selection of fluid region. The model includes parameters, equations, and annotations for defining conditions."
+    },
+    "ElectricBoiler.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Boilers/ElectricBoiler.mo",
+        "description": "The `ElectricBoiler` model simulates an electric boiler, accounting for factors like electrical power, boiler efficiency, and pressure loss. It calculates the specific enthalpy variation and thermodynamic properties of the fluid, ensuring inlet-to-outlet energy balance. Thermodynamic calculations adapt based on the operational mode specified."
+    },
+    "CentrifugalPump.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/CentrifugalPump.mo",
+        "description": "The CentrifugalPump model simulates a centrifugal pump with parameters for angular velocity, moment of inertia, and pump volume. It supports dynamic and static equations for mechanical and energy aspects, flow reversal, various fluid types, and efficiency based on nominal values or characteristics. It calculates head, torque, power, and energy balances."
+    },
+    "StodolaTurbine.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/StodolaTurbine.mo",
+        "description": "The \"StodolaTurbine\" model represents a multistage steam turbine using Stodola's ellipse law to calculate mass flow rates. It considers fluid properties pre- and post-expansion, isentropic efficiency, nozzle efficiency, and mechanical power output, incorporating hydrodynamic friction, nozzle areas, and critical conditions."
+    },
+    "Generator.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/Generator.mo",
+        "description": "The Modelica model represents an electrical generator with 99.8% efficiency. It calculates electrical power based on mechanical inputs. Inputs are set to zero if unconnected, and the electrical output is computed by multiplying the sum of input signals by the efficiency factor and dividing by 100."
+    },
+    "Generator8.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/Generator8.mo",
+        "description": "The Modelica model \"Generator8\" represents an electrical generator with 99.8% efficiency. It calculates electrical power from multiple mechanical power inputs. Unconnected inputs default to zero to ensure smooth operation. The model asserts efficiency within realistic bounds, preventing values over 100% or below 0%."
+    },
+    "DynamicCentrifugalPump.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/DynamicCentrifugalPump.mo",
+        "description": "The Modelica code describes a dynamic centrifugal pump model featuring parameters for rotational speed, pump volume, moment of inertia, and mechanical friction. It offers options for starting conditions, energy balance (dynamic or static), and fluid type. Equations govern rotational dynamics, energy balance, efficiency, and flow characteristics."
+    },
+    "StaticCentrifugalPump.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/StaticCentrifugalPump.mo",
+        "description": "The StaticCentrifugalPump model simulates a centrifugal pump with fixed rotational speed or mechanical power. It incorporates parameters for efficiency, flow properties, and fluid characteristics, supporting water/steam and other fluids. The model calculates pressure, enthalpy variations, and power outputs for hydraulic and mechanical systems."
+    },
+    "SteamEngine.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/SteamEngine.mo",
+        "description": "The SteamEngine model simulates a steam engine's thermodynamic behavior, accounting for isentropic efficiency and power losses. It computes power output, mass flow rate, and specific enthalpy, using pressure differences and interpolation options for steam properties between inlet and outlet, to emulate real fluid dynamics and expansion processes."
+    },
+    "Compressor.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Machines/Compressor.mo",
+        "description": "The \"Compressor\" model simulates a heat pump compressor, detailing parameters for compression factor, isentropic efficiency, and power losses. It calculates mechanical power based on mass flow and enthalpy changes, while determining thermodynamic properties of fluid before and after compression. The model ensures no flow reversal."
+    },
+    "SteamGenerator_1SG.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/SteamGenerator_1SG.mo",
+        "description": "This Modelica model represents an individual steam generator system composed of U-tube heat exchangers, a dynamic drum, pressure loss components, and various connectors. It simulates the flow and thermal dynamics, accommodating start conditions and steady-state analysis, essential for optimizing steam energy production."
+    },
+    "DynamicCondenser.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicCondenser.mo",
+        "description": "The DynamicCondenser model simulates a heat exchanger cavity for condensing steam into liquid, featuring configurable parameters such as liquid volume fraction, initial pressure, and cavity dimensions. It integrates cooling pipes with specified thermal properties and models dynamic flow, supporting connections for vapor, water inlet, and outlet streams."
+    },
+    "StaticCondenser.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/StaticCondenser.mo",
+        "description": "The \"StaticCondenser\" Modelica model represents a heat exchanger used for steam condensation. It includes parameters for area, pressure loss, heat transfer, and flow properties, and defines the thermodynamic properties, mass, and energy balance. It handles reversible flow cooling and calculates saturation conditions within the condenser."
+    },
+    "DynamicWaterHeating.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicWaterHeating.mo",
+        "description": "The DynamicWaterHeating model represents a dynamic water heater using a two-phase cavity and multiple heat exchanger pipes. It includes parameters for physical properties, dimensions, initial conditions, and thermal parameters. It connects various components like pipes, volumes, and connectors to simulate heat exchange and fluid flow."
+    },
+    "SimpleStaticCondenser.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/SimpleStaticCondenser.mo",
+        "description": "The \"SimpleStaticCondenser\" is a Modelica model within the ThermoSysPro library, designed to simulate a static condenser. It includes parameterized frictional and gravitational pressure losses for hot and cold sides, thermodynamic properties of fluids, flow reversals, and energy exchange calculation. Various configurations can be set for the fluid phases."
+    },
+    "SimpleDynamicCondenser.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/SimpleDynamicCondenser.mo",
+        "description": "The SimpleDynamicCondenser model simulates heat exchange between liquid and gas phases in a cavity, accounting for gravity, friction, and thermodynamic properties. It includes mass and energy balance equations for both phases and calculates pressure, vapor mass fraction, and heat transfer, operating using various initial conditions and flow configurations."
+    },
+    "DynamicTwoPhaseFlowRiser.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicTwoPhaseFlowRiser.mo",
+        "description": "The Modelica model \"DynamicTwoPhaseFlowRiser\" represents a riser used for dynamic two-phase flow in pipes, handling the fluid's phase changes and thermodynamic properties. It includes parameters for pipe dimensions, pressure, temperature, and heat exchange, with options for mass balance dynamics, flow direction, and initial conditions."
+    },
+    "StaticWaterWaterExchangerDTorWorEff.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/StaticWaterWaterExchangerDTorWorEff.mo",
+        "description": "The `StaticWaterWaterExchangerDTorWorEff` model is a static water-to-water heat exchanger with configurable parameters for delta temperature, delta power, or efficiency. It accounts for pressure losses, fluid density, and optionally allows for continuous flow reversal, simulating heat exchange based on selected mode parameters."
+    },
+    "StaticCondenserHEI.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/StaticCondenserHEI.mo",
+        "description": "The `StaticCondenserHEI` Modelica model represents a static condenser designed to exchange heat between hot and cold fluid streams. It includes parameters for friction losses, altitudes, fluid density, tube materials, tube dimensions, and HEI standard conformities, calculating flow dynamics, heat transfer coefficients, and pressure variations."
+    },
+    "DynamicWaterHeatingOnePipe.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicWaterHeatingOnePipe.mo",
+        "description": "The Modelica code models a dynamic water heating system using one pipe with parameters for initial liquid volume, pressure, and specific design characteristics. It includes a two-phase water cavity, one-phase flow pipe components, and connectors for fluid inlets and outlets to simulate thermal and fluid dynamics in a structured manner."
+    },
+    "NTUWaterHeating.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/NTUWaterHeating.mo",
+        "description": "The NTUWaterHeating model simulates a heat exchanger for water heating using condensation and deheating zones. It considers pressure loss, heat transfer coefficients, and IF97 thermodynamic properties. The model includes equations for mass and energy balance, covering drain cooling and flash zones, ensuring efficient heat exchange and thermodynamic consistency."
+    },
+    "CoolingTower.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/CoolingTower.mo",
+        "description": "The CoolingTower model in the ThermoSysPro package simulates a cooling tower system with parameters for fluid type, pressure, and mass flow rates. It features two main zones, packing and rain, where water and air interact through heat and mass transfer, utilizing fluid properties to compute energy balances and evaporation rates."
+    },
+    "DynamicOnePhaseFlowPipe.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicOnePhaseFlowPipe.mo",
+        "description": "The Modelica code describes a dynamic one-phase flow pipe model used in heat exchangers. It simulates fluid dynamics and heat transfer, accounting for parameters like pipe length, diameter, roughness, and thermal properties. Options include inertia, advection, mass/energy balance, and steady state settings for simulating hydraulic and thermal behavior."
+    },
+    "SteamGenerator_4SG.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/SteamGenerator_4SG.mo",
+        "description": "The Modelica model \"SteamGenerator_4SG\" represents an equivalent of four steam generators, featuring dynamic flow pipes, pressure losses, heat exchanger walls, and sensors for monitoring steam generation. It utilizes parameters and initial conditions to model heat transfer, pressure drops, and fluid dynamics within the system."
+    },
+    "DynamicOnePhaseFlowShell.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicOnePhaseFlowShell.mo",
+        "description": "The `DynamicOnePhaseFlowShell` model simulates dynamic one-phase flow in heat exchangers. It accounts for factors such as shell length, tube arrangement, friction loss, heat exchange, and fluid properties. It includes options for inertia, advection, and mass/energy balances, supporting continuous flow reversal and both steady and dynamic states."
+    },
+    "DynamicWaterWaterExchanger.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicWaterWaterExchanger.mo",
+        "description": "The DynamicWaterWaterExchanger model simulates a dynamic plate heat exchanger, enhancing thermal energy transfer between hot and cold fluids. It accounts for thermal conductivity, heat transfer, and pressure loss coefficients. Segmented into sections, it allows computation of fluid properties with IF97 correlations, facilitating steady or dynamic state analysis."
+    },
+    "StaticWaterWaterExchanger.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/StaticWaterWaterExchanger.mo",
+        "description": "The StaticWaterWaterExchanger model represents a static plate heat exchanger in Modelica. It calculates thermal power exchange, fluid temperature changes, and pressure losses for hot and cold sides. Parameters define conductivity, heat transfer coefficients, pressure losses, fluid densities, flow rates, and thermodynamic properties, supporting both countercurrent and cocurrent configurations."
+    },
+    "DynamicTwoFlowHeatExchangerShell.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicTwoFlowHeatExchangerShell.mo",
+        "description": "The \"DynamicTwoFlowHeatExchangerShell\" Modelica model simulates a dynamic water/steam heat exchanger. It includes parameters for exchanger length, altitude, segment count, and pipe characteristics. The model integrates components for one-phase flow and wall heat exchange, defining fluid paths and connections within the system."
+    },
+    "DynamicTwoPhaseFlowPipe.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/HeatExchangers/DynamicTwoPhaseFlowPipe.mo",
+        "description": "The Modelica model, \"DynamicTwoPhaseFlowPipe,\" simulates two-phase flow in pipes, accounting for parameters like pipe dimensions, phase slip, and pressure loss coefficients. It employs dynamic and steady-state equations to model heat and mass balance along thermal and hydraulic nodes, accommodating various flow conditions and heat transfer mechanisms."
+    },
+    "IdealCheckValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/IdealCheckValve.mo",
+        "description": "The Modelica model \"Ideal Check Valve\" simulates a valve's behavior by controlling flow direction and pressure loss. It opens when pressure difference exceeds a threshold and ensures flow reversal based on specific conditions. Adjustable parameters include pressure difference thresholds, minimum mass flow rates, and continuous flow reversal settings."
+    },
+    "DynamicReliefValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/DynamicReliefValve.mo",
+        "description": "The Modelica code describes a dynamic relief valve for controlling fluid pressure, featuring parameters like opening pressure, valve position, hydraulic areas, and forces impacting the clapper. It includes velocity, flow rate, and thermodynamic properties, allowing simulations of pressure dynamics and flow characteristics with options for conic clapper interpolation."
+    },
+    "ControlValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/ControlValve.mo",
+        "description": "The ControlValve model in Modelica simulates a control valve for managing fluid flow and pressure within a system. It allows customization of flow characteristics and interpolation options, accommodates different fluids, and calculates fluid properties. This model considers pressure loss and flow reversal, based on user-defined parameters."
+    },
+    "Diaphragm.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/Diaphragm.mo",
+        "description": "The Modelica model \"Diaphragm\" simulates fluid flow through a diaphragm in a thermodynamic system, calculating parameters such as pressure loss, mass flow rate, and fluid properties. It considers diaphragm aperture, flow reversal, fluid type, and operating mode, ensuring proper flow conditions and dynamic viscosity calculations for water/steam or other fluids."
+    },
+    "PipePressureLoss.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/PipePressureLoss.mo",
+        "description": "The Modelica model \"PipePressureLoss\" calculates generic pressure loss in a pipe using parameters for friction loss, inlet and outlet altitudes, and fluid type. It evaluates pressure loss due to friction and gravity, accounts for flow reversal, and determines fluid properties, including temperature and density."
+    },
+    "SingularPressureLoss.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/SingularPressureLoss.mo",
+        "description": "The \"SingularPressureLoss\" model simulates pressure losses in a fluid system. It calculates pressure difference based on mass flow rate, fluid density, and a loss coefficient. Flow reversal can be continuous or discontinuous, with properties determined via thermodynamic equations. The model is functional for steam/water or C3H3F5."
+    },
+    "CheckValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/CheckValve.mo",
+        "description": "The Modelica code describes a CheckValve model within the ThermoSysPro WaterSteam library. This valve has parameters for pressure differences when opening or closing, pressure loss coefficient, and options for fluid type and density. It models flow conditions and calculates fluid thermodynamic properties dynamically."
+    },
+    "SwitchValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/SwitchValve.mo",
+        "description": "The \"Switch Valve\" model simulates fluid flow regulation, with parameters for pressure loss coefficient, minimal flow, fluid type, and flow reversal mode. It computes mass flow rate, pressure loss, fluid density, temperature, and enthalpy. The model handles opening/closing state, flow direction, and pressure dynamics."
+    },
+    "ThreeWayValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/ThreeWayValve.mo",
+        "description": "The \"ThreeWayValve\" Modelica model represents a three-way valve system used to control fluid flow, with defined parameters for two control valves, valve volume, fluid type, and flow characteristics. It supports configurable valve flow characteristics and flow reversal, and connects various inlet and outlet fluid interfaces."
+    },
+    "IdealSwitchValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/IdealSwitchValve.mo",
+        "description": "The \"IdealSwitchValve\" model in Modelica describes a fluid valve capable of reversing flow direction. It manages pressure difference and mass flow, with parameters defining minimal flow and flow reversal behavior. The valve operates based on input signals, either maintaining pressure or controlling flow to a defined minimum."
+    },
+    "DynamicCheckValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/DynamicCheckValve.mo",
+        "description": "The Modelica model \"DynamicCheckValve\" simulates a dynamic check valve that regulates fluid flow by adjusting the flap position based on mechanical forces and pressure differences. Parameters include valve flow coefficient, flap friction, inertia, mass, and fluid properties. Enables mode selection, interpolation, and flow characteristics customization."
+    },
+    "Bend.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/Bend.mo",
+        "description": "The Modelica model \"Bend\" simulates pressure loss in a pipe bend. It calculates hydraulic, singular, and friction pressure loss coefficients using parameters such as pipe diameter, angle, roughness, and fluid type. The model handles continuous and discontinuous flow reversals and computes fluid properties like density and viscosity."
+    },
+    "InvSingularPressureLoss.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/InvSingularPressureLoss.mo",
+        "description": "The \"InvSingularPressureLoss\" Modelica model simulates inverse singular pressure loss in fluid systems, with parameters for continuous or discontinuous flow reversal and fluid type. It computes pressure losses, mass flow rate, temperature, and density using thermodynamic properties under varying conditions, supporting water/steam and C3H3F5 fluid types."
+    },
+    "LumpedStraightPipe.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/LumpedStraightPipe.mo",
+        "description": "The \"LumpedStraightPipe\" model in Modelica represents a circular duct simplifying pressure losses due to friction and changes in altitude. It allows for customization of parameters such as pipe length, diameter, friction coefficients, flow conditions, and fluid properties to simulate hydraulic behavior in pipes with or without flow reversal and inertia effects."
+    },
+    "NonBoilingValve.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/PressureLosses/NonBoilingValve.mo",
+        "description": "The NonBoilingValve model simulates a valve that prevents boiling in fluid systems by managing pressure. It adjusts inlet pressure to avoid boiling based on critical and saturation pressures, considering specific enthalpy limits and flow conditions. It supports continuous or discontinuous flow reversal, maintaining mass flow and enthalpy balance."
+    },
+    "Degasifier.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/Degasifier.mo",
+        "description": "The Modelica model \"Degasifier\" simulates a degasifier system within the ThermoSysPro library. It comprises components like volumes, pipes, dynamic drums, and connectors that handle fluid dynamics, pressure losses, and steady-state operations. The model connects fluid sources and addresses flow reversal and pressure management across different segments."
+    },
+    "VolumeA.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeA.mo",
+        "description": "The model 'VolumeA' simulates a mixing volume with two inlets and two outlets. It handles both static and dynamic mass balance, considering initial pressure, specific enthalpy, fluid type, and thermodynamic properties. It ensures fluid thermodynamics is adjusted based on the selected parameters and conditions."
+    },
+    "VolumeATh.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeATh.mo",
+        "description": "The Modelica model \"VolumeATh\" represents a mixing volume featuring two inlets, two outlets, and a thermal input. It models fluid dynamics with options for dynamic or static mass balance equations and initializes based on specific pressure and enthalpy. The model supports water/steam and C3H3F5 fluid types."
+    },
+    "VolumeD.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeD.mo",
+        "description": "The VolumeD model represents a mixing volume with one inlet and three outlets, managing fluid flow dynamics, pressure, and specific enthalpy. It supports both static and dynamic mass balance equations, and addresses fluid properties, including temperature, pressure, and density, adjustable for both water/steam and refrigerant applications."
+    },
+    "VolumeI.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeI.mo",
+        "description": "The Modelica model \"VolumeI\" represents a mixing volume with four inlets and outlets, allowing fluid mixing and transport. It supports dynamic or static mass balance and starts from steady state or initial conditions. Fluid properties are adjustable, accommodating different fluids and thermodynamic modes."
+    },
+    "VolumeITh.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeITh.mo",
+        "description": "The \"VolumeITh\" model represents a fluid mixing volume with four inlets and outlets, designed for water/steam or C3H3F5. It uses dynamic or static mass balance equations, factoring in initial pressure and enthalpy. Thermal properties adjust dynamically, ensuring steady-state or transient simulation capabilities."
+    },
+    "Pressurizer.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/Pressurizer.mo",
+        "description": "The Pressurizer model in ThermoSysPro simulates water and steam dynamics in a pressurizer, accounting for volume, pressure, heat transfer, condensation, and evaporation. It features parameters for geometry and coefficients, with connectors for fluid and thermal interaction, supporting both steady-state and initial condition analyses."
+    },
+    "DegasifierVolume.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/DegasifierVolume.mo",
+        "description": "The DegasifierVolume Modelica model simulates the thermal and mass balance within a degasifier volume, considering initial pressures and specific enthalpies. It features parameters for metal properties, fluid properties, density, and an automatic mode to adjust for liquid or steam conditions, ensuring efficient fluid thermodynamics."
+    },
+    "VolumeDTh.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeDTh.mo",
+        "description": "The VolumeDTh model represents a mixing volume with one fluid inlet, three outlets, and a thermal input. It includes parameters for volume, pressure, and enthalpy, with options for dynamic or static mass balance. The model simulates fluid thermodynamic properties and calculates mass and energy balances in various states."
+    },
+    "DynamicDrum.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/DynamicDrum.mo",
+        "description": "The `DynamicDrum` model simulates a dynamic steam drum system with vertical or horizontal configurations. It models the fluid's pressure, temperature, and volume dynamics in liquid and gas phases, considering parameters like initial pressure, heat exchange coefficients, and condensation. It includes connectors for fluid input/output and thermal exchange."
+    },
+    "TwoPhaseCavity.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/TwoPhaseCavity.mo",
+        "description": "The \"TwoPhaseCavity\" model simulates a heat exchange process within a vertical or horizontal cylindrical cavity, involving both liquid and gaseous phases of water. It incorporates mass and energy balance equations, multiple parameters for structural and thermal properties, and calculates heat exchange rates and phase transitions under steady-state or dynamic conditions."
+    },
+    "VolumeC.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeC.mo",
+        "description": "The Modelica model \"VolumeC\" represents a mixing volume with three inlets and one outlet. It manages fluid properties like pressure, specific enthalpy, and density, supporting both static and dynamic mass balances. Configurable parameters include volume, fluid type, and thermodynamic properties for different fluid phases."
+    },
+    "VolumeCTh.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeCTh.mo",
+        "description": "The Modelica model, VolumeCTh, represents a thermal mixing volume with three inlets and one outlet. It accommodates dynamic or static mass balance, and includes thermal inputs. The model calculates fluid thermodynamic properties, supports water/steam or C3H3F5 fluid, and initiates from specified pressure and enthalpy conditions."
+    },
+    "VolumeBTh.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeBTh.mo",
+        "description": "The \"VolumeBTh\" model simulates a mixing volume with two inlets, two outlets, and a thermal input, handling both static and dynamic mass balance modes. It manages fluid thermodynamic properties and calculates mass and energy balances using parameters such as initial pressure, enthalpy, and density."
+    },
+    "VolumeB.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/VolumeB.mo",
+        "description": "This Modelica model, \"VolumeB,\" simulates a fluid mixing volume with two inlets and outlets, incorporating mass and energy balance equations. Users can specify parameters such as volume, initial pressure, specific enthalpy, fluid type, and density mode. The model supports both dynamic and static mass balance scenarios."
+    },
+    "TwoPhaseVolume.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/TwoPhaseVolume.mo",
+        "description": "The TwoPhaseVolume model simulates a two-phase thermodynamic system with parameters for cavity volume, area, pressure, and phase-specific properties. It includes equations for mass and energy balance, and models evaporation, condensation, and heat exchange between liquid and vapor phases, starting from steady state or specified initial conditions."
+    },
+    "Tank.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/Tank.mo",
+        "description": "The Modelica model \"Tank\" simulates an open tank handling fluid dynamics and thermodynamics, featuring inlets and outlets with pressure and altitude parameters. It supports dynamic or static mass balance, customizable initial fluid conditions, and includes balance equations for mass, momentum, and energy, ideal for water or C3H3F5 fluids."
+    },
+    "TwoPhaseCavityOnePipe.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/Volumes/TwoPhaseCavityOnePipe.mo",
+        "description": "The \"TwoPhaseCavityOnePipe\" Modelica model describes a thermal system involving a two-phase cavity with one shell pass, containing parameters for geometry, thermodynamic properties, heat transfer, and fluid dynamics. It simulates fluid interaction in a vertical or horizontal cylindrical cavity, involving steam and liquid phases with heat transfers and condensation analysis."
+    },
+    "LoopingPQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/LoopBreakers/LoopingPQ.mo",
+        "description": "The \"LoopingPQ\" model within the ThermoSysPro library simulates a water-steam flow system with predefined pressure and mass flow rate. It includes fluid inlet and outlet connectors and utilizes pressure loss and loop breaker components to regulate and control system parameters, ensuring stable operation across the loop."
+    },
+    "LoopBreakerP.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/LoopBreakers/LoopBreakerP.mo",
+        "description": "The Modelica model \"LoopBreakerP\" is a pressure loop breaker for water/steam systems, ensuring mass and energy balance through connectors. It enforces consistent enthalpy and manages flow direction reversal, featuring detailed graphical and annotation descriptions within the ThermoSysPro library."
+    },
+    "LoopBreakerH.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/LoopBreakers/LoopBreakerH.mo",
+        "description": "The Modelica model \"LoopBreakerH\" serves as a specific enthalpy loop breaker for water/steam connectors, ensuring equal flow and pressure between the inlet and outlet, and handling potential flow reversal. It is graphically represented and annotated for visual and documentation purposes within the ThermoSysPro framework."
+    },
+    "LoopBreakerQ.mo": {
+        "path": "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam/LoopBreakers/LoopBreakerQ.mo",
+        "description": "The Modelica model \"LoopBreakerQ\" is a loop breaker for mass flow in water/steam systems. It equates pressure and enthalpy across fluid connectors, and manages flow reversal based on enthalpy differences. The model includes annotations for placement, diagram visuals, icons, and documentation credits to authors."
+    }
+}

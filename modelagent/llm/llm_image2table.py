@@ -20,11 +20,18 @@ import pandas as pd
 
 class LLMImage2Table:
     
-    def __init__(self, model="gpt-4o", max_num_tokens=4096, max_retries=3):
+    def __init__(
+        self, 
+        model="gpt-4o", 
+        max_num_tokens=4096, 
+        max_retries=3,
+        base_url="https://api.openai.com/v1"
+    ):
         self.model = model
-        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+        self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url=base_url)
         self.max_num_tokens = max_num_tokens
         self.max_retries = max_retries
+        self.base_url = base_url
         
     def get_table_from_image(self, image_path):
         table_dict = self.get_json_from_image(image_path)
@@ -81,7 +88,8 @@ class LLMImage2Table:
         
         for i in range(self.max_retries):
             try:
-                response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+                url = self.base_url + "/chat/completions"
+                response = requests.post(url=url, headers=headers, json=payload)
                 content = response.json()["choices"][0]["message"]["content"]
                 table_dict = json.loads(content)
                 return table_dict

@@ -33,4 +33,8 @@ def download_images_from_url(url, save_folder):
             print(f"下载失败 {img_url}: {e}")
 
 # 使用示例
-download_images_from_url('https://mp.weixin.qq.com/s/Bq_Cd-couSQLTZwFIDj3_g', 'downloaded_images')
+
+url = "https://mp.weixin.qq.com/s/0-jP3RvFuewh2E4imwRQ-A"
+save_folder = "./zhongkong_tpt"
+
+download_images_from_url(url, save_folder)
