@@ -13,12 +13,12 @@ from .gpt import GPTQuery
 
 
 class LLMQuery:
-    def __init__(self, model_name="gpt-4o") -> None:
+    def __init__(self, model_name="gpt-4o", **kwargs) -> None:
         self.model_name = model_name
         if self.model_name == "gpt-4o":
-            self.llm_model = GPTQuery(model=self.model_name)
+            self.llm_model = GPTQuery(model=self.model_name, **kwargs)
         else:
-            self.llm_model = GPTQuery(model="gpt-4o")
+            self.llm_model = GPTQuery(model="gpt-4o", **kwargs)
 
     def get_completion(self, prompt):
         return self.llm_model.get_completion(prompt=prompt)

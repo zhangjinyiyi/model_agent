@@ -19,6 +19,6 @@ if __name__ == "__main__":
     # task = "build a chua circuit system"
     result = designer.design(task)
     # result2 = designer.recheck(task)
-    designer.draw()
-    designer.save("test.gml")
+    designer.draw_dot()
+    designer.save_result_in_json("test.json")
 

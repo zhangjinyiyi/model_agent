@@ -13,8 +13,10 @@
 import logging
 logger = logging.getLogger(__name__)
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import networkx as nx
 import json
+import pygraphviz as pgv
 
 from ..llm.base_llm_query import BaseLLMQuery
 from ..llm.gpt import GPTQuery
@@ -34,9 +36,11 @@ class Designer:
            logger.warning("llm_query.json_mode is set to False, may cause error in design process.")
                                
         self.prompt = """
-            you are a modeling and simulation expert. you need to give a system model structure in the format of a graph.
+            you are a modeling and simulation expert. 
+            you need to give a system model structure in the format of a graph.
             The node of the sytem model graph represent the module and the edge represent the connection between modules.
-            output all the necessary modules names in a list with name, description, paramters, input connectors and output connectors.
+            output all the necessary modules names in a list with name, description, paramters, input connectors 
+            and output connectors.
             output all the connections in a list as upstream_module-downstream_module.
             The given modules and connections should be able to build a complete system model to finish the task.
             Here is the task: {task}.
@@ -58,8 +62,15 @@ class Designer:
             }}.
         """
         
+        # list of wrong designs
+        # each wrong design is a dict with the following keys:
+        # "design": the wrong design
+        # "reason": the reason why the design is wrong
+        self.wrong_designs = []
+        
         self.graph_dict = None
         self.graph = nx.DiGraph()
+        self.graph_graphviz = pgv.AGraph(directed=True)
     
     def design(self, task: str):
         """design the system model structure
@@ -74,50 +85,58 @@ class Designer:
         resp = self.llm_query.get_completion(prompt)
         self.graph_dict = json.loads(resp)
         self._graph_dict_to_graph()
+        self._graph_dict_to_graphviz()
         return self.graph_dict
     
-    def recheck(self, task: str):
-        prompt = """
-            you are a senior modeling and simulation expert. You are ask to check if the given system structure can 
-            finish the task in a simulation environment described as follows: {task}.
-            Here is the system structure: {graph_dict}.
-            if not: you need to give a new system structure that can finish the task based on the given system structure, 
-            the format should be the same as the output of the design function.
-            if yes: you need to output the system structure in json format, same as the given one.
+    def draw(self, save_path: str = "./system_structure.png"):
+        """draw the system structure graph
+
+        Args:
+            save_path (str, optional): the path to save the figure. Defaults to "./system_structure.png".
+            
         """
-        prompt = prompt.format(task=task, graph_dict=json.dumps(self.graph_dict))
-        resp = self.llm_query.get_completion(prompt)
-        self.graph_dict = json.loads(resp)
-        self._graph_dict_to_graph()
-        return self.graph_dict
-    
-    def draw(self):
         
         G = self.graph
         node_font_size = 10
         edge_font_size = node_font_size * 0.6
         
-        # 绘制图形
-        pos = nx.spring_layout(G)  # 使用 spring 布局
+        pos = nx.spring_layout(G)
+        # pos = nx.layout(G, prog='dot')
+        
+        # G.layout(prog='dot')
 
-        # 绘制节点
+        # Draw nodes
         nx.draw_networkx_nodes(G, pos, node_color='lightblue', node_size=2000, alpha=0.5)
 
-        # 绘制边
+        # Draw edges
         nx.draw_networkx_edges(G, pos, arrowstyle='->', arrowsize=20)
 
-        # 绘制节点标签
+        # Draw node labels
         nx.draw_networkx_labels(G, pos, font_size=node_font_size, font_weight='bold')
 
-        # 绘制边标签
+        # Draw edge labels
         edge_labels = {(u, v): f"{data['input_name']} -> {data['output_name']}" for u, v, data in G.edges(data=True)}
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=edge_font_size, font_color='red')
 
-        # 显示图形
+        # Display graph
         plt.title("Directed Graph with Named Inputs and Outputs")
-        plt.axis('off')  # 关闭坐标轴
+        plt.axis('off')
+        plt.savefig(save_path)
         plt.show()
-        plt.savefig("./system_structure.png")
+        return True
+    
+    def draw_dot(self, save_path: str = "./system_structure.png"):
+        G = self.graph_graphviz
+        G.node_attr['shape'] = 'box'
+        G.edge_attr['color'] = 'blue'
+        G.layout(prog='dot')
+        G.draw(save_path)
+
+        # img = mpimg.imread(save_path)
+        #  plt.imshow(img)
+        # plt.axis('off')
+        # plt.show()
+        return True
         
     def save(self, file_path: str):
         nx.write_gml(self.graph, file_path)
@@ -136,4 +155,30 @@ class Designer:
                 output_name=connection["downstream_connector"]
             )
             
+    def _graph_dict_to_graphviz(self):
+        # Add all modules as nodes
+        node_names = [module["name"] for module in self.graph_dict["modules"]]
+        self.graph_graphviz.add_nodes_from(node_names)
+        
+        # Add edges with connection information
+        for connection in self.graph_dict["connections"]:
+            self.graph_graphviz.add_edge(
+                connection["upstream_module"],
+                connection["downstream_module"],
+                # input_name=connection["upstream_connector"],
+                # output_name=connection["downstream_connector"]
+            )
+            
+    def save_result_in_json(self, file_path: str):
+        """save the result in json format
+
+        Args:
+            file_path (str): the path to save the json file
+            
+        Returns:
+            bool: True if success, False otherwise
+        """
+        with open(file_path, 'w') as f:
+            json.dump(self.graph_dict, f)
+        return True
 

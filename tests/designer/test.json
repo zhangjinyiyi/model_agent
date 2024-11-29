@@ -1,0 +1,109 @@
+{
+    "modules": [
+        {
+            "name": "PID_Controller",
+            "description": "A PID controller that computes control actions.",
+            "parameters": {
+                "Kp": "Proportional gain",
+                "Ki": "Integral gain",
+                "Kd": "Derivative gain"
+            },
+            "input_connectors": [
+                "setpoint",
+                "process_variable"
+            ],
+            "output_connectors": [
+                "control_action"
+            ]
+        },
+        {
+            "name": "First_Order_System",
+            "description": "A first-order dynamic system to be controlled.",
+            "parameters": {
+                "gain": "System gain",
+                "time_constant": "System time constant"
+            },
+            "input_connectors": [
+                "input"
+            ],
+            "output_connectors": [
+                "output"
+            ]
+        },
+        {
+            "name": "Reference_Signal",
+            "description": "Provides the reference setpoint signal.",
+            "parameters": {
+                "amplitude": "Amplitude of the reference signal",
+                "frequency": "Frequency of the reference signal"
+            },
+            "input_connectors": [],
+            "output_connectors": [
+                "setpoint"
+            ]
+        },
+        {
+            "name": "Measurement_Noise",
+            "description": "Simulates measurement noise in the system.",
+            "parameters": {
+                "noise_level": "Amplitude of the measurement noise"
+            },
+            "input_connectors": [
+                "input"
+            ],
+            "output_connectors": [
+                "noisy_output"
+            ]
+        },
+        {
+            "name": "Summation_Block",
+            "description": "Computes the deviation between setpoint and process variable.",
+            "parameters": {},
+            "input_connectors": [
+                "first_input",
+                "second_input"
+            ],
+            "output_connectors": [
+                "output"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Reference_Signal",
+            "upstream_connector": "setpoint",
+            "downstream_module": "Summation_Block",
+            "downstream_connector": "first_input"
+        },
+        {
+            "upstream_module": "First_Order_System",
+            "upstream_connector": "output",
+            "downstream_module": "Measurement_Noise",
+            "downstream_connector": "input"
+        },
+        {
+            "upstream_module": "Measurement_Noise",
+            "upstream_connector": "noisy_output",
+            "downstream_module": "Summation_Block",
+            "downstream_connector": "second_input"
+        },
+        {
+            "upstream_module": "Summation_Block",
+            "upstream_connector": "output",
+            "downstream_module": "PID_Controller",
+            "downstream_connector": "process_variable"
+        },
+        {
+            "upstream_module": "Reference_Signal",
+            "upstream_connector": "setpoint",
+            "downstream_module": "PID_Controller",
+            "downstream_connector": "setpoint"
+        },
+        {
+            "upstream_module": "PID_Controller",
+            "upstream_connector": "control_action",
+            "downstream_module": "First_Order_System",
+            "downstream_connector": "input"
+        }
+    ]
+}
