@@ -18,11 +18,12 @@ import time
 
 if __name__ == "__main__":
 
-    generator = DocGeneratorModelica(max_description_len=50)
+    max_description_len = 50
+    generator = DocGeneratorModelica(max_description_len=max_description_len)
     enable_llm = 0
 
-    #root_path = "/Users/yi/Documents/code/model_agent/ThermoSysPro/WaterSteam"
-    root_path = "/Users/yi/Documents/code/model_agent/ThermoSysPro/"
+    root_path = "../../ThermoSysPro/WaterSteam"
+    # root_path = "/Users/yi/Documents/code/model_agent/ThermoSysPro/"
     exclude_fnames = ["package.order", "package.mo", "UsersGuide.mo"]
     module_paths = []
     module_descriptions = {}
@@ -45,5 +46,5 @@ if __name__ == "__main__":
                 "description": desc
             }
             
-        with open("models_50.json", "w") as f:
+        with open(f"models_{max_description_len}.json", "w") as f:
             json.dump(module_descriptions, f)

@@ -18,6 +18,9 @@ OPENAI_EMBEDDING_MODELS = ["text-embedding-3-large", "text-embedding-3-small"]
 
 
 class SelectorEmbedding:
+    """
+    SelectorEmbedding is a class to select modules from a list of modules using embedding.
+    """
     def __init__(
         self, 
         embedding_model_name: str = "text-embedding-3-large",

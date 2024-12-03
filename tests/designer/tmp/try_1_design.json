@@ -1,0 +1,99 @@
+{
+    "modules": [
+        {
+            "name": "PID_Controller",
+            "description": "A PID (Proportional-Integral-Derivative) controller to adjust the control variable based on error signal.",
+            "parameters": {
+                "Kp": "Proportional gain",
+                "Ki": "Integral gain",
+                "Kd": "Derivative gain"
+            },
+            "input_connectors": [
+                "error"
+            ],
+            "output_connectors": [
+                "control_signal"
+            ]
+        },
+        {
+            "name": "First_Order_System",
+            "description": "A simple first order dynamic system to be controlled by the PID. It's characterized by a single pole.",
+            "parameters": {
+                "time_constant": "Time constant of the system",
+                "gain": "System steady state gain"
+            },
+            "input_connectors": [
+                "input_signal"
+            ],
+            "output_connectors": [
+                "output_signal"
+            ]
+        },
+        {
+            "name": "Setpoint",
+            "description": "Module to provide the desired setpoint for the system.",
+            "parameters": {
+                "value": "Desired setpoint value"
+            },
+            "input_connectors": [],
+            "output_connectors": [
+                "setpoint_value"
+            ]
+        },
+        {
+            "name": "Feedback",
+            "description": "Feeds the system output back as input to form a closed loop.",
+            "parameters": {},
+            "input_connectors": [
+                "system_output"
+            ],
+            "output_connectors": [
+                "feedback_signal"
+            ]
+        },
+        {
+            "name": "Error_Calculator",
+            "description": "Calculates the error signal by subtracting feedback from setpoint.",
+            "parameters": {},
+            "input_connectors": [
+                "setpoint_value",
+                "feedback_signal"
+            ],
+            "output_connectors": [
+                "error"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Setpoint",
+            "upstream_connector": "setpoint_value",
+            "downstream_module": "Error_Calculator",
+            "downstream_connector": "setpoint_value"
+        },
+        {
+            "upstream_module": "Feedback",
+            "upstream_connector": "feedback_signal",
+            "downstream_module": "Error_Calculator",
+            "downstream_connector": "feedback_signal"
+        },
+        {
+            "upstream_module": "Error_Calculator",
+            "upstream_connector": "error",
+            "downstream_module": "PID_Controller",
+            "downstream_connector": "error"
+        },
+        {
+            "upstream_module": "PID_Controller",
+            "upstream_connector": "control_signal",
+            "downstream_module": "First_Order_System",
+            "downstream_connector": "input_signal"
+        },
+        {
+            "upstream_module": "First_Order_System",
+            "upstream_connector": "output_signal",
+            "downstream_module": "Feedback",
+            "downstream_connector": "system_output"
+        }
+    ]
+}

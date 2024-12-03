@@ -57,5 +57,15 @@ class GPTQuery(BaseLLMQuery):
     def get_completion_multiple_round(self, messages):
         # TODO
         pass
-        
     
+    def get_completion_messages(self, messages: list[dict], json_mode=None):
+        if json_mode is None:
+            json_mode = self.json_mode
+        
+        response = self.client.chat.completions.create(
+            messages=messages,
+            model=self.model,
+            max_tokens=self.max_num_tokens,
+            response_format={"type": "json_object"} if json_mode else None
+        )
+        return response.choices[0].message.content

@@ -40,7 +40,7 @@ setup(
     description='a model agent for modeling and simulation',
     author='Jinyi Zhang',
     author_email='zhangjinyi.cn@hotmail.com',
-    packages=['modelagent', 'modelagent.llm']
+    packages=['modelagent', 'modelagent.llm', 'modelagent.conversation', 'modelagent.designer']
 )
             
 

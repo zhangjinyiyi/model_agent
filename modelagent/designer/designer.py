@@ -72,7 +72,7 @@ class Designer:
         self.graph = nx.DiGraph()
         self.graph_graphviz = pgv.AGraph(directed=True)
     
-    def design(self, task: str):
+    def execute_design(self, task: str):
         """design the system model structure
 
         Args:

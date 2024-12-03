@@ -1,0 +1,78 @@
+{
+    "modules": [
+        {
+            "name": "SineWaveGenerator",
+            "description": "Generates a sine wave signal with configurable frequency and amplitude.",
+            "parameters": {
+                "frequency": "Frequency of the sine wave in Hz",
+                "amplitude": "Amplitude of the sine wave",
+                "phase": "Phase shift of the sine wave in radians",
+                "sample_time": "Time interval between samples"
+            },
+            "input_connectors": [],
+            "output_connectors": [
+                "sine_wave_output"
+            ]
+        },
+        {
+            "name": "Gain",
+            "description": "Amplifies the input signal by a specified gain factor.",
+            "parameters": {
+                "gain": "Gain factor to amplify the signal"
+            },
+            "input_connectors": [
+                "input_signal"
+            ],
+            "output_connectors": [
+                "amplified_signal_output"
+            ]
+        },
+        {
+            "name": "SignalAdder",
+            "description": "Adds two input signals.",
+            "parameters": {},
+            "input_connectors": [
+                "input_signal1",
+                "input_signal2"
+            ],
+            "output_connectors": [
+                "sum_output"
+            ]
+        },
+        {
+            "name": "Scope",
+            "description": "Visualizes the input signal for analysis and monitoring.",
+            "parameters": {},
+            "input_connectors": [
+                "input_signal"
+            ],
+            "output_connectors": []
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "SineWaveGenerator",
+            "upstream_connector": "sine_wave_output",
+            "downstream_module": "Gain",
+            "downstream_connector": "input_signal"
+        },
+        {
+            "upstream_module": "Gain",
+            "upstream_connector": "amplified_signal_output",
+            "downstream_module": "SignalAdder",
+            "downstream_connector": "input_signal1"
+        },
+        {
+            "upstream_module": "SineWaveGenerator",
+            "upstream_connector": "sine_wave_output",
+            "downstream_module": "SignalAdder",
+            "downstream_connector": "input_signal2"
+        },
+        {
+            "upstream_module": "SignalAdder",
+            "upstream_connector": "sum_output",
+            "downstream_module": "Scope",
+            "downstream_connector": "input_signal"
+        }
+    ]
+}

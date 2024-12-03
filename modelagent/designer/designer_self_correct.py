@@ -77,6 +77,32 @@ class DesignerSelfCorrect():
             error you made before to give a better design result.
             Here is the design candidates: {design_candidates}
         """
+
+        self.prompt_improve = """
+            You are a senoir system modeling and simulation expert. 
+            you have deep knowledge in matlab/simulink, modelica, aspen plus, etc.
+            You are given a task: {task}.
+            You are given a system design: {system_design}.
+            User gives the following feedback: {feedback}.
+            Please improve the system design to finish the task.
+            the output should be in json format, same as :
+            {{
+                "modules": [
+                    {{"name": "module_name", "description": "module_description", 
+                      "parameters": "module_parameters", 
+                      "input_connectors": "module_input_connectors",
+                      "output_connectors": "module_output_connectors"
+                    }},
+                ],
+                "connections": [
+                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
+                      "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}},
+                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
+                    "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}}
+                ]
+            }}.
+
+        """
         
         self.prompt_check = """
             You are a senoir system modeling and simulation expert. 
@@ -154,9 +180,39 @@ class DesignerSelfCorrect():
                 self.design_candidates.append(check_result)
                 logger.info(f"Failed design on try: {i+1}")
                 
-        return is_success
+        return self.design
+    
+    def improve_design(self, feedback: str, design: dict = None, task: str = None):
+        
+        if design is None:
+            design = self.design
+        if task is None:
+            task = self.task
+
+        prompt_improve = self.prompt_improve.format(task=task, 
+                                                    system_design=json.dumps(design),
+                                                    feedback=feedback)
+        design_improved = json.loads(self.llm_query.get_completion(prompt_improve))
+        if self.save_intermediate_result:
+            with open(os.path.join(self.tmp_path, f"design_improved.json"), "w") as f:
+                json.dump(design_improved, f, indent=4)
+            
+            try:
+                self.draw(design=design_improved, 
+                          save_path=os.path.join(self.tmp_path, f"design_improved.png"))
+            except Exception as e:
+                logger.warning(f"Failed to draw system structure: {e}")
+        self.design = design_improved
+        return design_improved
+    
+    def save_design(self, save_path: str):
+        with open(save_path, "w") as f:
+            json.dump(self.design, f, indent=4)
                 
     def draw(self, design: dict = None, save_path: str = "./system_structure.png"):
+        """
+        Draw the system structure graph using graphviz.
+        """
         if design is None:
             design = self.design
         if design:

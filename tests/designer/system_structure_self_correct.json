@@ -1,0 +1,58 @@
+{
+    "modules": [
+        {
+            "name": "Setpoint",
+            "description": "Module to define the desired setpoint value for the PID controller.",
+            "parameters": "Target value",
+            "input_connectors": "None",
+            "output_connectors": "Setpoint Signal"
+        },
+        {
+            "name": "PID Controller",
+            "description": "PID Controller module to control the output of the first order system.",
+            "parameters": "P gain, I gain, D gain",
+            "input_connectors": "Setpoint Signal, Feedback Signal",
+            "output_connectors": "Control Signal"
+        },
+        {
+            "name": "First Order System",
+            "description": "A first order system represented by a transfer function.",
+            "parameters": "Gain, Time Constant",
+            "input_connectors": "Control Signal",
+            "output_connectors": "System Output"
+        },
+        {
+            "name": "Feedback",
+            "description": "Module to provide feedback from the system output to the PID controller.",
+            "parameters": "None",
+            "input_connectors": "System Output",
+            "output_connectors": "Feedback Signal"
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Setpoint",
+            "upstream_connector": "Setpoint Signal",
+            "downstream_module": "PID Controller",
+            "downstream_connector": "Setpoint Signal"
+        },
+        {
+            "upstream_module": "PID Controller",
+            "upstream_connector": "Control Signal",
+            "downstream_module": "First Order System",
+            "downstream_connector": "Control Signal"
+        },
+        {
+            "upstream_module": "First Order System",
+            "upstream_connector": "System Output",
+            "downstream_module": "Feedback",
+            "downstream_connector": "System Output"
+        },
+        {
+            "upstream_module": "Feedback",
+            "upstream_connector": "Feedback Signal",
+            "downstream_module": "PID Controller",
+            "downstream_connector": "Feedback Signal"
+        }
+    ]
+}

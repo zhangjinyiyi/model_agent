@@ -2,7 +2,7 @@
 # -*-coding:utf-8 -*-
 """
 @File    :   __init__.py
-@Time    :   2024/10/25 22:40:01
+@Time    :   2024/12/03 09:34:05
 @Author  :   Jinyi Zhang 
 @Version :   1.0
 @Contact :   zhangjinyi.cn@hotmail.com
@@ -10,6 +10,6 @@
 @Desc    :   None
 """
 
+from .conversation import Conversation
 
-from .gpt import GPTQuery
-from .llm_query import LLMQuery
+

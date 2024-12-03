@@ -1,0 +1,82 @@
+{
+    "modules": [
+        {
+            "name": "PID_Controller",
+            "description": "Proportional-Integrative-Derivative controller for the system.",
+            "parameters": {
+                "Kp": "Proportional gain",
+                "Ki": "Integral gain",
+                "Kd": "Derivative gain"
+            },
+            "input_connectors": [
+                "error"
+            ],
+            "output_connectors": [
+                "control_signal"
+            ]
+        },
+        {
+            "name": "First_Order_System",
+            "description": "A first-order system to be controlled by the PID controller.",
+            "parameters": {
+                "time_constant": "Time constant of the system",
+                "gain": "Gain of the system"
+            },
+            "input_connectors": [
+                "input_signal"
+            ],
+            "output_connectors": [
+                "output_signal"
+            ]
+        },
+        {
+            "name": "Setpoint",
+            "description": "Desired setpoint for the system.",
+            "parameters": {
+                "value": "Setpoint value"
+            },
+            "input_connectors": [],
+            "output_connectors": [
+                "setpoint_value"
+            ]
+        },
+        {
+            "name": "Difference_Block",
+            "description": "Computes the error between setpoint and system output by calculating the difference.",
+            "parameters": {},
+            "input_connectors": [
+                "input1",
+                "input2"
+            ],
+            "output_connectors": [
+                "error"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Setpoint",
+            "upstream_connector": "setpoint_value",
+            "downstream_module": "Difference_Block",
+            "downstream_connector": "input1"
+        },
+        {
+            "upstream_module": "First_Order_System",
+            "upstream_connector": "output_signal",
+            "downstream_module": "Difference_Block",
+            "downstream_connector": "input2"
+        },
+        {
+            "upstream_module": "Difference_Block",
+            "upstream_connector": "error",
+            "downstream_module": "PID_Controller",
+            "downstream_connector": "error"
+        },
+        {
+            "upstream_module": "PID_Controller",
+            "upstream_connector": "control_signal",
+            "downstream_module": "First_Order_System",
+            "downstream_connector": "input_signal"
+        }
+    ]
+}

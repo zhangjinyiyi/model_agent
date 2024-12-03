@@ -1,0 +1,97 @@
+{
+    "modules": [
+        {
+            "name": "Reference Input",
+            "description": "Provides the setpoint for the control system.",
+            "parameters": {},
+            "input_connectors": [],
+            "output_connectors": [
+                "setpoint"
+            ]
+        },
+        {
+            "name": "PID Controller",
+            "description": "Processes the error signal and calculates the control signal.",
+            "parameters": {
+                "Kp": "Proportional gain",
+                "Ki": "Integral gain",
+                "Kd": "Derivative gain"
+            },
+            "input_connectors": [
+                "error"
+            ],
+            "output_connectors": [
+                "control_signal"
+            ]
+        },
+        {
+            "name": "First Order Process",
+            "description": "Represents a first order dynamic system.",
+            "parameters": {
+                "gain": "System gain",
+                "time_constant": "Time constant of the process"
+            },
+            "input_connectors": [
+                "control_input"
+            ],
+            "output_connectors": [
+                "process_output"
+            ]
+        },
+        {
+            "name": "Feedback Loop",
+            "description": "Provides the feedback signal from the process output.",
+            "parameters": {},
+            "input_connectors": [
+                "process_output"
+            ],
+            "output_connectors": [
+                "feedback_signal"
+            ]
+        },
+        {
+            "name": "Subtractor",
+            "description": "Calculates the error signal as the difference between the setpoint and the feedback.",
+            "parameters": {},
+            "input_connectors": [
+                "setpoint",
+                "feedback_signal"
+            ],
+            "output_connectors": [
+                "error"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Reference Input",
+            "upstream_connector": "setpoint",
+            "downstream_module": "Subtractor",
+            "downstream_connector": "setpoint"
+        },
+        {
+            "upstream_module": "Feedback Loop",
+            "upstream_connector": "feedback_signal",
+            "downstream_module": "Subtractor",
+            "downstream_connector": "feedback_signal"
+        },
+        {
+            "upstream_module": "Subtractor",
+            "upstream_connector": "error",
+            "downstream_module": "PID Controller",
+            "downstream_connector": "error"
+        },
+        {
+            "upstream_module": "PID Controller",
+            "upstream_connector": "control_signal",
+            "downstream_module": "First Order Process",
+            "downstream_connector": "control_input"
+        },
+        {
+            "upstream_module": "First Order Process",
+            "upstream_connector": "process_output",
+            "downstream_module": "Feedback Loop",
+            "downstream_connector": "process_output"
+        }
+    ]
+}

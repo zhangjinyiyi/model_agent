@@ -1,5 +1,18 @@
-# model_agent
-an llm-based expert on system modeling and simulation
+# modelagent
+an llm-based package to ease system modeling and simulation
+
+## Key features
+- system topology building from task description
+    - design, check, correct and improve
+    - simple support on multi-round interaction
+    - [ongoing] finetune, topology optimization
+    - topology visualization based on pygraphviz, better package to be found?
+- module retrival based on embedding similarity search, realized based on langchain and openai embeddings
+- [ongoing, modify from automodeling package, omc-based] modelica code generation
+- doc generation from modelica code, test on ThermoSysPro
+- [ongoing, result not good] code generation from text descriptions
+- [planned] parameter search and assignment from documents
+- [planned] test case generation based on previous features
 
 
 # TODO
@@ -8,6 +21,11 @@ an llm-based expert on system modeling and simulation
 
 
 # features
+
+- new design
+- improve from current design
+
+
 - module level
     - generate module modelica code from text descriptions
     - check validity of generated modelica code, with compiler integration
@@ -29,29 +47,24 @@ an llm-based expert on system modeling and simulation
 - analysis
 
 
-# Tests
 
-## Documentation generation from modelica code
-good
+## Installation
 
-## Create models list
-- name
-- description
-    - introduction
-    - parameters
-    - connectors
-    - details
-- code
+`pip install -r requirements.txt`
 
-## Create system from task description
-- test case
-- more complex system
+ATTENTION: if pygraphviz is not installed, you can install it by:
+`conda install --channel conda-forge pygraphviz`
 
-## Modelica code generation from description
+please refer to [link](https://pygraphviz.github.io/documentation/stable/install.html) for more installation instructions.
 
-- generate documentation for all thermosyspro modules
-- ask llm to select necessary modules for a specific task
-- boundary conditions
-- parameters
-- initializations
-- automodeling and test
+
+## Usage
+
+- set OPENAI_API_KEY in your environment variables
+- set base_url in llm object, e.g. `gpt = GPTQuery(base_url="https://api.bianxie.ai/v1")`
+
+
+## examples
+### design a simple system
+- [design a simple system](./tests/designer/test_designer_design_self_correct.py)
+![Alt text](relative%20tests/designer/fos_show.png?raw=true "Title")

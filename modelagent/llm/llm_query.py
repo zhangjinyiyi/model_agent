@@ -10,15 +10,21 @@
 @Desc    :   None
 """
 from .gpt import GPTQuery
+from .base_llm_query import BaseLLMQuery
 
-
-class LLMQuery:
+class LLMQuery(BaseLLMQuery):
     def __init__(self, model_name="gpt-4o", **kwargs) -> None:
         self.model_name = model_name
+        self.kwargs = kwargs
+        for key, value in kwargs.items():
+            setattr(self, key, value)
         if self.model_name == "gpt-4o":
-            self.llm_model = GPTQuery(model=self.model_name, **kwargs)
+            self.llm_model = GPTQuery(model=self.model_name, **self.kwargs)
         else:
-            self.llm_model = GPTQuery(model="gpt-4o", **kwargs)
+            self.llm_model = GPTQuery(model="gpt-4o", **self.kwargs)
 
     def get_completion(self, prompt):
         return self.llm_model.get_completion(prompt=prompt)
+    
+    def get_completion_messages(self, messages: list[dict], **kwargs):
+        return self.llm_model.get_completion_messages(messages=messages, **kwargs)
