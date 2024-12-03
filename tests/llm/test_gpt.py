@@ -10,6 +10,8 @@
 @Desc    :   None
 """
 
+# Test connection to OpenAI
+
 import sys
 print(sys.path)
 

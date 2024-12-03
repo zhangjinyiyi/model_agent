@@ -2,87 +2,86 @@
     "design": {
         "modules": [
             {
-                "name": "Reference_Input",
-                "description": "Provides the reference input signal for the PID controller",
-                "parameters": [
-                    "Amplitude",
-                    "Frequency"
+                "name": "FirstOrderSystem",
+                "description": "Represents a first-order transfer function system.",
+                "parameters": {
+                    "time_constant": "T",
+                    "gain": "K"
+                },
+                "input_connectors": [
+                    "input_signal"
                 ],
+                "output_connectors": [
+                    "system_output"
+                ]
+            },
+            {
+                "name": "PIDController",
+                "description": "Generic PID controller for feedback control.",
+                "parameters": {
+                    "proportional_gain": "Kp",
+                    "integral_gain": "Ki",
+                    "derivative_gain": "Kd"
+                },
+                "input_connectors": [
+                    "error_signal"
+                ],
+                "output_connectors": [
+                    "control_output"
+                ]
+            },
+            {
+                "name": "SummationBlock",
+                "description": "Calculates the error between setpoint and measured output.",
+                "parameters": {},
+                "input_connectors": [
+                    "setpoint",
+                    "measured_output"
+                ],
+                "output_connectors": [
+                    "error_signal"
+                ]
+            },
+            {
+                "name": "Setpoint",
+                "description": "Provides a constant or variable setpoint for the system.",
+                "parameters": {
+                    "value": "setpoint_value"
+                },
                 "input_connectors": [],
                 "output_connectors": [
-                    "ref_signal"
-                ]
-            },
-            {
-                "name": "PID_Controller",
-                "description": "PID Controller module to control the first-order system",
-                "parameters": [
-                    "Kp",
-                    "Ki",
-                    "Kd"
-                ],
-                "input_connectors": [
-                    "ref_signal",
-                    "measured_output"
-                ],
-                "output_connectors": [
-                    "control_signal"
-                ]
-            },
-            {
-                "name": "First_Order_System",
-                "description": "First-order system to be controlled, characterized by a time constant and gain",
-                "parameters": [
-                    "Time Constant",
-                    "Gain"
-                ],
-                "input_connectors": [
-                    "control_signal"
-                ],
-                "output_connectors": [
-                    "system_output"
-                ]
-            },
-            {
-                "name": "Feedback",
-                "description": "Feeds the output of the first-order system back to the PID controller",
-                "parameters": [],
-                "input_connectors": [
-                    "system_output"
-                ],
-                "output_connectors": [
-                    "measured_output"
+                    "setpoint"
                 ]
             }
         ],
         "connections": [
             {
-                "upstream_module": "Reference_Input",
-                "upstream_connector": "ref_signal",
-                "downstream_module": "PID_Controller",
-                "downstream_connector": "ref_signal"
+                "upstream_module": "Setpoint",
+                "upstream_connector": "setpoint",
+                "downstream_module": "SummationBlock",
+                "downstream_connector": "setpoint"
             },
             {
-                "upstream_module": "PID_Controller",
-                "upstream_connector": "control_signal",
-                "downstream_module": "First_Order_System",
-                "downstream_connector": "control_signal"
-            },
-            {
-                "upstream_module": "First_Order_System",
+                "upstream_module": "FirstOrderSystem",
                 "upstream_connector": "system_output",
-                "downstream_module": "Feedback",
-                "downstream_connector": "system_output"
+                "downstream_module": "SummationBlock",
+                "downstream_connector": "measured_output"
             },
             {
-                "upstream_module": "Feedback",
-                "upstream_connector": "measured_output",
-                "downstream_module": "PID_Controller",
-                "downstream_connector": "measured_output"
+                "upstream_module": "SummationBlock",
+                "upstream_connector": "error_signal",
+                "downstream_module": "PIDController",
+                "downstream_connector": "error_signal"
+            },
+            {
+                "upstream_module": "PIDController",
+                "upstream_connector": "control_output",
+                "downstream_module": "FirstOrderSystem",
+                "downstream_connector": "input_signal"
             }
         ]
     },
     "result": "correct",
-    "reason": null,
-    "suggestion": null
+    "reason": "",
+    "suggestion": ""
 }

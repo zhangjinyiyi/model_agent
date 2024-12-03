@@ -65,7 +65,6 @@ class MultiRoundDesigner:
                     task = ""
                     logger.warning(f"Failed to check user's intention: {e}")
                     
-                logger.info(f"User's intention is {intention}, task: {task}")
                 if intention == "design":
                     logger.info(f"User's intention is design, task: {user_input}")
                     design = self.designer.execute_design(task=task)
