@@ -67,4 +67,4 @@ please refer to [link](https://pygraphviz.github.io/documentation/stable/install
 ## examples
 ### design a simple system
 - [design a simple system](./tests/designer/test_designer_design_self_correct.py)
-![Alt text](relative%20tests/designer/fos_show.png?raw=true "Title")
+![Alt text](tests/designer/fos_show.png?raw=true "Title")
