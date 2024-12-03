@@ -64,7 +64,16 @@ please refer to [link](https://pygraphviz.github.io/documentation/stable/install
 - set base_url in llm object, e.g. `gpt = GPTQuery(base_url="https://api.bianxie.ai/v1")`
 
 
-## examples
-### design a simple system
-- [design a simple system](./tests/designer/test_designer_design_self_correct.py)
+## Examples
+### Design a simple system topologywith a task description
+For a simple task, such as "build a system to test the pid controller of a first order system", it can design a system as follows:
 ![Alt text](tests/designer/fos_show.png?raw=true "Title")
+[example code link](./tests/designer/test_designer_design_self_correct.py)
+
+Feel free to test more complex tasks, but it may not work well.
+For this task, gpt-4o outperforms significantly gpt-3.5-turbo. 
+Fine tune will be tested later.
+Another alternative is to use few-shot prompting with a few tricks.
+
+### Improve current design
+
