@@ -1,0 +1,103 @@
+{
+    "design": {
+        "modules": [
+            {
+                "name": "Setpoint",
+                "description": "Module representing the desired setpoint for the system.",
+                "parameters": {
+                    "value": "desired_value"
+                },
+                "input_connectors": [],
+                "output_connectors": [
+                    "setpoint_output"
+                ]
+            },
+            {
+                "name": "PIDController",
+                "description": "Module representing a PID controller that adjusts the control action.",
+                "parameters": {
+                    "Kp": "proportional_gain",
+                    "Ki": "integral_gain",
+                    "Kd": "derivative_gain"
+                },
+                "input_connectors": [
+                    "error_input"
+                ],
+                "output_connectors": [
+                    "control_output"
+                ]
+            },
+            {
+                "name": "FirstOrderSystem",
+                "description": "Module representing the first order system to be controlled.",
+                "parameters": {
+                    "time_constant": "system_time_constant"
+                },
+                "input_connectors": [
+                    "control_input"
+                ],
+                "output_connectors": [
+                    "system_output"
+                ]
+            },
+            {
+                "name": "Comparator",
+                "description": "Module that computes the error by subtracting the measured output from the setpoint.",
+                "parameters": {},
+                "input_connectors": [
+                    "setpoint_input",
+                    "measured_input"
+                ],
+                "output_connectors": [
+                    "error_output"
+                ]
+            },
+            {
+                "name": "Sensor",
+                "description": "Module representing a sensor that measures the output of the first order system.",
+                "parameters": {},
+                "input_connectors": [
+                    "system_output"
+                ],
+                "output_connectors": [
+                    "measured_output"
+                ]
+            }
+        ],
+        "connections": [
+            {
+                "upstream_module": "Setpoint",
+                "upstream_connector": "setpoint_output",
+                "downstream_module": "Comparator",
+                "downstream_connector": "setpoint_input"
+            },
+            {
+                "upstream_module": "FirstOrderSystem",
+                "upstream_connector": "system_output",
+                "downstream_module": "Sensor",
+                "downstream_connector": "system_output"
+            },
+            {
+                "upstream_module": "Sensor",
+                "upstream_connector": "measured_output",
+                "downstream_module": "Comparator",
+                "downstream_connector": "measured_input"
+            },
+            {
+                "upstream_module": "Comparator",
+                "upstream_connector": "error_output",
+                "downstream_module": "PIDController",
+                "downstream_connector": "error_input"
+            },
+            {
+                "upstream_module": "PIDController",
+                "upstream_connector": "control_output",
+                "downstream_module": "FirstOrderSystem",
+                "downstream_connector": "control_input"
+            }
+        ]
+    },
+    "result": "correct",
+    "reason": null,
+    "suggestion": null
+}

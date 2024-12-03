@@ -11,6 +11,8 @@
 """
 
 import json
+import os
+import shutil
 import logging
 logger = logging.getLogger(__name__)
 import pygraphviz as pgv
@@ -24,10 +26,16 @@ class DesignerSelfCorrect():
         self,
         llm_query: BaseLLMQuery = GPTQuery(),
         max_iter: int = 4,
-                 
+        save_intermediate_result: bool = True,
+        tmp_path: str = os.path.join(os.getcwd(), "tmp"),
     ):
         self.llm_query = llm_query
         self.max_iter = max_iter
+        self.save_intermediate_result = save_intermediate_result
+        self.tmp_path = tmp_path
+        
+        if self.save_intermediate_result and not os.path.exists(self.tmp_path):
+            os.makedirs(self.tmp_path)
         
         if not hasattr(self.llm_query, "json_mode"):
             logger.warning("llm_query does not have json_mode attribute, may cause error in design process.")
@@ -124,8 +132,18 @@ class DesignerSelfCorrect():
             
             check_result = self.check_system(design)
             
-            with open(f"./check_result_{i+1}.json", "w") as f:
-                json.dump(check_result, f, indent=4)
+            correctness = check_result.get("result")
+            if correctness is None:
+                correctness = "unknown"
+            
+            if self.save_intermediate_result:
+                with open(os.path.join(self.tmp_path, f"check_result_{i+1}_{correctness}.json"), "w") as f:
+                    json.dump(check_result, f, indent=4)
+                try:
+                    self.draw(design=design, 
+                              save_path=os.path.join(self.tmp_path, f"system_structure_{i+1}_{correctness}.png"))
+                except Exception as e:
+                    logger.warning(f"Failed to draw system structure: {e}")
             
             if check_result["result"] == "correct":
                 self.design = design
@@ -150,7 +168,7 @@ class DesignerSelfCorrect():
             G.draw(save_path)
             return True
         else:
-            logger.warning("No design found, please run design() first.")
+            logger.warning("No design found, please run execute_design() first.")
             return False
             
     def clean(self):
@@ -172,3 +190,10 @@ class DesignerSelfCorrect():
                 # output_name=connection["downstream_connector"]
             )
         return graph
+    
+    def clean_tmp(self):
+        if os.path.exists(self.tmp_path):
+            shutil.rmtree(self.tmp_path)
+            logger.info(f"Temporary directory {self.tmp_path} removed.")
+        else:
+            logger.warning(f"Temporary directory {self.tmp_path} does not exist.")

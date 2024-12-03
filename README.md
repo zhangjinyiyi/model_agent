@@ -1,6 +1,12 @@
 # model_agent
 an llm-based expert on system modeling and simulation
 
+
+# TODO
+- multiple round q&a
+- multiple agent interaction
+
+
 # features
 - module level
     - generate module modelica code from text descriptions
