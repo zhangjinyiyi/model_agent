@@ -68,7 +68,7 @@ Another alternative is to use few-shot prompting with a few tricks.
 
 It uses multi-round interaction to improve the design.
 
-[Example code link](./tests/designer/test_designer_multi_round.py)
+[Example code link](./tests/designer/test_multi_round_design.py)
 
 Use the following command to run the example in an interactive way:
 
