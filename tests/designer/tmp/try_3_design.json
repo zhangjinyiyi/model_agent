@@ -119,28 +119,16 @@
             "downstream_connector": "HotWaterIn"
         },
         {
-            "upstream_module": "PipeNetwork",
-            "upstream_connector": "Outflow",
+            "upstream_module": "HeatExchanger_User1",
+            "upstream_connector": "HotWaterOut",
             "downstream_module": "HeatExchanger_User2",
             "downstream_connector": "HotWaterIn"
         },
         {
-            "upstream_module": "PipeNetwork",
-            "upstream_connector": "Outflow",
-            "downstream_module": "HeatExchanger_User3",
-            "downstream_connector": "HotWaterIn"
-        },
-        {
-            "upstream_module": "HeatExchanger_User1",
-            "upstream_connector": "HotWaterOut",
-            "downstream_module": "ReturnPipeNetwork",
-            "downstream_connector": "ReturnInflow"
-        },
-        {
             "upstream_module": "HeatExchanger_User2",
             "upstream_connector": "HotWaterOut",
-            "downstream_module": "ReturnPipeNetwork",
-            "downstream_connector": "ReturnInflow"
+            "downstream_module": "HeatExchanger_User3",
+            "downstream_connector": "HotWaterIn"
         },
         {
             "upstream_module": "HeatExchanger_User3",

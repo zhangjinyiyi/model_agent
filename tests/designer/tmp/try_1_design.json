@@ -1,99 +1,112 @@
 {
     "modules": [
         {
-            "name": "PID_Controller",
-            "description": "A PID (Proportional-Integral-Derivative) controller to adjust the control variable based on error signal.",
+            "name": "Setpoint Generator",
+            "description": "Generates the setpoint for the outer loop control system.",
             "parameters": {
-                "Kp": "Proportional gain",
-                "Ki": "Integral gain",
-                "Kd": "Derivative gain"
-            },
-            "input_connectors": [
-                "error"
-            ],
-            "output_connectors": [
-                "control_signal"
-            ]
-        },
-        {
-            "name": "First_Order_System",
-            "description": "A simple first order dynamic system to be controlled by the PID. It's characterized by a single pole.",
-            "parameters": {
-                "time_constant": "Time constant of the system",
-                "gain": "System steady state gain"
-            },
-            "input_connectors": [
-                "input_signal"
-            ],
-            "output_connectors": [
-                "output_signal"
-            ]
-        },
-        {
-            "name": "Setpoint",
-            "description": "Module to provide the desired setpoint for the system.",
-            "parameters": {
-                "value": "Desired setpoint value"
+                "setpoint_value": "float"
             },
             "input_connectors": [],
             "output_connectors": [
-                "setpoint_value"
+                "setpoint_output"
             ]
         },
         {
-            "name": "Feedback",
-            "description": "Feeds the system output back as input to form a closed loop.",
-            "parameters": {},
+            "name": "Outer Loop Controller",
+            "description": "Controls the primary process variable by adjusting the setpoint of the inner loop.",
+            "parameters": {
+                "kp": "float",
+                "ki": "float",
+                "kd": "float"
+            },
             "input_connectors": [
-                "system_output"
+                "process_variable",
+                "setpoint_input"
             ],
             "output_connectors": [
-                "feedback_signal"
+                "inner_setpoint_output"
             ]
         },
         {
-            "name": "Error_Calculator",
-            "description": "Calculates the error signal by subtracting feedback from setpoint.",
-            "parameters": {},
+            "name": "Inner Loop Controller",
+            "description": "Handles fast-changing dynamics by controlling a secondary process.",
+            "parameters": {
+                "kp": "float",
+                "ki": "float",
+                "kd": "float"
+            },
             "input_connectors": [
-                "setpoint_value",
-                "feedback_signal"
+                "setpoint_input",
+                "process_variable"
             ],
             "output_connectors": [
-                "error"
+                "control_signal_output"
+            ]
+        },
+        {
+            "name": "Process Model",
+            "description": "Simulates the dynamic behavior of the process under control.",
+            "parameters": {
+                "time_constant": "float",
+                "gain": "float"
+            },
+            "input_connectors": [
+                "control_signal_input"
+            ],
+            "output_connectors": [
+                "process_output"
+            ]
+        },
+        {
+            "name": "Sensor",
+            "description": "Measures the process variable for feedback to the controllers.",
+            "parameters": {
+                "measurement_noise": "float"
+            },
+            "input_connectors": [
+                "process_input"
+            ],
+            "output_connectors": [
+                "measured_output"
             ]
         }
     ],
     "connections": [
         {
-            "upstream_module": "Setpoint",
-            "upstream_connector": "setpoint_value",
-            "downstream_module": "Error_Calculator",
-            "downstream_connector": "setpoint_value"
+            "upstream_module": "Setpoint Generator",
+            "upstream_connector": "setpoint_output",
+            "downstream_module": "Outer Loop Controller",
+            "downstream_connector": "setpoint_input"
         },
         {
-            "upstream_module": "Feedback",
-            "upstream_connector": "feedback_signal",
-            "downstream_module": "Error_Calculator",
-            "downstream_connector": "feedback_signal"
+            "upstream_module": "Outer Loop Controller",
+            "upstream_connector": "inner_setpoint_output",
+            "downstream_module": "Inner Loop Controller",
+            "downstream_connector": "setpoint_input"
         },
         {
-            "upstream_module": "Error_Calculator",
-            "upstream_connector": "error",
-            "downstream_module": "PID_Controller",
-            "downstream_connector": "error"
+            "upstream_module": "Inner Loop Controller",
+            "upstream_connector": "control_signal_output",
+            "downstream_module": "Process Model",
+            "downstream_connector": "control_signal_input"
         },
         {
-            "upstream_module": "PID_Controller",
-            "upstream_connector": "control_signal",
-            "downstream_module": "First_Order_System",
-            "downstream_connector": "input_signal"
+            "upstream_module": "Process Model",
+            "upstream_connector": "process_output",
+            "downstream_module": "Sensor",
+            "downstream_connector": "process_input"
         },
         {
-            "upstream_module": "First_Order_System",
-            "upstream_connector": "output_signal",
-            "downstream_module": "Feedback",
-            "downstream_connector": "system_output"
+            "upstream_module": "Sensor",
+            "upstream_connector": "measured_output",
+            "downstream_module": "Inner Loop Controller",
+            "downstream_connector": "process_variable"
+        },
+        {
+            "upstream_module": "Sensor",
+            "upstream_connector": "measured_output",
+            "downstream_module": "Outer Loop Controller",
+            "downstream_connector": "process_variable"
         }
     ]
 }

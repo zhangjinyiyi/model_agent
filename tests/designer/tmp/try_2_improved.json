@@ -1,0 +1,295 @@
+{
+    "modules": [
+        {
+            "name": "Process",
+            "description": "Represents the main process dynamics being controlled.",
+            "parameters": {
+                "time_constant": 5,
+                "gain": 2.0
+            },
+            "input_connectors": [
+                "input_signal"
+            ],
+            "output_connectors": [
+                "process_variable"
+            ]
+        },
+        {
+            "name": "Inner PID Controller",
+            "description": "Provides fast control as the inner loop of the cascade control system with full PID control.",
+            "parameters": {
+                "proportional_gain": 0.5,
+                "integral_time": 1.0,
+                "derivative_time": 0.1
+            },
+            "input_connectors": [
+                "inner_setpoint",
+                "inner_feedback"
+            ],
+            "output_connectors": [
+                "inner_control_signal"
+            ]
+        },
+        {
+            "name": "Outer PID Controller",
+            "description": "Provides broader control as the outer loop of the cascade control system with full PID control.",
+            "parameters": {
+                "proportional_gain": 1.0,
+                "integral_time": 2.0,
+                "derivative_time": 0.2
+            },
+            "input_connectors": [
+                "outer_setpoint",
+                "outer_feedback"
+            ],
+            "output_connectors": [
+                "outer_control_signal"
+            ]
+        },
+        {
+            "name": "Measurement Sensor",
+            "description": "Measures the process variable to provide feedback.",
+            "parameters": {
+                "measurement_noise": 0.01
+            },
+            "input_connectors": [
+                "process_variable"
+            ],
+            "output_connectors": [
+                "measured_value"
+            ]
+        },
+        {
+            "name": "Setpoint Generator",
+            "description": "Generates the reference setpoint for the controllers.",
+            "parameters": {
+                "setpoint_value": 1.0
+            },
+            "input_connectors": [],
+            "output_connectors": [
+                "outer_setpoint",
+                "inner_setpoint"
+            ]
+        },
+        {
+            "name": "Inner Controller Proportional",
+            "description": "The proportional component of the inner PID controller.",
+            "parameters": {
+                "proportional_gain": 0.5
+            },
+            "input_connectors": [
+                "inner_error"
+            ],
+            "output_connectors": [
+                "inner_proportional_output"
+            ]
+        },
+        {
+            "name": "Inner Controller Integral",
+            "description": "The integral component of the inner PID controller.",
+            "parameters": {
+                "integral_time": 1.0
+            },
+            "input_connectors": [
+                "inner_error"
+            ],
+            "output_connectors": [
+                "inner_integral_output"
+            ]
+        },
+        {
+            "name": "Inner Controller Derivative",
+            "description": "The derivative component of the inner PID controller.",
+            "parameters": {
+                "derivative_time": 0.1
+            },
+            "input_connectors": [
+                "inner_error"
+            ],
+            "output_connectors": [
+                "inner_derivative_output"
+            ]
+        },
+        {
+            "name": "Outer Controller Proportional",
+            "description": "The proportional component of the outer PID controller.",
+            "parameters": {
+                "proportional_gain": 1.0
+            },
+            "input_connectors": [
+                "outer_error"
+            ],
+            "output_connectors": [
+                "outer_proportional_output"
+            ]
+        },
+        {
+            "name": "Outer Controller Integral",
+            "description": "The integral component of the outer PID controller.",
+            "parameters": {
+                "integral_time": 2.0
+            },
+            "input_connectors": [
+                "outer_error"
+            ],
+            "output_connectors": [
+                "outer_integral_output"
+            ]
+        },
+        {
+            "name": "Outer Controller Derivative",
+            "description": "The derivative component of the outer PID controller.",
+            "parameters": {
+                "derivative_time": 0.2
+            },
+            "input_connectors": [
+                "outer_error"
+            ],
+            "output_connectors": [
+                "outer_derivative_output"
+            ]
+        },
+        {
+            "name": "Signal Summation Inner",
+            "description": "Summation block for composing the total inner control signal from PID components.",
+            "parameters": {},
+            "input_connectors": [
+                "inner_proportional_output",
+                "inner_integral_output",
+                "inner_derivative_output"
+            ],
+            "output_connectors": [
+                "inner_control_signal"
+            ]
+        },
+        {
+            "name": "Signal Summation Outer",
+            "description": "Summation block for composing the total outer control signal from PID components.",
+            "parameters": {},
+            "input_connectors": [
+                "outer_proportional_output",
+                "outer_integral_output",
+                "outer_derivative_output"
+            ],
+            "output_connectors": [
+                "outer_control_signal"
+            ]
+        }
+    ],
+    "connections": [
+        {
+            "upstream_module": "Setpoint Generator",
+            "upstream_connector": "outer_setpoint",
+            "downstream_module": "Outer PID Controller",
+            "downstream_connector": "outer_setpoint"
+        },
+        {
+            "upstream_module": "Setpoint Generator",
+            "upstream_connector": "inner_setpoint",
+            "downstream_module": "Inner PID Controller",
+            "downstream_connector": "inner_setpoint"
+        },
+        {
+            "upstream_module": "Outer PID Controller",
+            "upstream_connector": "outer_control_signal",
+            "downstream_module": "Inner PID Controller",
+            "downstream_connector": "inner_setpoint"
+        },
+        {
+            "upstream_module": "Inner PID Controller",
+            "upstream_connector": "inner_control_signal",
+            "downstream_module": "Process",
+            "downstream_connector": "input_signal"
+        },
+        {
+            "upstream_module": "Process",
+            "upstream_connector": "process_variable",
+            "downstream_module": "Measurement Sensor",
+            "downstream_connector": "process_variable"
+        },
+        {
+            "upstream_module": "Measurement Sensor",
+            "upstream_connector": "measured_value",
+            "downstream_module": "Outer PID Controller",
+            "downstream_connector": "outer_feedback"
+        },
+        {
+            "upstream_module": "Measurement Sensor",
+            "upstream_connector": "measured_value",
+            "downstream_module": "Inner PID Controller",
+            "downstream_connector": "inner_feedback"
+        },
+        {
+            "upstream_module": "Inner Controller Proportional",
+            "upstream_connector": "inner_proportional_output",
+            "downstream_module": "Signal Summation Inner",
+            "downstream_connector": "inner_proportional_output"
+        },
+        {
+            "upstream_module": "Inner Controller Integral",
+            "upstream_connector": "inner_integral_output",
+            "downstream_module": "Signal Summation Inner",
+            "downstream_connector": "inner_integral_output"
+        },
+        {
+            "upstream_module": "Inner Controller Derivative",
+            "upstream_connector": "inner_derivative_output",
+            "downstream_module": "Signal Summation Inner",
+            "downstream_connector": "inner_derivative_output"
+        },
+        {
+            "upstream_module": "Outer Controller Proportional",
+            "upstream_connector": "outer_proportional_output",
+            "downstream_module": "Signal Summation Outer",
+            "downstream_connector": "outer_proportional_output"
+        },
+        {
+            "upstream_module": "Outer Controller Integral",
+            "upstream_connector": "outer_integral_output",
+            "downstream_module": "Signal Summation Outer",
+            "downstream_connector": "outer_integral_output"
+        },
+        {
+            "upstream_module": "Outer Controller Derivative",
+            "upstream_connector": "outer_derivative_output",
+            "downstream_module": "Signal Summation Outer",
+            "downstream_connector": "outer_derivative_output"
+        },
+        {
+            "upstream_module": "Inner PID Controller",
+            "upstream_connector": "inner_error",
+            "downstream_module": "Inner Controller Proportional",
+            "downstream_connector": "inner_error"
+        },
+        {
+            "upstream_module": "Inner PID Controller",
+            "upstream_connector": "inner_error",
+            "downstream_module": "Inner Controller Integral",
+            "downstream_connector": "inner_error"
+        },
+        {
+            "upstream_module": "Inner PID Controller",
+            "upstream_connector": "inner_error",
+            "downstream_module": "Inner Controller Derivative",
+            "downstream_connector": "inner_error"
+        },
+        {
+            "upstream_module": "Outer PID Controller",
+            "upstream_connector": "outer_error",
+            "downstream_module": "Outer Controller Proportional",
+            "downstream_connector": "outer_error"
+        },
+        {
+            "upstream_module": "Outer PID Controller",
+            "upstream_connector": "outer_error",
+            "downstream_module": "Outer Controller Integral",
+            "downstream_connector": "outer_error"
+        },
+        {
+            "upstream_module": "Outer PID Controller",
+            "upstream_connector": "outer_error",
+            "downstream_module": "Outer Controller Derivative",
+            "downstream_connector": "outer_error"
+        }
+    ]
+}

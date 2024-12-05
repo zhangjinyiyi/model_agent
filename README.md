@@ -16,9 +16,17 @@ an llm-based package to ease system modeling and simulation
 - [planned] test case generation based on previous features
 
 
-# TODO
+## Observations
+- multi round interaction is useful if user gives clear feedback on the design
+- check agent is not able to check the design correctly, improve prompt? not an effective way. 
+
+
+## TODO
+- test o1-preview and o1-mini, its output is very different from gpt-4o
+- * modeling dataset preparation, use llm to generate dataset, modelica and thermosyspro, etc.
 - multiple round q&a
 - multiple agent interaction
+- visualization of system structure, use flow chart
 
 
 ## Installation

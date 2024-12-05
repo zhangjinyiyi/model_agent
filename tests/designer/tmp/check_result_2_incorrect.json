@@ -37,8 +37,8 @@
                     "kd": "float"
                 },
                 "input_connectors": [
-                    "process_variable",
-                    "setpoint_input"
+                    "setpoint_input",
+                    "process_variable"
                 ],
                 "output_connectors": [
                     "control_signal_output"
@@ -80,22 +80,10 @@
                 "downstream_connector": "setpoint_input"
             },
             {
-                "upstream_module": "Sensor",
-                "upstream_connector": "measured_output",
-                "downstream_module": "Outer Loop Controller",
-                "downstream_connector": "process_variable"
-            },
-            {
                 "upstream_module": "Outer Loop Controller",
                 "upstream_connector": "inner_setpoint_output",
                 "downstream_module": "Inner Loop Controller",
                 "downstream_connector": "setpoint_input"
-            },
-            {
-                "upstream_module": "Sensor",
-                "upstream_connector": "measured_output",
-                "downstream_module": "Inner Loop Controller",
-                "downstream_connector": "process_variable"
             },
             {
                 "upstream_module": "Inner Loop Controller",
@@ -108,10 +96,16 @@
                 "upstream_connector": "process_output",
                 "downstream_module": "Sensor",
                 "downstream_connector": "process_input"
+            },
+            {
+                "upstream_module": "Sensor",
+                "upstream_connector": "measured_output",
+                "downstream_module": "Inner Loop Controller",
+                "downstream_connector": "process_variable"
             }
         ]
     },
     "result": "incorrect",
-    "reason": "The current design has a redundancy issue as the 'Sensor' module's 'measured_output' is connected to both the 'Outer Loop Controller' and the 'Inner Loop Controller' for the same 'process_variable'. This redundancy can lead to duplicated feedback paths that are not typically required in cascade control as the outer loop should not be directly concerned with the feedback from the secondary process, which the inner loop handles.",
-    "suggestion": "Remove the redundant connection: Ensure that the 'Inner Loop Controller' alone receives the process variable feedback directly from the 'Sensor'. The 'Outer Loop Controller' should be concerned only with the primary control loop variable filtered through the 'Process Model'."
+    "reason": "The feedback from the Sensor to the Outer Loop Controller is missing.",
+    "suggestion": "Add a connection from the Sensor's measured_output to the Outer Loop Controller's process_variable input to complete the cascade control loop. This will ensure both controllers receive the necessary feedback to function correctly."
 }

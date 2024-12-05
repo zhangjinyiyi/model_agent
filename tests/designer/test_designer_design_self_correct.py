@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
-    designer = DesignerSelfCorrect(llm_query=GPTQuery(model="gpt-4o", json_mode=True))
-    task = "build a system to test the pid controller of a first order system"
+    designer = DesignerSelfCorrect(llm_query=GPTQuery(model="o1-preview", json_mode=True))
+    task = "design a system to test cascade control"
     result = designer.execute_design(task)
     designer.draw(save_path="./system_structure_self_correct.png")
     designer.save_design(save_path="./system_structure_self_correct.json")

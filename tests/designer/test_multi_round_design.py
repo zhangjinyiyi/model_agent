@@ -26,6 +26,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--loglevel", type=int, default=logging.INFO)
+parser.add_argument("--model", type=str, default="gpt-4o")
 args = parser.parse_args()
 
 FORMAT = "%(asctime)s - %(name)s[%(lineno)d] - %(levelname)s - %(message)s"
@@ -37,8 +38,9 @@ logger.info(f"logging level: {args.loglevel}")
 
 
 if __name__ == "__main__":
+    model = args.model
     designer = MultiRoundDesigner(
-        designer=DesignerSelfCorrect(llm_query=LLMQuery(model_name="gpt-4o", json_mode=True)),
-        llm_query=LLMQuery(model_name="gpt-4o", json_mode=True)
+        designer=DesignerSelfCorrect(llm_query=LLMQuery(model_name=model, json_mode=True)),
+        llm_query=LLMQuery(model_name=model, json_mode=True)
     )
     designer.start()

@@ -12,13 +12,16 @@
 from .gpt import GPTQuery
 from .base_llm_query import BaseLLMQuery
 
+
+openai_models = ["gpt-4o", "o1-preview", "o1-mini", "gpt-3.5-turbo"]
+
 class LLMQuery(BaseLLMQuery):
     def __init__(self, model_name="gpt-4o", **kwargs) -> None:
         self.model_name = model_name
         self.kwargs = kwargs
         for key, value in kwargs.items():
             setattr(self, key, value)
-        if self.model_name == "gpt-4o":
+        if self.model_name in openai_models:
             self.llm_model = GPTQuery(model=self.model_name, **self.kwargs)
         else:
             self.llm_model = GPTQuery(model="gpt-4o", **self.kwargs)

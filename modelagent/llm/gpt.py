@@ -62,10 +62,29 @@ class GPTQuery(BaseLLMQuery):
         if json_mode is None:
             json_mode = self.json_mode
         
-        response = self.client.chat.completions.create(
-            messages=messages,
-            model=self.model,
-            max_tokens=self.max_num_tokens,
-            response_format={"type": "json_object"} if json_mode else None
-        )
+        if self.model.startswith("o1"):
+            response = self.client.chat.completions.create(
+                messages=messages,
+                model=self.model,
+            )
+            if json_mode:
+                answer = response.choices[0].message.content
+                prompt = f"""
+                    extract the json content in the answer.
+                    answer: {answer}
+                """
+                response = self.client.chat.completions.create(
+                    messages=[{"role": "user", "content": prompt.format(answer=answer)}],
+                    model="gpt-4o",
+                    max_tokens=self.max_num_tokens,
+                    response_format={"type": "json_object"}
+                )
+            
+        else:   
+            response = self.client.chat.completions.create(
+                messages=messages,
+                model=self.model,
+                max_tokens=self.max_num_tokens,
+                response_format={"type": "json_object"} if json_mode else None
+            )
         return response.choices[0].message.content
