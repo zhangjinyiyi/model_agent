@@ -11,16 +11,17 @@
 """
 
 from modelagent.designer.designer_self_correct import DesignerSelfCorrect
-from modelagent.llm.gpt import GPTQuery
+from modelagent.llm import LLMQuery
 
 import logging
-
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 if __name__ == "__main__":
-    designer = DesignerSelfCorrect(llm_query=GPTQuery(model="o1-preview", json_mode=True))
-    task = "design a system to test cascade control"
+    model_name = "gpt-4o"
+    llm = LLMQuery(model_name=model_name, json_mode=True, max_tokens=10000)
+    designer = DesignerSelfCorrect(llm_query=llm)
+    task = "build a system to test the pid controller of a first order system with a setpoint reference"
     result = designer.execute_design(task)
     designer.draw(save_path="./system_structure_self_correct.png")
     designer.save_design(save_path="./system_structure_self_correct.json")

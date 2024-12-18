@@ -1,0 +1,42 @@
+{
+    "description": "This is a PI (Proportional-Integral) controller block that implements a continuous-time PI control algorithm. The controller can be reset to a specified value using a reset input signal.",
+    "model_name": "PI",
+    "parameters": [
+        {
+            "name": "k",
+            "description": "Controller gain"
+        },
+        {
+            "name": "Ti",
+            "description": "Time constant in seconds"
+        },
+        {
+            "name": "ureset0",
+            "description": "Default reset output value when ureset is not connected"
+        },
+        {
+            "name": "permanent",
+            "description": "Boolean flag to determine if permanent calculation is enabled"
+        }
+    ],
+    "input_connectors": [
+        {
+            "name": "u",
+            "description": "Main input signal for the PI controller"
+        },
+        {
+            "name": "ureset",
+            "description": "Reset value input signal"
+        },
+        {
+            "name": "reset",
+            "description": "Logical input signal to trigger controller reset"
+        }
+    ],
+    "output_connectors": [
+        {
+            "name": "y",
+            "description": "Output signal of the PI controller"
+        }
+    ]
+}

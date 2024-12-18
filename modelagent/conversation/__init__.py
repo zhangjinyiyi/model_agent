@@ -10,6 +10,6 @@
 @Desc    :   None
 """
 
-from .conversation import Conversation
+from .simple_conversation import SimpleConversation
 
 

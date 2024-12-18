@@ -42,7 +42,8 @@ class MultiRoundDesigner:
             utput the user's intention in json format.
             the json format should be:
             {{"intention": "user's intention, it should be one of the following: design, improve, or other",
-              "task": "user's task, it should be a task description if the intention is design, or a feedback if the intention is improve"}}
+              "task": "user's task, 
+                it should be a task description if the intention is design, or a feedback if the intention is improve"}}
         """
 
     def start(self):

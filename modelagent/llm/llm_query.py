@@ -13,7 +13,10 @@ from .gpt import GPTQuery
 from .base_llm_query import BaseLLMQuery
 from .claude_bianxie import ClaudeQuery
 
+import logging
+logger = logging.getLogger(__name__)
 openai_models = ["gpt-4o", "o1-preview", "o1-mini", "gpt-3.5-turbo"]
+
 
 class LLMQuery(BaseLLMQuery):
     """llm query class
@@ -56,6 +59,8 @@ class LLMQuery(BaseLLMQuery):
         else:
             self.llm_model = GPTQuery(model="gpt-4o", json_mode=self.json_mode, 
                                       max_num_token=self.max_tokens, **self.kwargs)
+            
+        logger.info(f"Using model: {self.llm_model.model}")
             
         
 

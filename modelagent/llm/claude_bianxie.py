@@ -53,7 +53,7 @@ class ClaudeQuery(BaseLLMQuery):
             {'role': 'system', 'content': self.system_prompt},
             {'role': 'user', 'content': prompt}
         ]
-        response = self.get_completion_messages(messages)
+        response = self.get_completion_messages(messages, json_mode=self.json_mode)
         return response
     
     def get_completion_messages(self, messages: list[dict], json_mode=None):
@@ -80,12 +80,13 @@ class ClaudeQuery(BaseLLMQuery):
             'model': self.model,
             'messages': messages,
             'max_tokens': self.max_num_tokens,
-            'response_format': {'type': 'json_object'} if self.json_mode else None
+            'response_format': {'type': 'json_object'} if json_mode else None
         }
 
-        response = requests.post(url, headers=headers, json=data).json()
+        response = requests.post(url, headers=headers, json=data)
+        response_json = response.json()
         
-        response_text = response["choices"][0]["message"]["content"]
+        response_text = response_json["choices"][0]["message"]["content"]
             
         if json_mode:
             response_text = self.enforce_json_mode(response_text)

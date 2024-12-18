@@ -1,146 +1,64 @@
 {
     "modules": [
         {
-            "name": "HeatSource",
-            "description": "Primary heat source for the district heating network",
-            "parameters": {
-                "PowerOutput": "5000 kW",
-                "TemperatureOut": "95\u00b0C"
-            },
-            "input_connectors": [
-                "ReturnInlet"
-            ],
+            "name": "ElectricalSource",
+            "description": "Module providing electrical power to the system",
+            "parameters": "voltage, current",
+            "input_connectors": [],
             "output_connectors": [
-                "HeatOut"
+                "electrical_power"
             ]
         },
         {
             "name": "Pump",
-            "description": "Pump to circulate water through the network",
-            "parameters": {
-                "FlowRate": "100 L/s",
-                "Head": "50 m"
-            },
+            "description": "Module representing a pump to provide pressure and flow to the system",
+            "parameters": "power, efficiency, flow_rate, head",
             "input_connectors": [
-                "Inlet"
+                "electrical_power"
             ],
             "output_connectors": [
-                "Outlet"
+                "fluid_outlet"
             ]
         },
         {
-            "name": "PipeNetwork",
-            "description": "Network of pipes distributing heat from the source to users",
-            "parameters": {
-                "Length": "2000 m",
-                "Diameter": "0.2 m"
-            },
+            "name": "Pipe",
+            "description": "Module representing a pipe segment for fluid transport",
+            "parameters": "length, diameter, roughness",
             "input_connectors": [
-                "Inflow"
+                "fluid_inlet"
             ],
             "output_connectors": [
-                "Outflow"
+                "fluid_outlet"
             ]
         },
         {
-            "name": "HeatExchanger_User1",
-            "description": "Heat exchanger for User 1",
-            "parameters": {
-                "HeatTransferCo": "200 kW/K"
-            },
+            "name": "Reservoir",
+            "description": "Module representing a reservoir to store fluid",
+            "parameters": "volume, initial_fluid_level",
             "input_connectors": [
-                "HotWaterIn"
+                "fluid_inlet"
             ],
-            "output_connectors": [
-                "HotWaterOut",
-                "SupplyToUser1"
-            ]
-        },
-        {
-            "name": "HeatExchanger_User2",
-            "description": "Heat exchanger for User 2",
-            "parameters": {
-                "HeatTransferCo": "150 kW/K"
-            },
-            "input_connectors": [
-                "HotWaterIn"
-            ],
-            "output_connectors": [
-                "HotWaterOut",
-                "SupplyToUser2"
-            ]
-        },
-        {
-            "name": "HeatExchanger_User3",
-            "description": "Heat exchanger for User 3",
-            "parameters": {
-                "HeatTransferCo": "250 kW/K"
-            },
-            "input_connectors": [
-                "HotWaterIn"
-            ],
-            "output_connectors": [
-                "HotWaterOut",
-                "SupplyToUser3"
-            ]
-        },
-        {
-            "name": "ReturnPipeNetwork",
-            "description": "Piping system for returning water to heat source",
-            "parameters": {
-                "Length": "2000 m",
-                "Diameter": "0.2 m"
-            },
-            "input_connectors": [
-                "ReturnInflow"
-            ],
-            "output_connectors": [
-                "ReturnOutflow"
-            ]
+            "output_connectors": []
         }
     ],
     "connections": [
         {
-            "upstream_module": "HeatSource",
-            "upstream_connector": "HeatOut",
+            "upstream_module": "ElectricalSource",
+            "upstream_connector": "electrical_power",
             "downstream_module": "Pump",
-            "downstream_connector": "Inlet"
+            "downstream_connector": "electrical_power"
         },
         {
             "upstream_module": "Pump",
-            "upstream_connector": "Outlet",
-            "downstream_module": "PipeNetwork",
-            "downstream_connector": "Inflow"
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "Pipe",
+            "downstream_connector": "fluid_inlet"
         },
         {
-            "upstream_module": "PipeNetwork",
-            "upstream_connector": "Outflow",
-            "downstream_module": "HeatExchanger_User1",
-            "downstream_connector": "HotWaterIn"
-        },
-        {
-            "upstream_module": "HeatExchanger_User1",
-            "upstream_connector": "HotWaterOut",
-            "downstream_module": "HeatExchanger_User2",
-            "downstream_connector": "HotWaterIn"
-        },
-        {
-            "upstream_module": "HeatExchanger_User2",
-            "upstream_connector": "HotWaterOut",
-            "downstream_module": "HeatExchanger_User3",
-            "downstream_connector": "HotWaterIn"
-        },
-        {
-            "upstream_module": "HeatExchanger_User3",
-            "upstream_connector": "HotWaterOut",
-            "downstream_module": "ReturnPipeNetwork",
-            "downstream_connector": "ReturnInflow"
-        },
-        {
-            "upstream_module": "ReturnPipeNetwork",
-            "upstream_connector": "ReturnOutflow",
-            "downstream_module": "HeatSource",
-            "downstream_connector": "ReturnInlet"
+            "upstream_module": "Pipe",
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "Reservoir",
+            "downstream_connector": "fluid_inlet"
         }
     ]
 }

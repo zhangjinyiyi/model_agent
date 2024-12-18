@@ -2,116 +2,128 @@
     "design": {
         "modules": [
             {
-                "name": "Setpoint Generator",
-                "description": "Generates the setpoint for the outer loop control system.",
-                "parameters": {
-                    "setpoint_value": "float"
-                },
+                "name": "PID_Controller",
+                "description": "A module representing a PID controller used to control the first-order system.",
+                "parameters": [
+                    {
+                        "name": "P_gain",
+                        "description": "Proportional gain of the PID controller."
+                    },
+                    {
+                        "name": "I_gain",
+                        "description": "Integral gain of the PID controller."
+                    },
+                    {
+                        "name": "D_gain",
+                        "description": "Derivative gain of the PID controller."
+                    }
+                ],
+                "input_connectors": [
+                    {
+                        "name": "setpoint",
+                        "description": "The desired setpoint for the system response."
+                    },
+                    {
+                        "name": "process_variable",
+                        "description": "The current output of the process being controlled."
+                    }
+                ],
+                "output_connectors": [
+                    {
+                        "name": "control_signal",
+                        "description": "The output control signal to the process."
+                    }
+                ]
+            },
+            {
+                "name": "First_Order_System",
+                "description": "A first-order linear dynamic system representing the process being controlled.",
+                "parameters": [
+                    {
+                        "name": "time_constant",
+                        "description": "The time constant of the first-order system."
+                    },
+                    {
+                        "name": "gain",
+                        "description": "The gain of the first-order system."
+                    }
+                ],
+                "input_connectors": [
+                    {
+                        "name": "input_signal",
+                        "description": "The control signal input to the system."
+                    }
+                ],
+                "output_connectors": [
+                    {
+                        "name": "system_output",
+                        "description": "The output response of the first-order system."
+                    }
+                ]
+            },
+            {
+                "name": "Setpoint_Reference",
+                "description": "A module providing the reference setpoint to the PID controller.",
+                "parameters": [
+                    {
+                        "name": "initial_value",
+                        "description": "The initial value of the reference setpoint."
+                    }
+                ],
                 "input_connectors": [],
                 "output_connectors": [
-                    "setpoint_output"
+                    {
+                        "name": "reference_signal",
+                        "description": "The reference signal provided to the PID controller."
+                    }
                 ]
             },
             {
-                "name": "Outer Loop Controller",
-                "description": "Controls the primary process variable by adjusting the setpoint of the inner loop.",
-                "parameters": {
-                    "kp": "float",
-                    "ki": "float",
-                    "kd": "float"
-                },
+                "name": "Feedback",
+                "description": "A module to provide feedback from the system output back to the PID controller.",
+                "parameters": [],
                 "input_connectors": [
-                    "process_variable",
-                    "setpoint_input"
+                    {
+                        "name": "feedback_input",
+                        "description": "The input from the system output to be fed back."
+                    }
                 ],
                 "output_connectors": [
-                    "inner_setpoint_output"
-                ]
-            },
-            {
-                "name": "Inner Loop Controller",
-                "description": "Handles fast-changing dynamics by controlling a secondary process.",
-                "parameters": {
-                    "kp": "float",
-                    "ki": "float",
-                    "kd": "float"
-                },
-                "input_connectors": [
-                    "process_variable",
-                    "setpoint_input"
-                ],
-                "output_connectors": [
-                    "control_signal_output"
-                ]
-            },
-            {
-                "name": "Process Model",
-                "description": "Simulates the dynamic behavior of the process under control.",
-                "parameters": {
-                    "time_constant": "float",
-                    "gain": "float"
-                },
-                "input_connectors": [
-                    "control_signal_input"
-                ],
-                "output_connectors": [
-                    "process_output"
-                ]
-            },
-            {
-                "name": "Sensor",
-                "description": "Measures the process variable for feedback to the controllers.",
-                "parameters": {
-                    "measurement_noise": "float"
-                },
-                "input_connectors": [
-                    "process_input"
-                ],
-                "output_connectors": [
-                    "measured_output"
+                    {
+                        "name": "feedback_output",
+                        "description": "The feedback output to the PID controller."
+                    }
                 ]
             }
         ],
         "connections": [
             {
-                "upstream_module": "Setpoint Generator",
-                "upstream_connector": "setpoint_output",
-                "downstream_module": "Outer Loop Controller",
-                "downstream_connector": "setpoint_input"
+                "upstream_module": "Setpoint_Reference",
+                "upstream_connector": "reference_signal",
+                "downstream_module": "PID_Controller",
+                "downstream_connector": "setpoint"
             },
             {
-                "upstream_module": "Sensor",
-                "upstream_connector": "measured_output",
-                "downstream_module": "Outer Loop Controller",
+                "upstream_module": "Feedback",
+                "upstream_connector": "feedback_output",
+                "downstream_module": "PID_Controller",
                 "downstream_connector": "process_variable"
             },
             {
-                "upstream_module": "Outer Loop Controller",
-                "upstream_connector": "inner_setpoint_output",
-                "downstream_module": "Inner Loop Controller",
-                "downstream_connector": "setpoint_input"
+                "upstream_module": "PID_Controller",
+                "upstream_connector": "control_signal",
+                "downstream_module": "First_Order_System",
+                "downstream_connector": "input_signal"
             },
             {
-                "upstream_module": "Sensor",
-                "upstream_connector": "measured_output",
-                "downstream_module": "Inner Loop Controller",
-                "downstream_connector": "process_variable"
-            },
-            {
-                "upstream_module": "Inner Loop Controller",
-                "upstream_connector": "control_signal_output",
-                "downstream_module": "Process Model",
-                "downstream_connector": "control_signal_input"
-            },
-            {
-                "upstream_module": "Process Model",
-                "upstream_connector": "process_output",
-                "downstream_module": "Sensor",
-                "downstream_connector": "process_input"
+                "upstream_module": "First_Order_System",
+                "upstream_connector": "system_output",
+                "downstream_module": "Feedback",
+                "downstream_connector": "feedback_input"
             }
         ]
     },
     "result": "incorrect",
-    "reason": "The current design has a redundancy issue as the 'Sensor' module's 'measured_output' is connected to both the 'Outer Loop Controller' and the 'Inner Loop Controller' for the same 'process_variable'. This redundancy can lead to duplicated feedback paths that are not typically required in cascade control as the outer loop should not be directly concerned with the feedback from the secondary process, which the inner loop handles.",
-    "suggestion": "Remove the redundant connection: Ensure that the 'Inner Loop Controller' alone receives the process variable feedback directly from the 'Sensor'. The 'Outer Loop Controller' should be concerned only with the primary control loop variable filtered through the 'Process Model'."
+    "reason": "The feedback loop contains a redundant module: 'Feedback'. The 'Feedback' module is unnecessary as the connection from 'First_Order_System' output can directly feed back to the 'PID_Controller' without an intermediary module. This creates an unnecessary layer and complicates the topology without adding value.",
+    "suggestion": "Remove the 'Feedback' module. Connect the 'system_output' from the 'First_Order_System' directly to the 'process_variable' input of the 'PID_Controller'. This simplifies the feedback path and maintains logical clarity."
 }

@@ -1,0 +1,2509 @@
+{
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Commun": {
+        "description": "The Commun package contains several external C functions used for generating random numbers and computing the floating-point remainder of division. These functions include `rand`, which outputs a random integer, `srand`, which sets a seed for random number generation, and `fmod`, which calculates the floating-point remainder of division.",
+        "model_name": "Commun",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input integer for setting the seed in srand function"
+            },
+            {
+                "name": "u1",
+                "description": "First input real number for computing the remainder in fmod function"
+            },
+            {
+                "name": "u2",
+                "description": "Second input real number as a divisor in fmod function"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output integer from rand function representing a random number"
+            },
+            {
+                "name": "y",
+                "description": "Output real from fmod function representing the remainder of the division"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Commun"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.Derivee": {
+        "description": "The Derivee block is part of the ThermoSysPro library, specifically within the Instrumentation and Control Blocks. It acts as a first-order transfer function derivative block, where the output y is the gain-scaled derivative of the input u with respect to time. A reset input ureset is used to set the initial state of the integrator when the simulation starts. The block utilizes parameters such as gain and time constant to configure its behavior.",
+        "model_name": "Derivee",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain; affects the scaling of the output signal y."
+            },
+            {
+                "name": "Ti",
+                "description": "Constante de temps (s); the time constant used in the transfer function, with a minimum value to ensure numerical stability."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal to the derivative block."
+            },
+            {
+                "name": "ureset",
+                "description": "Input reset signal used to determine the initial condition of the integrator."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal that represents the scaled derivative of the input signal u."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.Derivee"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.FctTrans": {
+        "description": "This is a block model representing a transfer function in the ThermoSysPro library. The model calculates the output based on input signals and the given numerator and denominator coefficients of the transfer function.",
+        "model_name": "FctTrans",
+        "parameters": [
+            {
+                "name": "b",
+                "description": "Numerator coefficients of the transfer function (in decreasing powers)"
+            },
+            {
+                "name": "a",
+                "description": "Denominator coefficients of the transfer function (in decreasing powers)"
+            },
+            {
+                "name": "U0",
+                "description": "Initial output value if not in permanent state and if u0 is not connected"
+            },
+            {
+                "name": "permanent",
+                "description": "Flag indicating calculation in permanent state"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal connector"
+            },
+            {
+                "name": "u0",
+                "description": "Connector for initial value input"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal connector"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.FctTrans"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.Integrateur": {
+        "description": "The 'Integrateur' block is a continuous integrator block, adapted from the Modelica.Blocks.Continuous library. It integrates the input signal with a gain and provides options for resetting the output.",
+        "model_name": "Integrateur",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the integrator."
+            },
+            {
+                "name": "ureset0",
+                "description": "Output value when reset is applied, if the ureset connector is not connected."
+            },
+            {
+                "name": "permanent",
+                "description": "Indicates whether the integration is calculated as permanent (when true, the derivative is zero)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal to be integrated."
+            },
+            {
+                "name": "reset",
+                "description": "Logical input to reset the integration output."
+            },
+            {
+                "name": "ureset",
+                "description": "Real input for setting output during reset."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal of the integrator."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.Integrateur"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.IntegrateurSat": {
+        "description": "This model is called 'IntegrateurSat' and is a part of the ThermoSysPro library, specifically within the Instrumentation and Control Blocks.Continu module. The model represents a saturation integrator block. It takes an input signal and integrates it, with options for gain, saturation limits for the output, and reset conditions. Additionally, it includes a 'permanent' parameter to maintain a steady state if required.",
+        "model_name": "IntegrateurSat",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the integrator."
+            },
+            {
+                "name": "maxval",
+                "description": "Maximum value of the output."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum value of the output."
+            },
+            {
+                "name": "ureset0",
+                "description": "Output value upon reset if ureset is not connected."
+            },
+            {
+                "name": "permanent",
+                "description": "Boolean indicating if permanent value calculation is performed."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input real signal to be integrated."
+            },
+            {
+                "name": "ureset",
+                "description": "Input real signal for resetting the output."
+            },
+            {
+                "name": "reset",
+                "description": "Input logical signal to trigger a reset in the integrator."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output real signal representing the integrated value, subject to saturation limits."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.IntegrateurSat"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PI": {
+        "description": "This is a PI (Proportional-Integral) control block adapted from the Modelica.Blocks.Continuous library. It is used to provide control actions in response to an input signal based on proportional and integral terms. The block has several features including reset functionality and initial parameterization options.",
+        "model_name": "PI",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain"
+            },
+            {
+                "name": "Ti",
+                "description": "Time constant (s)"
+            },
+            {
+                "name": "ureset0",
+                "description": "Reset output value (if ureset not connected)"
+            },
+            {
+                "name": "permanent",
+                "description": "Permanent calculation boolean"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal"
+            },
+            {
+                "name": "ureset",
+                "description": "Reset signal input"
+            },
+            {
+                "name": "reset",
+                "description": "Logical reset signal"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PI"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PIsat": {
+        "description": "The PIsat block is a Proportional-Integral (PI) controller with saturation limits for its output. It computes the control signal by integrating the error between a reference signal and the feedback signal, scaled by a proportional gain. Additionally, it features saturation to limit the output within specified minimum and maximum values.",
+        "model_name": "PIsat",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the PI controller."
+            },
+            {
+                "name": "Ti",
+                "description": "Integration time constant (s)."
+            },
+            {
+                "name": "maxval",
+                "description": "Maximum value of the output signal."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum value of the output signal."
+            },
+            {
+                "name": "ureset0",
+                "description": "Output value upon reset (if ureset is not connected)."
+            },
+            {
+                "name": "permanent",
+                "description": "Flag to compute the permanent (true or false)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input for the PI controller."
+            },
+            {
+                "name": "ureset",
+                "description": "Real input for resetting the integrator state."
+            },
+            {
+                "name": "reset",
+                "description": "Logical input to reset the integrator."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output of the PI controller, subject to saturation limits."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PIsat"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PT1": {
+        "description": "The PT1 block represents a first-order transfer function with a gain 'k' and a time constant 'Ti'. It includes an initial output value and can operate in a permanent state if specified. The block uses input and output connectors to receive and send real-valued signals.",
+        "model_name": "PT1",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the transfer function."
+            },
+            {
+                "name": "Ti",
+                "description": "Time constant of the transfer function in seconds."
+            },
+            {
+                "name": "U0",
+                "description": "Initial output value of the signal if not in permanent mode and if 'u0' is not connected."
+            },
+            {
+                "name": "permanent",
+                "description": "Boolean flag indicating whether the block calculates in permanent mode."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector for the signal input."
+            },
+            {
+                "name": "u0",
+                "description": "Real input connector for the initial output value if not in a permanent state."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector for the signal output."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PT1"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PT2": {
+        "description": "The PT2 block is a second-order transfer function model adapted from the Modelica.Blocks.Continuous library. It models a damped oscillatory system with parameters for gain, angular frequency, and damping. The block has an optional feature for calculating a steady state solution. The input is a real signal and the output is the processed real signal based on the parameters.",
+        "model_name": "PT2",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the transfer function."
+            },
+            {
+                "name": "w",
+                "description": "Angular frequency (Fr\u00e9quence angulaire) of the oscillatory system."
+            },
+            {
+                "name": "D",
+                "description": "Damping (Amortissement) factor of the system."
+            },
+            {
+                "name": "permanent",
+                "description": "Boolean flag indicating whether to calculate the steady state solution (Calcul du permanent)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "InputReal connector for the system's input signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector for the system's output signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Continu.PT2"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.ConvAD": {
+        "description": "The ConvAD block models an analog-to-digital converter (ADC) which samples an input signal at specified intervals and quantizes it into a discrete value with a predefined number of bits. It handles input signal bounding to ensure it remains within specified maximum and minimum limits before quantization. Sampling is performed at a defined starting offset and at regular intervals thereafter.",
+        "model_name": "ConvAD",
+        "parameters": [
+            {
+                "name": "maxval",
+                "description": "Maximum value of the input signal."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum value of the input signal, set as the negative of maxval."
+            },
+            {
+                "name": "bits",
+                "description": "Number of bits used by the ADC for quantization."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Starting instant for sampling in seconds."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period in seconds."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "InputReal connector for the input signal to the ADC."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector for the quantized output signal from the ADC."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.ConvAD"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.ConvDA": {
+        "description": "The ConvDA block is a digital-to-analog (DA) converter that quantizes an input signal within specified bounds using a fixed number of bits. It samples the input signal at defined intervals and produces a quantized output.",
+        "model_name": "ConvDA",
+        "parameters": [
+            {
+                "name": "maxval",
+                "description": "Maximum value of the input. Default is 1."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum value of the input. Default is the negative of maxval."
+            },
+            {
+                "name": "bits",
+                "description": "Number of bits used in the DA converter. Default is 12."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Starting time for sampling (seconds). Default is 0."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period (seconds). Default is 0.01."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal that will be quantized."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal that represents the quantized value of the input."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.ConvDA"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.Echant": {
+        "description": "The Echant block is a component from the ThermoSysPro library, designed for discrete-time sampling of an input signal. It outputs a modified signal based on a gain factor. The block allows sampling at specific intervals with an optional time offset. The sampling process can be interrupted by a logical input.",
+        "model_name": "Echant",
+        "parameters": [
+            {
+                "name": "Gain",
+                "description": "Gain applied to the sampled signal."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Initial offset time for starting the sampling process (in seconds)."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period defining the interval between each sample (in seconds)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal to be sampled."
+            },
+            {
+                "name": "continu",
+                "description": "Logical input to control if continuous input is used or sampled data."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal after applying gain to either the continuous input or sampled data."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.Echant"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.FctTrans": {
+        "description": "The FctTrans block is a discrete-time transfer function block that takes an input signal and produces an output signal by applying a transfer function. The transfer function is described by its numerator and denominator coefficients, and operates according to specified sampling parameters.",
+        "model_name": "FctTrans",
+        "parameters": [
+            {
+                "name": "b",
+                "description": "Numerator coefficients of the transfer function"
+            },
+            {
+                "name": "a",
+                "description": "Denominator coefficients of the transfer function"
+            },
+            {
+                "name": "SampleOffset",
+                "description": "The start time of the sampling (in seconds)"
+            },
+            {
+                "name": "SampleInterval",
+                "description": "The sampling period (in seconds)"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input connector for the real-valued signal"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector for the real-valued signal"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.FctTrans"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PI": {
+        "description": "The PI block is a discrete Proportional-Integral (PI) controller model used within the ThermoSysPro library's Instrumentation and Control package. This block computes the output signal based on a proportional and integral action derived from the input signal. The integral action is calculated using the past input signal, the gain, and the integration time constant. The PI controller executes its operations at specified sampling intervals.",
+        "model_name": "PI",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the PI controller."
+            },
+            {
+                "name": "Ti",
+                "description": "Integration time constant."
+            },
+            {
+                "name": "initialCond",
+                "description": "Initial condition of the integral action."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Start time for sampling in seconds."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period in seconds."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal to the PI controller."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal from the PI controller."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PI"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PIsat": {
+        "description": "The PIsat block is a PI (Proportional-Integral) controller with saturation limits. It operates in discrete time, integrating its input signal to produce a control output, which is subsequently limited to a specified maximum and minimum value.",
+        "model_name": "PIsat",
+        "parameters": [
+            {
+                "name": "Kp",
+                "description": "Gain of the PI controller."
+            },
+            {
+                "name": "Ti",
+                "description": "Time constant of the PI controller."
+            },
+            {
+                "name": "initialCond",
+                "description": "Initial condition of the integrator."
+            },
+            {
+                "name": "maxval",
+                "description": "Maximum value of the output."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum value of the output."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Start time of the sampling interval in seconds."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period in seconds."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal to the PI controller."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal of the saturated PI controller."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PIsat"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.Pre": {
+        "description": "The model 'Pre' is a sampled data system block suitable for discrete control or instrumentation applications. It samples an input signal at specified intervals, processes it with a gain, and outputs the result. The sample timing can be offset by a defined amount, and the initial condition of the state can be set by the user. The model uses a pre-variable to ensure the output uses the previous sample's state.",
+        "model_name": "Pre",
+        "parameters": [
+            {
+                "name": "Gain",
+                "description": "Gain applied to the sampled input."
+            },
+            {
+                "name": "initialCond",
+                "description": "Initial condition of the state variable."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Start time for sampling (in seconds)."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period (in seconds)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input connector for the real-valued signal to be sampled."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector providing the processed signal, post-gain application on the previously sampled value."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.Pre"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PT1": {
+        "description": "This is a PT1 (first-order time delay) block used for modeling a system with a gain and a time constant. It is sampled at discrete intervals. The block has parameters to specify gain, time constant, initial condition, and sampling properties.",
+        "model_name": "PT1",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Gain of the system"
+            },
+            {
+                "name": "Ti",
+                "description": "Time constant of the system in seconds"
+            },
+            {
+                "name": "initialCond",
+                "description": "Initial condition of the system state"
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Time offset for starting the sampling in seconds"
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period in seconds"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector for the PT1 block"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector of the PT1 block"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Discret.PT1"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND": {
+        "description": "The AND block is part of the ThermoSysPro library under the InstrumentationAndControl.Blocks.Logique package. It performs a logical AND operation on two input signals, providing a single output signal which is true only if both input signals are true.",
+        "model_name": "AND",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "First logical input for the AND operation."
+            },
+            {
+                "name": "uL2",
+                "description": "Second logical input for the AND operation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output which is true only if both inputs are true."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND3": {
+        "description": "The AND3 block is a logical operator that takes three boolean input signals and outputs a single boolean signal. The output is true only if all three input signals are true, functioning similarly to a three-input AND gate.",
+        "model_name": "AND3",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "The first logical input connector. It provides the first Boolean signal for the AND operation."
+            },
+            {
+                "name": "uL2",
+                "description": "The second logical input connector. It provides the second Boolean signal for the AND operation."
+            },
+            {
+                "name": "uL3",
+                "description": "The third logical input connector. It provides the third Boolean signal for the AND operation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "The logical output connector. It outputs the result of the AND operation of the three input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND3"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND4": {
+        "description": "The AND4 block is a logical block in the ThermoSysPro instrumentation and control library that outputs a logical 'true' signal only when all four of its input signals are 'true'. It performs a logical AND operation on four input signals.",
+        "model_name": "AND4",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "First logical input connector"
+            },
+            {
+                "name": "uL2",
+                "description": "Second logical input connector"
+            },
+            {
+                "name": "uL3",
+                "description": "Third logical input connector"
+            },
+            {
+                "name": "uL4",
+                "description": "Fourth logical input connector"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output connector that results from the AND operation of the four inputs"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.AND4"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Constante": {
+        "description": "The Constante block outputs a constant logical signal based on the parameter value K. It has no input connectors and one output connector that transmits the value of K as a logical signal.",
+        "model_name": "Constante",
+        "parameters": [
+            {
+                "name": "K",
+                "description": "A parameter of Boolean type representing the constant logical value that will be output. The default value is true."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "An output connector that transmits the logical signal based on the parameter K."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Constante"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Echelon": {
+        "description": "The Echelon block is a simple logical output block within the ThermoSysPro.InstrumentationAndControl library. It generates a logical true output signal, yL, starting from a specified start time. Before this start time, the output signal remains false. The block is primarily used when a step change in a logical signal is required at a given simulation time.",
+        "model_name": "Echelon",
+        "parameters": [
+            {
+                "name": "startTime",
+                "description": "The time instance at which the output signal changes from false to true."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal that switches to true at the specified start time."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Echelon"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Edge": {
+        "description": "The Edge block models a logical edge detector in a Modelica environment, specifically within the ThermoSysPro instrumentation and control package. It detects rising or falling logical edges of a boolean signal. The block takes a logical input and produces an output that changes state only when an edge is detected. This is useful for event-driven systems or triggering actions upon state changes.",
+        "model_name": "Edge",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL",
+                "description": "A logical input connector representing the signal to be monitored for edge detection. It is initialized to false and is fixed at the start."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "A logical output connector that provides the result of the edge detection. It outputs a true signal when an edge on the input signal is detected."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Edge"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.NONL": {
+        "description": "The NONL block implements a logical NOT gate from the ThermoSysPro library. It provides a standard logical negation function, inverting the input logical signal and producing an output logical signal.",
+        "model_name": "NONL",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL",
+                "description": "Input logical connector that takes a logical signal to be negated."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical connector providing the negated logical signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.NONL"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR": {
+        "description": "The OR block is a logical operator that outputs true if at least one of its two input signals is true. It takes two logical inputs and produces a single logical output. The output signal is the result of the logical OR operation between the two input signals.",
+        "model_name": "OR",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "The first logical input signal for the OR operation."
+            },
+            {
+                "name": "uL2",
+                "description": "The second logical input signal for the OR operation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "The logical output signal, which is true if at least one of the input signals is true."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR3": {
+        "description": "The OR3 block is a logical block within the ThermoSysPro instrumentation and control library. It performs an OR operation on three boolean input signals and outputs the result.",
+        "model_name": "OR3",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "First logical input signal."
+            },
+            {
+                "name": "uL2",
+                "description": "Second logical input signal."
+            },
+            {
+                "name": "uL3",
+                "description": "Third logical input signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal resulting from the OR operation of the three input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR3"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR4": {
+        "description": "The OR4 block is a logical OR gate with four input signals. It computes the logical OR of the four input signals and outputs the result as a single logical signal. The output is true if at least one of the input signals is true; otherwise, the output is false.",
+        "model_name": "OR4",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "The first logical input signal for the OR operation."
+            },
+            {
+                "name": "uL2",
+                "description": "The second logical input signal for the OR operation."
+            },
+            {
+                "name": "uL3",
+                "description": "The third logical input signal for the OR operation."
+            },
+            {
+                "name": "uL4",
+                "description": "The fourth logical input signal for the OR operation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "The output logical signal that represents the OR operation result of the input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.OR4"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Pre": {
+        "description": "The 'Pre' block is part of the ThermoSysPro Instrumentation and Control library. This block samples the signal at its input logical connector at the end of a computation step and stores it as the output for the next step. It effectively provides the previous state of a logical signal.",
+        "model_name": "Pre",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL",
+                "description": "Input logical connector that receives the logical signal. The signal starts with a value of false and is fixed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical connector that outputs the previous value of the input logical signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Pre"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Pulse": {
+        "description": "The Pulse block generates a periodic logical pulse signal. The signal is true for a specified width of time within each period. The start time parameter defines when the first pulse occurs. The pulse signal becomes true at the start of each period and switches to false once the defined pulse width has elapsed.",
+        "model_name": "Pulse",
+        "parameters": [
+            {
+                "name": "width",
+                "description": "Width of the pulse in seconds (s). Defines the duration for which the pulse signal remains true within a period."
+            },
+            {
+                "name": "period",
+                "description": "Period of the pulse in seconds (s). Defines the time interval between the start of consecutive pulses."
+            },
+            {
+                "name": "startTime",
+                "description": "The start time in seconds (s) at which the first pulse will occur."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical connector that emits the periodic pulse signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Pulse"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.SampleTrigger": {
+        "description": "SampleTrigger is a block that generates output logical signals at regular intervals, defined by the specified period parameter. The block's output can be used in control applications where triggering or sampling is required. The signal starts after the defined startTime.",
+        "model_name": "SampleTrigger",
+        "parameters": [
+            {
+                "name": "period",
+                "description": "Period of the impulses in seconds."
+            },
+            {
+                "name": "startTime",
+                "description": "Time at which the impulses start."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal generated based on the specified period and startTime."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.SampleTrigger"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Selecteur": {
+        "description": "The 'Selecteur' block is a logic component that selects between two logical input signals based on a condition. It outputs the first input signal 'uL1' if the condition 'uCond' is true, otherwise, it outputs the second input signal 'uL2'. This block is a part of the ThermoSysPro library under the InstrumentationAndControl.Blocks.Logique package.",
+        "model_name": "Selecteur",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uCond",
+                "description": "This is a logical input signal that acts as a condition. If true, the output 'yL' will take the value of 'uL1', otherwise it will take the value of 'uL2'."
+            },
+            {
+                "name": "uL1",
+                "description": "This is the first logical input signal. 'yL' will output 'uL1' if 'uCond' is true."
+            },
+            {
+                "name": "uL2",
+                "description": "This is the second logical input signal. 'yL' will output 'uL2' if 'uCond' is false."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "This is the logical output signal. It outputs 'uL1' if 'uCond' is true, otherwise it outputs 'uL2'."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Selecteur"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Terminate": {
+        "description": "The Terminate block from the ThermoSysPro library is designed to end a simulation based on a logical signal. It is utilized in instrumentation and control systems to provide a mechanism to terminate simulations gracefully when a specific condition is met. The block listens for a logical input signal, and upon detection of a 'true' signal, it terminates the simulation with a specified message.",
+        "model_name": "Terminate",
+        "parameters": [
+            {
+                "name": "message",
+                "description": "A string parameter that specifies the message displayed upon termination of the simulation. Its default value is 'End of simulation'."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "uL",
+                "description": "An input logical connector that triggers the termination of the simulation when its signal is true."
+            }
+        ],
+        "output_connectors": [],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.Terminate"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.XOR": {
+        "description": "This block represents a logical XOR gate using the Modelica language, part of the ThermoSysPro library's Instrumentation and Control package. It takes two boolean input signals and provides one boolean output signal. The output is true if and only if exactly one of the inputs is true, which represents the XOR logic operation.",
+        "model_name": "XOR",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "uL1",
+                "description": "First input logical connector, receives a boolean signal."
+            },
+            {
+                "name": "uL2",
+                "description": "Second input logical connector, receives a boolean signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical connector, provides the boolean result of the XOR logic operation."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Logique.XOR"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Abs": {
+        "description": "The 'Abs' block is part of the ThermoSysPro instrumentation and control library. It computes the absolute value of an input signal. The block takes a real input signal and produces a real output signal that is the absolute value of the input.",
+        "model_name": "Abs",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal connector whose absolute value is to be computed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal connector that provides the absolute value of the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Abs"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Acos": {
+        "description": "The Acos block computes the arc cosine (inverse cosine) of the input signal. The input and output signals are real numbers, where the input signal must be between -1 and 1. The output is the angle in radians whose cosine is the input signal.",
+        "model_name": "Acos",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector representing the signal for which the arc cosine is to be computed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector that provides the result of the arc cosine function, i.e., the angle in radians corresponding to the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Acos"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Add": {
+        "description": "This model represents an addition block that takes two input signals, each multiplied by a gain, and produces an output signal that is the weighted sum of the inputs.",
+        "model_name": "Add",
+        "parameters": [
+            {
+                "name": "k1",
+                "description": "Gain for the first input signal."
+            },
+            {
+                "name": "k2",
+                "description": "Gain for the second input signal."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First input signal."
+            },
+            {
+                "name": "u2",
+                "description": "Second input signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal, resulting from the weighted sum of the input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Add"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Add3": {
+        "description": "The Add3 block is a mathematical model designed to perform a weighted sum of three input signals. Each input is multiplied by a corresponding gain parameter before being summed together to produce an output signal.",
+        "model_name": "Add3",
+        "parameters": [
+            {
+                "name": "k1",
+                "description": "Weight applied to the first input signal (u1). Default value is +1."
+            },
+            {
+                "name": "k2",
+                "description": "Weight applied to the second input signal (u2). Default value is +1."
+            },
+            {
+                "name": "k3",
+                "description": "Weight applied to the third input signal (u3). Default value is +1."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First input signal to the block."
+            },
+            {
+                "name": "u2",
+                "description": "Second input signal to the block."
+            },
+            {
+                "name": "u3",
+                "description": "Third input signal to the block."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal which is the weighted sum of the input signals u1, u2, and u3."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Add3"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Asin": {
+        "description": "The 'Asin' block computes the arcsine of the input signal. It is part of the ThermoSysPro Instrumentation and Control Blocks. The input range is typically between -1 and +1, and the output range is between -\u03c0/2 and +\u03c0/2.",
+        "model_name": "Asin",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal whose arcsine is to be calculated."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal representing the arcsine of the input."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Asin"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Atan": {
+        "description": "The `Atan` block is a mathematical component that computes the arctangent (inverse tangent) of its input signal. It is part of the ThermoSysPro.InstrumentationAndControl.Blocks.Math library and is adapted from the Modelica.Blocks.Math library. The output signal represents the arctangent of the input signal.",
+        "model_name": "Atan",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector representing the signal for which the arctangent will be computed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector representing the signal that is the arctangent of the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Atan"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Cos": {
+        "description": "This Modelica block calculates the cosine of an input signal. The output signal is the cosine of the input signal, computed using the Modelica.Math.cos function.",
+        "model_name": "Cos",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal representing the angle in radians for which the cosine will be calculated."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal representing the cosine of the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Cos"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Div": {
+        "description": "The Div block is part of the ThermoSysPro library under the InstrumentationAndControl.Blocks.Math package. It represents a mathematical division operation. The block takes two real input signals and outputs their quotient. The block divides the signal from input connector u1 by the signal from input connector u2 and outputs the result through the output connector y. The block is visually represented with an icon that includes a division symbol (/) and is encapsulated in an ellipse with additional graphics. Adapted from the Modelica.Blocks.Math library.",
+        "model_name": "Div",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "The numerator input connector, providing the dividend signal for the division operation."
+            },
+            {
+                "name": "u2",
+                "description": "The denominator input connector, providing the divisor signal for the division operation. Note: the divisor must be non-zero to avoid division errors."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output connector that provides the result of the division of u1 by u2. It carries the quotient signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Div"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.EgEntier": {
+        "description": "The EgEntier block checks if the values of two integer input signals are equal. If either input is not connected, it defaults to predetermined constant values C1 or C2. The output is a logical signal indicating whether the two inputs are equal.",
+        "model_name": "EgEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Default value for input u1 if it is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Default value for input u2 if it is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "Integer input signal, defaults to C1 if unconnected"
+            },
+            {
+                "name": "u2",
+                "description": "Integer input signal, defaults to C2 if unconnected"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal indicating if u1 is equal to u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.EgEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Exp": {
+        "description": "The 'Exp' block is a mathematical model that calculates the exponential function of an input signal. It belongs to the ThermoSysPro.InstrumentationAndControl.Blocks.Math package and is adapted from the Modelica.Blocks.Math library. This block takes a real-valued input and returns the exponential of the input as the output. The graphics annotations define the visual appearance of the block in a Modelica graphical environment.",
+        "model_name": "Exp",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector that provides the signal to which the exponential function is applied."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector that returns the exponential of the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Exp"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Feedback": {
+        "description": "The 'Feedback' block computes the difference between two input signals, typically used to determine the difference between a command signal and a feedback signal. It is adapted from the Modelica.Blocks.Math library. The output is the result of subtracting the second input from the first input.",
+        "model_name": "Feedback",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "The first input real connector, representing the command signal."
+            },
+            {
+                "name": "u2",
+                "description": "The second input real connector, representing the feedback signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output real connector, which provides the difference between the command signal (u1) and the feedback signal (u2)."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Feedback"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Gain": {
+        "description": "The Gain block model multiplies an input signal by a specified constant gain value to produce an output signal. This model is part of the ThermoSysPro Instrumentation and Control Blocks Math package.",
+        "model_name": "Gain",
+        "parameters": [
+            {
+                "name": "Gain",
+                "description": "A parameter representing the gain value by which the input signal is multiplied. The default value is 1."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "An input connector of type Real that provides the input signal to the block."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "An output connector of type Real that outputs the gained signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Gain"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Inf": {
+        "description": "The 'Inf' block is part of the ThermoSysPro library, specifically under Instrumentation and Control, used for performing mathematical comparison operations. It compares two input signals, 'u1' and 'u2'. If the first input 'u1' is less than the second input 'u2', the logical output 'yL' is true. If either 'u1' or 'u2' is not connected, the parameter values 'C1' and 'C2' are used as default values respectively.",
+        "model_name": "Inf",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Value of u1 if u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Value of u2 if u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First real input signal for comparison"
+            },
+            {
+                "name": "u2",
+                "description": "Second real input signal for comparison"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal that is true if u1 is less than u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Inf"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Infeg": {
+        "description": "The 'Infeg' block is a mathematical comparison block derived from the Modelica.Blocks.Math library. It compares two input signals u1 and u2 using the less-than-or-equal comparison and provides a logical output yL indicating the result of this comparison. If any input is not connected, it defaults to a specified parameter value.",
+        "model_name": "Infeg",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Value for u1 when u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Value for u2 when u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First real input signal for comparison"
+            },
+            {
+                "name": "u2",
+                "description": "Second real input signal for comparison"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output signal representing if u1 is less than or equal to u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Infeg"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.InfegEntier": {
+        "description": "The InfegEntier block is a mathematical component within the ThermoSysPro library, used for comparing two integer inputs. If either input is not connected, it defaults to a specified parameter value. The output is a boolean result indicating whether the first input is less than or equal to the second input.",
+        "model_name": "InfegEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Value of u1 if u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Value of u2 if u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First integer input for comparison"
+            },
+            {
+                "name": "u2",
+                "description": "Second integer input for comparison"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output boolean indicating if u1 is less than or equal to u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.InfegEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.InfEntier": {
+        "description": "The InfEntier block is a logical comparison block that compares two integer input signals. It outputs a logical true if the first input is less than the second input, otherwise it outputs logical false. If an input is not connected, a parameter default value is used as the input value.",
+        "model_name": "InfEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Value of u1 if u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Value of u2 if u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First integer input"
+            },
+            {
+                "name": "u2",
+                "description": "Second integer input"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical signal indicating if u1 is less than u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.InfEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Log": {
+        "description": "This block computes the natural logarithm of an input signal. It takes a real input signal, calculates its natural logarithm using the Modelica math library, and provides the result as an output signal. The block is visualized with graphical elements representing its functionality.",
+        "model_name": "Log",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "The input connector for the real signal of which the natural logarithm is to be calculated."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output connector providing the real signal that is the natural logarithm of the input signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Log"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Log10": {
+        "description": "This block computes the base-10 logarithm of the input signal, outputting the result to the specified output connector. It is adapted from the Modelica.Blocks.Math library.",
+        "model_name": "Log10",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector for the signal to be processed by the log10 operation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector for the resultant signal after applying the log10 operation."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Log10"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Mul": {
+        "description": "This Modelica block, named 'Mul', resides within the ThermoSysPro.InstrumentationAndControl.Blocks.Math package. It performs a multiplication operation on two input signals and outputs the result. Adapted from the Modelica.Blocks.Math library, the block takes two real-valued input signals and produces one real-valued output signal which is the product of the inputs. The graphical representation includes lines, rectangles, and an ellipse to denote multiplication.",
+        "model_name": "Mul",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First input connector of type Real, representing the first factor in the multiplication."
+            },
+            {
+                "name": "u2",
+                "description": "Second input connector of type Real, representing the second factor in the multiplication."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector of type Real, representing the product of the two input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Mul"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Mul3": {
+        "description": "The Mul3 block is designed to perform multiplication of three real input signals. It takes three real input signals and outputs their product as a single real output signal. This block is part of the ThermoSysPro.InstrumentationAndControl.Blocks.Math library and is adapted from the Modelica.Blocks.Math library.",
+        "model_name": "Mul3",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First real input signal for multiplication."
+            },
+            {
+                "name": "u2",
+                "description": "Second real input signal for multiplication."
+            },
+            {
+                "name": "u3",
+                "description": "Third real input signal for multiplication."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector providing the product of the input signals."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Mul3"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Polynome": {
+        "description": "The 'Polynome' block models a polynomial equation output based on the given input and polynomial coefficients. The polynomial is defined by a vector of coefficients, where each element corresponds to the coefficient of a term. The input signal 'u' is used to calculate the polynomial value based on these coefficients, and the result is provided as output 'y'.",
+        "model_name": "Polynome",
+        "parameters": [
+            {
+                "name": "a",
+                "description": "Vector of polynomial coefficients, where each element represents the coefficient for a term in the polynomial."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "InputReal connector for the input signal that is used in the polynomial calculation."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector providing the output signal that represents the calculated polynomial value."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Polynome"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sign": {
+        "description": "This block computes the sign of the input signal. It outputs 1 if the input is positive, -1 if negative, and 0 if the input is zero. The block is adapted from the Modelica.Blocks.Math library.",
+        "model_name": "Sign",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "InputReal connector for the input signal whose sign is to be determined."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector for the output signal representing the sign of the input."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sign"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sin": {
+        "description": "The 'Sin' block computes the sine of the input signal using the mathematical sine function. It is adapted from the Modelica.Blocks.Math library.",
+        "model_name": "Sin",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal whose sine is to be calculated"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal representing the sine of the input"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sin"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sqrt": {
+        "description": "This model represents a mathematical block that computes the square root of the input signal 'u' and provides it as the output signal 'y'. It is part of the ThermoSysPro library within the InstrumentationAndControl package.",
+        "model_name": "Sqrt",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal connector representing the value for which the square root is to be computed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal connector representing the computed square root of the input signal 'u'."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sqrt"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sup": {
+        "description": "The Sup block compares two input signals, u1 and u2. If the cardinality of u1 or u2 is zero, it assigns default values C1 and C2 respectively. It outputs a logical signal yL indicating whether u1 is greater than u2.",
+        "model_name": "Sup",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Default value for u1 if not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Default value for u2 if not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "Real input connector u1"
+            },
+            {
+                "name": "u2",
+                "description": "Real input connector u2"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output connector indicating if u1 is greater than u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Sup"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Supeg": {
+        "description": "The model 'Supeg' is a block within the ThermoSysPro.InstrumentationAndControl.Blocks.Math package. It is used to perform a comparison between two real input signals u1 and u2. If any of the input connectors is not connected, a default value (C1 or C2) is assigned to the corresponding signal. The output of the model is a logical signal yL which indicates whether the signal of u1 is greater than or equal to the signal of u2.",
+        "model_name": "Supeg",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Value assigned to u1 if u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Value assigned to u2 if u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First real input signal"
+            },
+            {
+                "name": "u2",
+                "description": "Second real input signal"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output indicating if u1 >= u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Supeg"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.SupegEntier": {
+        "description": "The SupegEntier block in the ThermoSysPro library is a mathematical comparator function that compares two integer inputs and provides a logical output indicating if the first input is greater than or equal to the second input. If either input is not connected, default parameter values are used.",
+        "model_name": "SupegEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Default value for u1 if it is not connected."
+            },
+            {
+                "name": "C2",
+                "description": "Default value for u2 if it is not connected."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First integer input for comparison."
+            },
+            {
+                "name": "u2",
+                "description": "Second integer input for comparison."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Logical output indicating if u1 is greater than or equal to u2."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.SupegEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.SupEntier": {
+        "description": "The SupEntier block is designed to compare two integer input signals. If the first input is greater than the second input, the output is set to true, otherwise false. If any input is not connected, a default parameter value is used instead.",
+        "model_name": "SupEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Default value for u1 if it is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Default value for u2 if it is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "Input integer connector for the first signal"
+            },
+            {
+                "name": "u2",
+                "description": "Input integer connector for the second signal"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "Output logical connector that indicates if u1 is greater than u2"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.SupEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Tan": {
+        "description": "The Tan block models the tangent mathematical function. It takes an input signal, computes its tangent using the Modelica.Math.tan function, and provides the output. The block is a part of the ThermoSysPro.InstrumentationAndControl.Blocks.Math library and is used in simulations that require trigonometric operations.",
+        "model_name": "Tan",
+        "parameters": [],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "The input signal for the tangent function."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output signal representing the tangent of the input."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Math.Tan"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.BandeMorte": {
+        "description": "The model is a deadband or dead zone block which is used to model a system where there is no change in output for certain ranges of input values. If the input signal is greater than a specified maximum value (uMax), the output is the input minus the maximum. If the input is less than a specified minimum value (uMin), the output is the input minus the minimum. Otherwise, the output is zero. This model is particularly used in control systems and is adapted from the Modelica.Blocks.NonLinear library.",
+        "model_name": "BandeMorte",
+        "parameters": [
+            {
+                "name": "uMax",
+                "description": "The upper limit of the deadband. If the input signal is greater than this value, the output is the input minus this value."
+            },
+            {
+                "name": "uMin",
+                "description": "The lower limit of the deadband. It is set as the negative of uMax. If the input signal is less than this value, the output is the input minus this value."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input connector that receives the real input signal for the deadband block."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector that provides the real output signal after applying the deadband logic."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.BandeMorte"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Limiteur": {
+        "description": "This block, named 'Limiteur', restricts the output signal to be within a specified maximum and minimum value. If the input signal exceeds the maximum value, the output is set to the maximum. If the input signal is below the minimum value, the output is set to the minimum. Otherwise, the output is the same as the input signal.",
+        "model_name": "Limiteur",
+        "parameters": [
+            {
+                "name": "maxval",
+                "description": "Maximum allowable value for the output. Default value is 1."
+            },
+            {
+                "name": "minval",
+                "description": "Minimum allowable value for the output. Default value is -1."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "InputReal connector that receives the input signal."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector that provides the output signal limited within the specified range."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Limiteur"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.LimiteurVar": {
+        "description": "This block model, called LimiteurVar, is designed to limit the output signal based on input constraints. It outputs a signal limited within specified max and min values. If the limit inputs are not connected, the default max and min parameter values are used. Additionally, it provides logical outputs indicating if the signal hits the max or min limits.",
+        "model_name": "LimiteurVar",
+        "parameters": [
+            {
+                "name": "maxval",
+                "description": "Valeur maximale de la sortie si limit1 n'est pas connect\u8305 (maximum output value if limit1 is not connected)."
+            },
+            {
+                "name": "minval",
+                "description": "Valeur minimale de la sortie si limit2 n'est pas connect\u8305 (minimum output value if limit2 is not connected)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "The input signal to be limited."
+            },
+            {
+                "name": "limit1",
+                "description": "The first limit input signal. If not connected, uses maxval."
+            },
+            {
+                "name": "limit2",
+                "description": "The second limit input signal. If not connected, uses minval."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The limited output signal constrained between uMax and uMin."
+            },
+            {
+                "name": "ySMax",
+                "description": "Logical output indicating if the output signal has reached the maximum limit."
+            },
+            {
+                "name": "ySMin",
+                "description": "Logical output indicating if the output signal has reached the minimum limit."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.LimiteurVar"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.LimiteurVitesse": {
+        "description": "The LimiteurVitesse block is a component used in the ThermoSysPro.InstrumentationAndControl library to limit the rate of change (derivative) of an output signal. It includes parameters to set maximum and minimum derivative values and features components like derivative, limiter, integrator, and clock functionalities to control the signal processing.",
+        "model_name": "LimiteurVitesse",
+        "parameters": [
+            {
+                "name": "dmax",
+                "description": "Valeur maximale de la d\u00e9riv\u00e9e de la sortie (Maximum value of the output derivative)"
+            },
+            {
+                "name": "dmin",
+                "description": "Valeur minimale de la d\u00e9riv\u00e9e de la sortie (Minimum value of the output derivative)"
+            },
+            {
+                "name": "Ti",
+                "description": "Constante de temps (s) (Time constant in seconds, constrained to be a minimum of a small positive constant)"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input signal for the block"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal of the block"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.LimiteurVitesse"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.RetardFixe": {
+        "description": "The 'RetardFixe' is a block that applies a fixed time delay to its input signal. It is defined within the ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire package. The block uses the Modelica 'delay' function to delay the input signal by a specified amount of time, determined by the 'retard' parameter.",
+        "model_name": "RetardFixe",
+        "parameters": [
+            {
+                "name": "retard",
+                "description": "The time delay applied to the input signal (in seconds)."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input connector representing the input signal to be delayed."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector representing the delayed output signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.RetardFixe"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.RetardVar": {
+        "description": "RetardVar is a block model that introduces a variable delay into a signal. It takes an input signal and outputs it with a delay specified by an input signal uRetard, up to a maximum delay of retardMax seconds.",
+        "model_name": "RetardVar",
+        "parameters": [
+            {
+                "name": "retardMax",
+                "description": "Retard maximum in seconds. It defines the upper bound for the delay that can be applied to the input signal."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Real input signal to which the delay will be applied."
+            },
+            {
+                "name": "uRetard",
+                "description": "Real input signal specifying the variable delay to apply, constrained by retardMax."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output signal which is the delayed version of the input signal u."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.RetardVar"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Selecteur": {
+        "description": "The Selecteur block is designed to output one of two real input signals based on a logical condition. It uses a logical input to determine whether to output the first or second real input. If any of the real inputs are not connected, default values are used instead.",
+        "model_name": "Selecteur",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Output value used if uCond is true and u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Output value used if uCond is false and u2 is not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "uCond",
+                "description": "Logical input that determines which input to output"
+            },
+            {
+                "name": "u1",
+                "description": "First real input signal"
+            },
+            {
+                "name": "u2",
+                "description": "Second real input signal"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output real signal, which is either from u1 or u2 based on the value of uCond"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Selecteur"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.SelecteurEntier": {
+        "description": "The 'SelecteurEntier' block is a selector that outputs one of two integer values based on a logical input signal. If the logical input 'uCond' is true, the output is taken from 'u1'; if false, the output is taken from 'u2'. If 'u1' or 'u2' are not connected, default values 'C1' and 'C2' are used respectively.",
+        "model_name": "SelecteurEntier",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Output value for uCond=true if u1 is not connected (default: -1)"
+            },
+            {
+                "name": "C2",
+                "description": "Output value for uCond=false if u2 is not connected (default: 1)"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "uCond",
+                "description": "Logical input that determines which integer input ('u1' or 'u2') to pass to the output"
+            },
+            {
+                "name": "u1",
+                "description": "Integer input used as output when uCond is true"
+            },
+            {
+                "name": "u2",
+                "description": "Integer input used as output when uCond is false"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Integer output that results from the selection logic based on uCond"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.SelecteurEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Switch": {
+        "description": "This is a block model for selecting between multiple input values based on a selector signal. It provides five possible input values, each associated with a default value if the input is not connected. The output is determined based on the selector's value, mapping to one of the five inputs or defaults.",
+        "model_name": "Switch",
+        "parameters": [
+            {
+                "name": "C1",
+                "description": "Output value for sel=1 if u1 is not connected"
+            },
+            {
+                "name": "C2",
+                "description": "Output value for sel=2 if u2 is not connected"
+            },
+            {
+                "name": "C3",
+                "description": "Output value for sel=3 if u3 is not connected"
+            },
+            {
+                "name": "C4",
+                "description": "Output value for sel=4 if u4 is not connected"
+            },
+            {
+                "name": "C5",
+                "description": "Output value for other values of sel if u5 is not connected"
+            },
+            {
+                "name": "Sel0",
+                "description": "Default value of sel if not connected"
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "First input value"
+            },
+            {
+                "name": "u2",
+                "description": "Second input value"
+            },
+            {
+                "name": "u3",
+                "description": "Third input value"
+            },
+            {
+                "name": "u4",
+                "description": "Fourth input value"
+            },
+            {
+                "name": "u5",
+                "description": "Fifth input value"
+            },
+            {
+                "name": "sel",
+                "description": "Selector input to choose which input value is used for output"
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output value determined by the selected input"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.NonLineaire.Switch"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Constante": {
+        "description": "The 'Constante' block is a source block from the ThermoSysPro Instrumentation and Control library that provides a constant real-valued output. The output is determined by a parameter 'k', which sets the value of the signal emitted by the output connector.",
+        "model_name": "Constante",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Value of the output signal. This is a real number parameter that defines the constant output."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector that carries the constant signal defined by the parameter 'k'."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Constante"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.ConstanteEntier": {
+        "description": "The model 'ConstanteEntier' is a block within the ThermoSysPro.InstrumentationAndControl.Blocks.Sources package. It represents a constant integer source for simulation purposes. The block outputs a constant integer value defined by the parameter 'k', which is the integer value of the output.",
+        "model_name": "ConstanteEntier",
+        "parameters": [
+            {
+                "name": "k",
+                "description": "Valeur de la sortie entiere; the integer value output by this block."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output integer signal that carries the constant integer value specified by the parameter 'k'."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.ConstanteEntier"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Echelon": {
+        "description": "The Echelon block generates a step signal that starts at a specified offset and changes by a specified height at a specified start time. It is adapted from the Modelica.Blocks.Sources library and is part of the ThermoSysPro.InstrumentationAndControl package.",
+        "model_name": "Echelon",
+        "parameters": [
+            {
+                "name": "hauteur",
+                "description": "Height of the step change in the output signal."
+            },
+            {
+                "name": "offset",
+                "description": "Offset of the output signal at time zero."
+            },
+            {
+                "name": "startTime",
+                "description": "Time at which the step change occurs."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector providing the step signal output."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Echelon"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Exp": {
+        "description": "The 'Exp' block in the ThermoSysPro instrumentation and control library generates an exponential signal based on several parameters, including rise time, fall time, maximum height, and start time. The output 'y' is calculated as an exponential function, with an option to add an offset. The block is adapted from the Modelica.Blocks.Sources library.",
+        "model_name": "Exp",
+        "parameters": [
+            {
+                "name": "ymax",
+                "description": "Hauteur de la sortie pour riseTime infini"
+            },
+            {
+                "name": "riseTime",
+                "description": "Dur\u00e9e du front montant"
+            },
+            {
+                "name": "riseTimeConst",
+                "description": "Constante du front montant"
+            },
+            {
+                "name": "fallTimeConst",
+                "description": "Constante du front descendant"
+            },
+            {
+                "name": "offset",
+                "description": "D\u00e9calage de la sortie"
+            },
+            {
+                "name": "startTime",
+                "description": "Instant de d\u00e9part de l'exponentielle"
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector representing the exponential signal"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Exp"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Horloge": {
+        "description": "The 'Horloge' block is a simple clock model that outputs the current simulation time, with options for an offset and a starting time. The output is zero until the specified start time is reached, after which it is the simulation time minus the start time, plus the offset. This block is useful for synchronizing events or processes in a simulation based on time, by utilizing its output connector.",
+        "model_name": "Horloge",
+        "parameters": [
+            {
+                "name": "offset",
+                "description": "Offset added to the output signal. It shifts the output value by a constant amount."
+            },
+            {
+                "name": "startTime",
+                "description": "The simulation time at which the clock starts outputting the time. Before this time, the output is zero."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output signal representing the adjusted simulation time (time - startTime + offset)."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Horloge"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Pulse": {
+        "description": "The Pulse block is designed to generate periodic pulse signals with configurable amplitude, width, period, offset, and start time.",
+        "model_name": "Pulse",
+        "parameters": [
+            {
+                "name": "amplitude",
+                "description": "Amplitude of the pulses"
+            },
+            {
+                "name": "width",
+                "description": "Width of the pulses (s)"
+            },
+            {
+                "name": "period",
+                "description": "Period of the pulses (s)"
+            },
+            {
+                "name": "offset",
+                "description": "Offset of the output"
+            },
+            {
+                "name": "startTime",
+                "description": "Start time of the pulses"
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal for the pulses"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Pulse"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Rampe": {
+        "description": "The 'Rampe' block generates a ramp signal. This signal starts from an initial value at a specified start time and linearly increases or decreases to a final value over a given duration. Before the start time, the output remains constant at the initial value. After the ramp duration, the output remains constant at the final value.",
+        "model_name": "Rampe",
+        "parameters": [
+            {
+                "name": "Starttime",
+                "description": "The time at which the ramp starts (in seconds)."
+            },
+            {
+                "name": "Duration",
+                "description": "The duration over which the ramp occurs (in seconds)."
+            },
+            {
+                "name": "Initialvalue",
+                "description": "The initial value of the output before the ramp starts."
+            },
+            {
+                "name": "Finalvalue",
+                "description": "The final value of the output after the ramp duration."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output real signal of the ramp block."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Rampe"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Random": {
+        "description": "The 'Random' block generates a pseudo-random number at specified sampling times. It uses a random number generator to produce values which are output at each sampling interval. The block is initialized with a seed value and begins sampling after a specified offset.",
+        "model_name": "Random",
+        "parameters": [
+            {
+                "name": "seed",
+                "description": "The seed for the random number generator."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "The start time for sampling (in seconds)."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "The sampling period (in seconds)."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "The output connector carrying the generated random signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Random"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.RandomLineaire": {
+        "description": "This model is a block that generates a piecewise linear random signal, based on a random generator. It samples and updates its output at the specified intervals and reacts to changes in the logical input signal.",
+        "model_name": "RandomLineaire",
+        "parameters": [
+            {
+                "name": "seed",
+                "description": "Source of the random generator, used to initialize the random number generator (RNG) seed."
+            },
+            {
+                "name": "SampleOffset",
+                "description": "Start time for sampling, defining when the first sample is taken."
+            },
+            {
+                "name": "SampleInterval",
+                "description": "Sampling period, indicating the interval at which samples are taken."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "uL",
+                "description": "Logical input connector that toggles the sampling behavior on or off."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Real output connector providing the generated piecewise linear random signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.RandomLineaire"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.SinusExp": {
+        "description": "The SinusExp block represents a sinusoidal exponentially damped source signal generator. It outputs a signal that combines oscillations with exponential damping, allowing for control over frequency, amplitude, phase, damping coefficient, offset, and the starting point of the oscillation.",
+        "model_name": "SinusExp",
+        "parameters": [
+            {
+                "name": "amplitude",
+                "description": "Amplitude of the sinusoidal wave."
+            },
+            {
+                "name": "frequence",
+                "description": "Frequency of the sinusoidal wave in Hz."
+            },
+            {
+                "name": "phase",
+                "description": "Phase shift of the sinusoidal wave in radians."
+            },
+            {
+                "name": "damping",
+                "description": "Damping coefficient for the exponential decay of the sinusoidal wave."
+            },
+            {
+                "name": "offset",
+                "description": "Offset applied to the output signal."
+            },
+            {
+                "name": "startTime",
+                "description": "Start time for the sinusoidal wave output."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector for the generated sinusoidal signal."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.SinusExp"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Sinusoide": {
+        "description": "The Sinusoide model generates a sinusoidal signal with specified amplitude, period, phase, offset, and start time. This is useful for simulation scenarios where oscillatory input is required. It is derived from the Modelica.Blocks.Sources library.",
+        "model_name": "Sinusoide",
+        "parameters": [
+            {
+                "name": "amplitude",
+                "description": "Amplitude of the sinusoidal wave"
+            },
+            {
+                "name": "period",
+                "description": "Period of the sinusoidal wave in seconds"
+            },
+            {
+                "name": "phase",
+                "description": "Phase shift of the sinusoidal wave in radians"
+            },
+            {
+                "name": "offset",
+                "description": "Offset value added to the output signal"
+            },
+            {
+                "name": "startTime",
+                "description": "Start time after which the sinusoidal signal begins"
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector for the sinusoidal signal"
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Sinusoide"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Trapezoide": {
+        "description": "The 'Trapezoide' block generates a trapezoidal waveform signal. It allows configuration of amplitude, duration of the rise and fall times, width of the trapeze, and period. The block also supports an infinite or finite number of periods and an output offset. The waveform can be delayed by setting the start time.",
+        "model_name": "Trapezoide",
+        "parameters": [
+            {
+                "name": "amplitude",
+                "description": "Amplitude of the trapezoid waveform."
+            },
+            {
+                "name": "rising",
+                "description": "Duration of the rising front of the trapezoid in seconds."
+            },
+            {
+                "name": "largeur",
+                "description": "Width of the trapezoid in seconds."
+            },
+            {
+                "name": "falling",
+                "description": "Duration of the falling front of the trapezoid in seconds."
+            },
+            {
+                "name": "periode",
+                "description": "Period of the trapezoid waveform in seconds."
+            },
+            {
+                "name": "n",
+                "description": "Number of periods to generate (< 0 for infinite periods)."
+            },
+            {
+                "name": "offset",
+                "description": "Offset of the output signal."
+            },
+            {
+                "name": "startTime",
+                "description": "The start time of the waveform."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output signal carrying the trapezoid waveform."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Sources.Trapezoide"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1D": {
+        "description": "The Table1D block is a one-dimensional lookup table used for interpolation in simulation models. It maps input values to output values based on the specified table data. The block provides options for linear or spline interpolation methods. It is adapted from the ModelicaAdditions.Blocks.Tables library.",
+        "model_name": "Table1D",
+        "parameters": [
+            {
+                "name": "Table",
+                "description": "Table containing input-output pairs for interpolation. The first column represents inputs, and the second column represents corresponding outputs."
+            },
+            {
+                "name": "option_interpolation",
+                "description": "Interpolation method option: 1 for linear interpolation, 2 for spline interpolation."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u",
+                "description": "Input connector representing the signal to be interpolated based on the lookup table."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector representing the interpolated result based on the input signal and specified interpolation method."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1D"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1DTemps": {
+        "description": "The Table1DTemps block is a component within the ThermoSysPro library that provides 1-dimensional table lookup functionality. It offers interpolation between table entries based on configured settings. The block is designed to output a value using either linear or spline interpolation of a specified time-dependent input against tabulated data.",
+        "model_name": "Table1DTemps",
+        "parameters": [
+            {
+                "name": "Table",
+                "description": "A parameter representing the 1D table with the first column as time and the second column as the corresponding output value."
+            },
+            {
+                "name": "option_interpolation",
+                "description": "This parameter determines the method of interpolation: 1 for linear interpolation and 2 for spline interpolation."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "Output connector that provides the interpolated signal based on the time-dependent input and the configured table and interpolation settings."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1DTemps"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1DTempsBool": {
+        "description": "The model `Table1DTempsBool` is a block from the ThermoSysPro library's Instrumentation and Control Blocks, specifically designed to output a Boolean signal based on a time-indexed table. The table consists of time-value pairs where the first column is time and the second column is a sequence of values that is strictly increasing in time. At each time point defined in the first column, the block checks if the corresponding second column value is greater than 0.5, and outputs a Boolean result accordingly. The output is a discrete logical signal.",
+        "model_name": "Table1DTempsBool",
+        "parameters": [
+            {
+                "name": "Table",
+                "description": "A 2D parameter array where the first column represents time (strictly increasing) and the second column a sequence of values which determine the Boolean output."
+            },
+            {
+                "name": "iMax",
+                "description": "An integer parameter representing the number of rows in the Table, which defines the total number of time-value pairs included in the table."
+            }
+        ],
+        "input_connectors": [],
+        "output_connectors": [
+            {
+                "name": "yL",
+                "description": "An output logical connector that carries the Boolean result based on the evaluation of the table's second column against the threshold 0.5."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table1DTempsBool"
+    },
+    "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table2D": {
+        "description": "The Table2D block provides a two-dimensional lookup table for interpolating output values based on two input signals. It supports linear and spline interpolation options, allowing for flexible determination of output based on tabular data.",
+        "model_name": "Table2D",
+        "parameters": [
+            {
+                "name": "Tu1",
+                "description": "Entr\u00e9es lignes de la table; an array of real values serving as the input for rows in the table."
+            },
+            {
+                "name": "Tu2",
+                "description": "Entr\u00e9es colonnes de la table; an array of real values serving as the input for columns in the table."
+            },
+            {
+                "name": "Ty",
+                "description": "Sorties de la table; a matrix of real values representing the output values of the table."
+            },
+            {
+                "name": "option_interpolation",
+                "description": "Chooses the interpolation method. 1 for linear interpolation, 2 for spline interpolation."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "u1",
+                "description": "InputReal connector for the first input dimension used in the table lookup."
+            },
+            {
+                "name": "u2",
+                "description": "InputReal connector for the second input dimension used in the table lookup."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "y",
+                "description": "OutputReal connector providing the interpolated output from the table."
+            }
+        ],
+        "module_ref": "ThermoSysPro.InstrumentationAndControl.Blocks.Tables.Table2D"
+    }
+}

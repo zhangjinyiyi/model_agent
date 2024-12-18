@@ -45,10 +45,38 @@ class DesignerSelfCorrect():
            logger.warning("llm_query.json_mode is set to False, may cause error in design process.")
            
            
+        self.design_json_format = """
+            {{
+                "modules": [
+                    {{"name": "module_name", "description": "module_description", 
+                      "parameters": [
+                          {{"name": "parameter_name", "description": "parameter_description"}},
+                          {{"name": "parameter_name", "description": "parameter_description"}}
+                      ], 
+                      "input_connectors": [
+                          {{"name": "input_connector_name", "description": "input_connector_description"}},
+                          {{"name": "input_connector_name", "description": "input_connector_description"}}
+                      ],
+                      "output_connectors": [
+                          {{"name": "output_connector_name", "description": "output_connector_description"}},
+                          {{"name": "output_connector_name", "description": "output_connector_description"}}
+                      ]
+                    }},
+                    ...
+                ],
+                "connections": [
+                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
+                      "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}}
+                ]
+            }}
+        """
+           
         self.prompt_design = """
-            you are a modeling and simulation expert. 
+            you are a senior dynamic system modeling and simulation expert. 
             you have deep knowledge in system modeling and simulation softwares, 
             such as matlab/simulink, modelica, aspen plus, etc.
+            you have deep knowledge on control system design and analysis, thermal system modeling and simulation, 
+            fluid system modeling and simulation, etc.
             you need to give a system model structure in the format of a graph.
             The node of the sytem model graph represent the module and the edge represent the connection between modules.
             output all the necessary modules names in a list with name, description, paramters, input connectors 
@@ -56,25 +84,10 @@ class DesignerSelfCorrect():
             output all the connections in a list as upstream_module-downstream_module.
             The given modules and connections should be able to build a complete system model to finish the task.
             Here is the task: {task}.
-            the output should be in json format, same as :
-            {{
-                "modules": [
-                    {{"name": "module_name", "description": "module_description", 
-                      "parameters": "module_parameters", 
-                      "input_connectors": "module_input_connectors",
-                      "output_connectors": "module_output_connectors"
-                    }},
-                ],
-                "connections": [
-                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
-                      "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}},
-                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
-                    "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}}
-                ]
-            }}.
+            the output should be in json format, same as : {design_json_format}.
             
-            Here the design tried with its correctness result, reason and fix advices in a list. You need to avoid the 
-            error you made before to give a better design result.
+            Here the design tried before with its correctness result, reason why it's incorrect and 
+            fix advices in a list. You need to avoid the error you made before to give a better design result.
             Here is the design candidates: {design_candidates}
         """
 
@@ -85,22 +98,7 @@ class DesignerSelfCorrect():
             You are given a system design: {system_design}.
             User gives the following feedback: {feedback}.
             Please improve the system design to finish the task.
-            the output should be in json format, same as :
-            {{
-                "modules": [
-                    {{"name": "module_name", "description": "module_description", 
-                      "parameters": "module_parameters", 
-                      "input_connectors": "module_input_connectors",
-                      "output_connectors": "module_output_connectors"
-                    }},
-                ],
-                "connections": [
-                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
-                      "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}},
-                    {{"upstream_module": "upstream_module", "upstream_connector": "upstream_connector", 
-                    "downstream_module": "downstream_module", "downstream_connector": "downstream_connector"}}
-                ]
-            }}.
+            the output should be in json format, same as : {design_json_format}.
 
         """
         
@@ -153,6 +151,7 @@ class DesignerSelfCorrect():
         self.task = task
         for i in range(self.max_iter):
             prompt_design = self.prompt_design.format(task=task, 
+                                                      design_json_format=self.design_json_format,
                                                       design_candidates=json.dumps(self.design_candidates))
             design = json.loads(self.llm_query.get_completion(prompt_design))
             
@@ -191,7 +190,8 @@ class DesignerSelfCorrect():
 
         prompt_improve = self.prompt_improve.format(task=task, 
                                                     system_design=json.dumps(design),
-                                                    feedback=feedback)
+                                                    feedback=feedback,
+                                                    design_json_format=self.design_json_format)
         design_improved = json.loads(self.llm_query.get_completion(prompt_improve))
         if self.save_intermediate_result:
             with open(os.path.join(self.tmp_path, f"design_improved.json"), "w") as f:

@@ -10,6 +10,8 @@
 @Desc    :   None
 """
 
+from .base_llm_query import BaseLLMQuery
 from .llm_query import LLMQuery
 from .gpt import GPTQuery
+from .claude_bianxie import ClaudeQuery
 

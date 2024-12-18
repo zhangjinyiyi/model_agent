@@ -16,21 +16,44 @@ from modelagent.selector import SelectorEmbedding
 
 if __name__ == "__main__":
 
-    with open(os.path.abspath("./models_50.json"), "r") as f:
+    with open("../documentation/modelica_doc_gpt-4o.json", "r") as f:
         modules_list = json.load(f)
 
-    test_size = 10
-    descriptions_list = [modules_list[key]["description"] for key in modules_list][:test_size]
-    metadata_list = [
-        {
-            "path": modules_list[key]["path"], 
-            "name": key, 
-            "description": modules_list[key]["description"]
-        } 
-        for key in modules_list
-    ][:test_size]
+    test_size = len(modules_list)
+    descriptions_list = [json.dumps(v) for _, v in modules_list.items()][:test_size]
+    metadata_list = [{"module_ref": k} for k, _ in modules_list.items()][:test_size]
 
-    target_description = "For a water/steam source with fixed pressure to feed into the system"
+    target_module = {
+        "name": "PIDController",
+        "description": "A proportional-integral-derivative controller to regulate the system output.",
+        "parameters": [
+            {
+                "name": "Kp",
+                "description": "Proportional gain."
+            },
+            {
+                "name": "Ki",
+                "description": "Integral gain."
+            },
+            {
+                "name": "Kd",
+                "description": "Derivative gain."
+            }
+        ],
+        "input_connectors": [
+            {
+                "name": "error_input",
+                "description": "Input for the error signal (setpoint - process variable)."
+            }
+        ],
+        "output_connectors": [
+            {
+                "name": "control_signal_output",
+                "description": "Outputs the control signal to the plant."
+            }
+        ]
+    }
+    target_description = json.dumps(target_module)
 
     selector = SelectorEmbedding()
     selector.build_embedding_vectorstore(descriptions_list, metadata_list)

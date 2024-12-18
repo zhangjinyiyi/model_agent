@@ -22,6 +22,12 @@ an llm-based package to ease system modeling and simulation
 
 
 ## TODO
+
+### Short term
+- add automodeling
+- a simple demo
+
+### Long term
 - test o1-preview and o1-mini, its output is very different from gpt-4o
 - * modeling dataset preparation, use llm to generate dataset, modelica and thermosyspro, etc.
 - multiple round q&a
@@ -29,7 +35,11 @@ an llm-based package to ease system modeling and simulation
 - visualization of system structure, use flow chart
 
 
+
+
 ## Installation
+
+Attention: automodeling is based on omc, now support linux only.
 
 ### Linux or MacOS
 
@@ -48,6 +58,9 @@ ATTENTION: if pygraphviz is not installed, you can install it by:
 `conda install --channel conda-forge pygraphviz`
 
 please refer to [link](https://pygraphviz.github.io/documentation/stable/install.html) for more pygraphviz installation instructions.
+
+## OpenModelica installation
+Refer to [link](https://openmodelica.org/download/download-linux/) for more installation instructions on linux.
 
 
 ## Usage
@@ -107,6 +120,8 @@ Assistant:
                         The given result: {"modules": [{"name": "FirstOrderSystem", "description": "A module representing a first-order linear system characterized by a time constant and gain.", "parameters": {"time_constant": "T", "gain": "K"}, "input_connectors": ["input_signal"], "output_connectors": ["output_signal"]}, {"name": "PIDController", "description": "A PID controller with adjustable proportional, integral, and derivative gains.", "parameters": {"proportional_gain": "Kp", "integral_gain": "Ki", "derivative_gain": "Kd"}, "input_connectors": ["error_signal"], "output_connectors": ["control_signal"]}, {"name": "DifferenceBlock", "description": "A block to compute the error signal (setpoint - process_variable).", "parameters": {}, "input_connectors": ["input1", "input2"], "output_connectors": ["output"]}, {"name": "SinGenerator", "description": "A module that generates a sinusoidal reference setpoint value for the system.", "parameters": {}, "input_connectors": [], "output_connectors": ["setpoint"]}], "connections": [{"upstream_module": "SinGenerator", "upstream_connector": "setpoint", "downstream_module": "DifferenceBlock", "downstream_connector": "input1"}, {"upstream_module": "FirstOrderSystem", "upstream_connector": "output_signal", "downstream_module": "DifferenceBlock", "downstream_connector": "input2"}, {"upstream_module": "DifferenceBlock", "upstream_connector": "output", "downstream_module": "PIDController", "downstream_connector": "error_signal"}, {"upstream_module": "PIDController", "upstream_connector": "control_signal", "downstream_module": "FirstOrderSystem", "downstream_connector": "input_signal"}]}
 
 ![Alt text](tests/designer/demo_imgs/try_3_improved.png?raw=true "Title")
+
+## 
 
 
 

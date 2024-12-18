@@ -10,7 +10,7 @@
 @Desc    :   None
 """
 
-from modelagent.conversation.conversation import Conversation
+from modelagent.conversation.simple_conversation import Conversation
 
 import sys
 

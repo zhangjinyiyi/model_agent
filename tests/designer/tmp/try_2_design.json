@@ -1,82 +1,78 @@
 {
     "modules": [
         {
-            "name": "FirstOrderSystem",
-            "description": "Represents a first-order transfer function system.",
-            "parameters": {
-                "time_constant": "T",
-                "gain": "K"
-            },
-            "input_connectors": [
-                "input_signal"
-            ],
-            "output_connectors": [
-                "system_output"
-            ]
+            "name": "PowerSupply",
+            "description": "Module providing electrical power to components",
+            "parameters": "voltage, current, power_capacity",
+            "input_connectors": "None",
+            "output_connectors": "electrical_power"
         },
         {
-            "name": "PIDController",
-            "description": "Generic PID controller for feedback control.",
-            "parameters": {
-                "proportional_gain": "Kp",
-                "integral_gain": "Ki",
-                "derivative_gain": "Kd"
-            },
-            "input_connectors": [
-                "error_signal"
-            ],
-            "output_connectors": [
-                "control_output"
-            ]
+            "name": "Pump",
+            "description": "Module representing a pump to provide pressure and flow to the system",
+            "parameters": "power, efficiency, flow_rate, head",
+            "input_connectors": "electrical_power",
+            "output_connectors": "fluid_outlet"
         },
         {
-            "name": "SummationBlock",
-            "description": "Calculates the error between setpoint and measured output.",
-            "parameters": {},
-            "input_connectors": [
-                "setpoint",
-                "measured_output"
-            ],
-            "output_connectors": [
-                "error_signal"
-            ]
+            "name": "Pipe",
+            "description": "Module representing a pipe segment for fluid transport",
+            "parameters": "length, diameter, roughness",
+            "input_connectors": "fluid_inlet",
+            "output_connectors": "fluid_outlet"
         },
         {
-            "name": "Setpoint",
-            "description": "Provides a constant or variable setpoint for the system.",
-            "parameters": {
-                "value": "setpoint_value"
-            },
-            "input_connectors": [],
-            "output_connectors": [
-                "setpoint"
-            ]
+            "name": "Valve",
+            "description": "Module representing a valve to control fluid flow",
+            "parameters": "flow_coefficient, valve_position",
+            "input_connectors": "fluid_inlet",
+            "output_connectors": "fluid_outlet"
+        },
+        {
+            "name": "FlowMeter",
+            "description": "Module representing a flow meter to measure the flow rate",
+            "parameters": "measurement_accuracy, range",
+            "input_connectors": "fluid_inlet",
+            "output_connectors": "fluid_outlet"
+        },
+        {
+            "name": "Reservoir",
+            "description": "Module representing a reservoir to store fluid",
+            "parameters": "volume, initial_fluid_level",
+            "input_connectors": "fluid_inlet",
+            "output_connectors": "fluid_outlet"
         }
     ],
     "connections": [
         {
-            "upstream_module": "Setpoint",
-            "upstream_connector": "setpoint",
-            "downstream_module": "SummationBlock",
-            "downstream_connector": "setpoint"
+            "upstream_module": "PowerSupply",
+            "upstream_connector": "electrical_power",
+            "downstream_module": "Pump",
+            "downstream_connector": "electrical_power"
         },
         {
-            "upstream_module": "FirstOrderSystem",
-            "upstream_connector": "system_output",
-            "downstream_module": "SummationBlock",
-            "downstream_connector": "measured_output"
+            "upstream_module": "Pump",
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "Pipe",
+            "downstream_connector": "fluid_inlet"
         },
         {
-            "upstream_module": "SummationBlock",
-            "upstream_connector": "error_signal",
-            "downstream_module": "PIDController",
-            "downstream_connector": "error_signal"
+            "upstream_module": "Pipe",
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "Valve",
+            "downstream_connector": "fluid_inlet"
         },
         {
-            "upstream_module": "PIDController",
-            "upstream_connector": "control_output",
-            "downstream_module": "FirstOrderSystem",
-            "downstream_connector": "input_signal"
+            "upstream_module": "Valve",
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "FlowMeter",
+            "downstream_connector": "fluid_inlet"
+        },
+        {
+            "upstream_module": "FlowMeter",
+            "upstream_connector": "fluid_outlet",
+            "downstream_module": "Reservoir",
+            "downstream_connector": "fluid_inlet"
         }
     ]
 }

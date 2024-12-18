@@ -2,111 +2,124 @@
     "design": {
         "modules": [
             {
-                "name": "Process",
-                "description": "Represents the main process dynamics being controlled.",
-                "parameters": {
-                    "time_constant": 5,
-                    "gain": 2.0
-                },
-                "input_connectors": [
-                    "input_signal"
+                "name": "SetpointGenerator",
+                "description": "Generates the reference setpoint for the control system.",
+                "parameters": [
+                    {
+                        "name": "setpoint_value",
+                        "description": "Desired value of the setpoint."
+                    }
                 ],
-                "output_connectors": [
-                    "process_variable"
-                ]
-            },
-            {
-                "name": "Inner Controller",
-                "description": "Provides fast control as the inner loop of the cascade control system.",
-                "parameters": {
-                    "proportional_gain": 0.5,
-                    "integral_time": 1.0
-                },
-                "input_connectors": [
-                    "inner_setpoint",
-                    "inner_feedback"
-                ],
-                "output_connectors": [
-                    "inner_control_signal"
-                ]
-            },
-            {
-                "name": "Outer Controller",
-                "description": "Provides broader control as the outer loop of the cascade control system.",
-                "parameters": {
-                    "proportional_gain": 1.0,
-                    "integral_time": 2.0
-                },
-                "input_connectors": [
-                    "outer_setpoint",
-                    "outer_feedback"
-                ],
-                "output_connectors": [
-                    "outer_control_signal"
-                ]
-            },
-            {
-                "name": "Measurement Sensor",
-                "description": "Measures the process variable to provide feedback.",
-                "parameters": {
-                    "measurement_noise": 0.01
-                },
-                "input_connectors": [
-                    "process_variable"
-                ],
-                "output_connectors": [
-                    "measured_value"
-                ]
-            },
-            {
-                "name": "Setpoint Generator",
-                "description": "Generates the reference setpoint for the controller.",
-                "parameters": {
-                    "setpoint_value": 1.0
-                },
                 "input_connectors": [],
                 "output_connectors": [
-                    "outer_setpoint",
-                    "inner_setpoint"
+                    {
+                        "name": "setpoint_output",
+                        "description": "Outputs the setpoint value."
+                    }
+                ]
+            },
+            {
+                "name": "PIDController",
+                "description": "A proportional-integral-derivative controller to regulate the system output.",
+                "parameters": [
+                    {
+                        "name": "Kp",
+                        "description": "Proportional gain."
+                    },
+                    {
+                        "name": "Ki",
+                        "description": "Integral gain."
+                    },
+                    {
+                        "name": "Kd",
+                        "description": "Derivative gain."
+                    }
+                ],
+                "input_connectors": [
+                    {
+                        "name": "error_input",
+                        "description": "Input for the error signal (setpoint - process variable)."
+                    }
+                ],
+                "output_connectors": [
+                    {
+                        "name": "control_signal_output",
+                        "description": "Outputs the control signal to the plant."
+                    }
+                ]
+            },
+            {
+                "name": "FirstOrderSystem",
+                "description": "A first-order process characterized by a single time constant and gain.",
+                "parameters": [
+                    {
+                        "name": "gain",
+                        "description": "Gain of the first-order system."
+                    },
+                    {
+                        "name": "time_constant",
+                        "description": "Time constant of the first-order system."
+                    }
+                ],
+                "input_connectors": [
+                    {
+                        "name": "control_signal_input",
+                        "description": "Input for the control signal from the PID controller."
+                    }
+                ],
+                "output_connectors": [
+                    {
+                        "name": "process_variable_output",
+                        "description": "Outputs the process variable of the system."
+                    }
+                ]
+            },
+            {
+                "name": "ErrorComputation",
+                "description": "Calculates the error signal by subtracting the process variable from the setpoint.",
+                "parameters": [],
+                "input_connectors": [
+                    {
+                        "name": "setpoint_input",
+                        "description": "Input for the setpoint."
+                    },
+                    {
+                        "name": "process_variable_input",
+                        "description": "Input for the process variable."
+                    }
+                ],
+                "output_connectors": [
+                    {
+                        "name": "error_output",
+                        "description": "Outputs the error signal."
+                    }
                 ]
             }
         ],
         "connections": [
             {
-                "upstream_module": "Setpoint Generator",
-                "upstream_connector": "outer_setpoint",
-                "downstream_module": "Outer Controller",
-                "downstream_connector": "outer_setpoint"
+                "upstream_module": "SetpointGenerator",
+                "upstream_connector": "setpoint_output",
+                "downstream_module": "ErrorComputation",
+                "downstream_connector": "setpoint_input"
             },
             {
-                "upstream_module": "Outer Controller",
-                "upstream_connector": "outer_control_signal",
-                "downstream_module": "Inner Controller",
-                "downstream_connector": "inner_setpoint"
+                "upstream_module": "FirstOrderSystem",
+                "upstream_connector": "process_variable_output",
+                "downstream_module": "ErrorComputation",
+                "downstream_connector": "process_variable_input"
             },
             {
-                "upstream_module": "Inner Controller",
-                "upstream_connector": "inner_control_signal",
-                "downstream_module": "Process",
-                "downstream_connector": "input_signal"
+                "upstream_module": "ErrorComputation",
+                "upstream_connector": "error_output",
+                "downstream_module": "PIDController",
+                "downstream_connector": "error_input"
             },
             {
-                "upstream_module": "Process",
-                "upstream_connector": "process_variable",
-                "downstream_module": "Measurement Sensor",
-                "downstream_connector": "process_variable"
-            },
-            {
-                "upstream_module": "Measurement Sensor",
-                "upstream_connector": "measured_value",
-                "downstream_module": "Outer Controller",
-                "downstream_connector": "outer_feedback"
-            },
-            {
-                "upstream_module": "Measurement Sensor",
-                "upstream_connector": "measured_value",
-                "downstream_module": "Inner Controller",
-                "downstream_connector": "inner_feedback"
+                "upstream_module": "PIDController",
+                "upstream_connector": "control_signal_output",
+                "downstream_module": "FirstOrderSystem",
+                "downstream_connector": "control_signal_input"
             }
         ]
     },
