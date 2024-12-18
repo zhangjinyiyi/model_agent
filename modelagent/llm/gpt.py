@@ -56,34 +56,11 @@ class GPTQuery(BaseLLMQuery):
             str: the completion of the prompt
         """
         
-        if self.model.startswith("o1"):
-            # TODO: deal with the json mode
-            response = self.client.chat.completions.create(
-                messages=[{"role": "user", "content": prompt}],
-                model=self.model,
-                response_format={"type": "json_object"} if self.json_mode else None
-            )
-            response_text = response.choices[0].message.content
-        else:
-            response = self.client.chat.completions.create(
-                    messages=[
-                        {"role": "system", "content": self.system_prompt},
-                        {"role": "user", "content": prompt}
-                    ],
-                    model=self.model,
-                    max_tokens=self.max_num_tokens,
-                    response_format={"type": "json_object"} if self.json_mode else None
-                )
-            
-            response_text = response.choices[0].message.content
-            
-        if self.json_mode:
-            response_text = self.enforce_json_mode(response_text)
-        return response_text
-    
-    def get_completion_multiple_round(self, messages):
-        # TODO
-        pass
+        messages = [
+            {"role": "system", "content": self.system_prompt},
+            {"role": "user", "content": prompt}
+        ]
+        return self.get_completion_messages(messages)
     
     def get_completion_messages(self, messages: list[dict], json_mode=None):
         """get the completion of the messages
