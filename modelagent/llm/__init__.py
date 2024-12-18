@@ -10,6 +10,6 @@
 @Desc    :   None
 """
 
-
-from .gpt import GPTQuery
 from .llm_query import LLMQuery
+from .gpt import GPTQuery
+

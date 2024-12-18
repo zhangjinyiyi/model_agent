@@ -12,9 +12,13 @@
 
 from openai import OpenAI
 import os
+import json
+import re
+import logging
 
 from .base_llm_query import BaseLLMQuery
 
+logger = logging.getLogger(__name__)
 
 # openai.organization = ""
 # openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -33,32 +37,64 @@ class GPTQuery(BaseLLMQuery):
         self.model = model
         self.client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"), base_url=base_url)
         self.json_mode = json_mode
+        
+        if self.json_mode:
+            self.system_prompt = "You are a helpful assistant designed to output JSON."
+        else:
+            self.system_prompt = "You are a helpful assistant."
 
     def get_completion(self, prompt):
         return self.get_completion_single_round(prompt)
     
     def get_completion_single_round(self, prompt):
+        """get the completion of the prompt
+
+        Args:
+            prompt (str): the prompt to get the completion
+
+        Returns:
+            str: the completion of the prompt
+        """
         
         if self.model.startswith("o1"):
+            # TODO: deal with the json mode
             response = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt}],
                 model=self.model,
                 response_format={"type": "json_object"} if self.json_mode else None
             )
+            response_text = response.choices[0].message.content
         else:
             response = self.client.chat.completions.create(
-                messages=[{"role": "user", "content": prompt}],
-                model=self.model,
-                max_tokens=self.max_num_tokens,
-                response_format={"type": "json_object"} if self.json_mode else None
-            )
-        return response.choices[0].message.content
+                    messages=[
+                        {"role": "system", "content": self.system_prompt},
+                        {"role": "user", "content": prompt}
+                    ],
+                    model=self.model,
+                    max_tokens=self.max_num_tokens,
+                    response_format={"type": "json_object"} if self.json_mode else None
+                )
+            
+            response_text = response.choices[0].message.content
+            
+        if self.json_mode:
+            response_text = self.enforce_json_mode(response_text)
+        return response_text
     
     def get_completion_multiple_round(self, messages):
         # TODO
         pass
     
     def get_completion_messages(self, messages: list[dict], json_mode=None):
+        """get the completion of the messages
+
+        Args:
+            messages (list[dict]): the messages to get the completion
+            json_mode (bool, optional): whether to enforce the json mode. Defaults to self.json_mode.
+
+        Returns:
+            str: the completion of the messages
+        """
         if json_mode is None:
             json_mode = self.json_mode
         
@@ -74,11 +110,16 @@ class GPTQuery(BaseLLMQuery):
                     answer: {answer}
                 """
                 response = self.client.chat.completions.create(
-                    messages=[{"role": "user", "content": prompt.format(answer=answer)}],
+                    messages=[
+                        {"role": "system", "content": self.system_prompt},
+                        {"role": "user", "content": prompt.format(answer=answer)}
+                    ],
                     model="gpt-4o",
                     max_tokens=self.max_num_tokens,
                     response_format={"type": "json_object"}
                 )
+                
+            response_text = response.choices[0].message.content
             
         else:   
             response = self.client.chat.completions.create(
@@ -87,4 +128,9 @@ class GPTQuery(BaseLLMQuery):
                 max_tokens=self.max_num_tokens,
                 response_format={"type": "json_object"} if json_mode else None
             )
-        return response.choices[0].message.content
+            response_text = response.choices[0].message.content
+            
+        if json_mode:
+            response_text = self.enforce_json_mode(response_text)
+            
+        return response_text
