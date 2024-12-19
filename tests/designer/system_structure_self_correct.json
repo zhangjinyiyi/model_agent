@@ -1,124 +1,154 @@
 {
     "modules": [
         {
-            "name": "SetpointGenerator",
-            "description": "Generates the reference setpoint for the control system.",
+            "name": "Step Input",
+            "description": "Generates a step reference signal for testing the PID controller.",
             "parameters": [
                 {
-                    "name": "setpoint_value",
-                    "description": "Desired value of the setpoint."
+                    "name": "step_time",
+                    "description": "Time at which the step occurs."
+                },
+                {
+                    "name": "initial_value",
+                    "description": "Initial value of the signal before the step."
+                },
+                {
+                    "name": "final_value",
+                    "description": "Final value of the signal after the step."
                 }
             ],
             "input_connectors": [],
             "output_connectors": [
                 {
-                    "name": "setpoint_output",
-                    "description": "Outputs the setpoint value."
+                    "name": "step_output",
+                    "description": "Step signal output, used as reference input."
                 }
             ]
         },
         {
-            "name": "PIDController",
-            "description": "A proportional-integral-derivative controller to regulate the system output.",
+            "name": "PID Controller",
+            "description": "Implements the Proportional-Integral-Derivative control logic.",
             "parameters": [
                 {
                     "name": "Kp",
-                    "description": "Proportional gain."
+                    "description": "Proportional gain of the PID controller."
                 },
                 {
                     "name": "Ki",
-                    "description": "Integral gain."
+                    "description": "Integral gain of the PID controller."
                 },
                 {
                     "name": "Kd",
-                    "description": "Derivative gain."
+                    "description": "Derivative gain of the PID controller."
+                },
+                {
+                    "name": "sample_time",
+                    "description": "Sample time for the discrete PID controller."
                 }
             ],
             "input_connectors": [
                 {
                     "name": "error_input",
-                    "description": "Input for the error signal (setpoint - process variable)."
+                    "description": "Error signal input to the PID controller."
                 }
             ],
             "output_connectors": [
                 {
-                    "name": "control_signal_output",
-                    "description": "Outputs the control signal to the plant."
+                    "name": "control_output",
+                    "description": "Output control signal from the PID controller."
                 }
             ]
         },
         {
-            "name": "FirstOrderSystem",
-            "description": "A first-order process characterized by a single time constant and gain.",
+            "name": "First Order System",
+            "description": "Represents a first-order system being controlled by the PID controller.",
             "parameters": [
-                {
-                    "name": "gain",
-                    "description": "Gain of the first-order system."
-                },
                 {
                     "name": "time_constant",
                     "description": "Time constant of the first-order system."
+                },
+                {
+                    "name": "gain",
+                    "description": "System gain of the first-order system."
                 }
             ],
             "input_connectors": [
                 {
-                    "name": "control_signal_input",
-                    "description": "Input for the control signal from the PID controller."
+                    "name": "input_signal",
+                    "description": "Input signal to the first-order system."
                 }
             ],
             "output_connectors": [
                 {
-                    "name": "process_variable_output",
-                    "description": "Outputs the process variable of the system."
+                    "name": "system_output",
+                    "description": "Output of the first-order system."
                 }
             ]
         },
         {
-            "name": "ErrorComputation",
-            "description": "Calculates the error signal by subtracting the process variable from the setpoint.",
+            "name": "Sum",
+            "description": "Calculates the difference (error) between the reference signal and system output.",
             "parameters": [],
             "input_connectors": [
                 {
-                    "name": "setpoint_input",
-                    "description": "Input for the setpoint."
+                    "name": "positive_input",
+                    "description": "Positive input (reference signal)."
                 },
                 {
-                    "name": "process_variable_input",
-                    "description": "Input for the process variable."
+                    "name": "negative_input",
+                    "description": "Negative input (system output)."
                 }
             ],
             "output_connectors": [
                 {
                     "name": "error_output",
-                    "description": "Outputs the error signal."
+                    "description": "Calculated error signal output."
                 }
             ]
+        },
+        {
+            "name": "Scope",
+            "description": "Visualizes the output of the system for analysis.",
+            "parameters": [],
+            "input_connectors": [
+                {
+                    "name": "input_signal",
+                    "description": "Signal to be visualized in the scope."
+                }
+            ],
+            "output_connectors": []
         }
     ],
     "connections": [
         {
-            "upstream_module": "SetpointGenerator",
-            "upstream_connector": "setpoint_output",
-            "downstream_module": "ErrorComputation",
-            "downstream_connector": "setpoint_input"
+            "upstream_module": "Step Input",
+            "upstream_connector": "step_output",
+            "downstream_module": "Sum",
+            "downstream_connector": "positive_input"
         },
         {
-            "upstream_module": "FirstOrderSystem",
-            "upstream_connector": "process_variable_output",
-            "downstream_module": "ErrorComputation",
-            "downstream_connector": "process_variable_input"
+            "upstream_module": "First Order System",
+            "upstream_connector": "system_output",
+            "downstream_module": "Sum",
+            "downstream_connector": "negative_input"
         },
         {
-            "upstream_module": "ErrorComputation",
+            "upstream_module": "Sum",
             "upstream_connector": "error_output",
-            "downstream_module": "PIDController",
+            "downstream_module": "PID Controller",
             "downstream_connector": "error_input"
         },
         {
-            "upstream_module": "PIDController",
-            "upstream_connector": "control_signal_output",
-            "downstream_module": "FirstOrderSystem",
-            "downstream_connector": "control_signal_input"
+            "upstream_module": "PID Controller",
+            "upstream_connector": "control_output",
+            "downstream_module": "First Order System",
+            "downstream_connector": "input_signal"
+        },
+        {
+            "upstream_module": "First Order System",
+            "upstream_connector": "system_output",
+            "downstream_module": "Scope",
+            "downstream_connector": "input_signal"
         }
     ]
 }

@@ -21,7 +21,7 @@ if __name__ == "__main__":
     model_name = "gpt-4o"
     llm = LLMQuery(model_name=model_name, json_mode=True, max_tokens=10000)
     designer = DesignerSelfCorrect(llm_query=llm)
-    task = "build a system to test the pid controller of a first order system with a setpoint reference"
+    task = "build a system to test the pid controller of a first order system with a step reference"
     result = designer.execute_design(task)
     designer.draw(save_path="./system_structure_self_correct.png")
     designer.save_design(save_path="./system_structure_self_correct.json")

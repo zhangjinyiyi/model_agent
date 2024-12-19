@@ -26,7 +26,7 @@
         },
         {
             "name": "First Order Process",
-            "description": "Represents a first order dynamic system.",
+            "description": "Represents a first order dynamic system. use tranfer function to describe the system.",
             "parameters": {
                 "gain": "System gain",
                 "time_constant": "Time constant of the process"
